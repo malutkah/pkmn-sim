@@ -1,12 +1,12 @@
 ﻿[System.Serializable]
 public class MoveData
 {
-    public string ename;
-    public string type;
-    public string category;
+    public string Ename { get; set; }
+    public string Type { get; set; }
+    public string Category { get; set; }
 
-    public int id;
-    public int accuracy;
-    public int power;
-    public int pp;
+    public int Id { get; set; }
+    public int Accuracy { get; set; }
+    public int Power { get; set; }
+    public int Pp { get; set; }
 }
