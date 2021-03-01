@@ -1,5 +1,5 @@
-
- [
+{
+"moves": [
     {
         "accuracy": 100, 
         "category": "physical", 
@@ -6836,3 +6836,4 @@
         "type": "Water"
     }
 ]
+}
