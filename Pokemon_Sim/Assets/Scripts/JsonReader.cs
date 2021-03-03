@@ -21,22 +21,26 @@ public class JsonReader : MonoBehaviour
 
     void ShowMoves()
     {
-        Moves movesInJson = JsonConvert.DeserializeObject<Moves>(jsonfile_moves.text);
+        //Moves movesInJson = JsonConvert.DeserializeObject<Moves>(jsonfile_moves.text);
+        Moves jMoves = JsonConvert.DeserializeObject<Moves>(jsonfile_moves.text);
 
-        foreach (var m in movesInJson.moves)
+        foreach (var m in jMoves.moves)
         {
-            Debug.Log($"Found attack: {m.move_list[0]} of type {m.move_list[1]}");
+            for (int i = 0; i < m.move_list.Count; i++)
+            {
+                Debug.Log($"Found attack: {m.move_list[0]} of type {m.move_list[1]}");
+            }
         }
     }
 
     void ShowPokemons()
     {
-        Pokemons pkmnInJson = new Pokemons();
-        pkmnInJson = JsonConvert.DeserializeObject<Pokemons>(jsonfile.text);
+        var pkmnInJson = JsonConvert.DeserializeObject<PokemonData>(jsonfile.text);
 
-        foreach (var pkmn in pkmnInJson.pkmns)
-        {
-            Debug.Log($"Found pokemon: {pkmn.name.english} with poke dex ID: {pkmn.id}");
-        }
+        Debug.Log($"Found pokemon: {pkmnInJson.name.english} with poke dex ID: {pkmnInJson.id}");
+
+        //foreach (var pkmn in pkmnInJson.)
+        //{
+        //}
     }
 }
