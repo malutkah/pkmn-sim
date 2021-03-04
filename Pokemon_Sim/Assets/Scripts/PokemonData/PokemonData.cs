@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-[System.Serializable]
+
 public class PokemonData
 {
     public int id { get; set; }
-    public pkmn_name name { get; set; }
+    public pkmn_name Name { get; set; }
     public List<pkmn_type> type { get; set; }
     public pkmn_base base_stats { get; set; }
 

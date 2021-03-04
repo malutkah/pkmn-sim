@@ -1,5 +1,7 @@
-﻿[System.Serializable]
-public class Moves
+﻿using System.Collections.Generic;
+
+public class Moves //: MonoBehaviour
 {
-    public MoveData[] moves;
+    public List<moves> moves;
+
 }

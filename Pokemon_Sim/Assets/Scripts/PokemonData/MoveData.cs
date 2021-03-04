@@ -1,19 +1,11 @@
-﻿using System.Collections.Generic;
-
-[System.Serializable]
-public class MoveData
+﻿public class moves //: MonoBehaviour
 {
-    public List<moves> move_list { get; set; }
+    public string ename { get; set; }
+    public string type { get; set; }
+    public string category { get; set; }
 
-    public class moves
-    {
-        public string Ename { get; set; }
-        public string Type { get; set; }
-        public string Category { get; set; }
-
-        public int Id { get; set; }
-        public int Accuracy { get; set; }
-        public int Power { get; set; }
-        public int Pp { get; set; }
-    }
+    public int id { get; set; }
+    public int accuracy { get; set; }
+    public int power { get; set; }
+    public int pp { get; set; }
 }
