@@ -14,7 +14,7 @@ public class JsonReader : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Alpha1))
         {
-            ShowMoves();
+            ShowMoves(moves);
         }
 
         if (Input.GetKeyUp(KeyCode.Alpha2))
@@ -24,9 +24,10 @@ public class JsonReader : MonoBehaviour
     }
 
 
-    void ShowMoves()
+    public void ShowMoves(Moves moves)
     {
         TextAsset jsonfile_moves = Resources.Load("moves") as TextAsset;
+        moves = new Moves();
 
         if (jsonfile_moves != null)
         {
@@ -47,7 +48,6 @@ public class JsonReader : MonoBehaviour
         if (jsonfile_pkmn != null)
         {
             pokemons = JsonConvert.DeserializeObject<Pokemons>(jsonfile_pkmn.text);
-            //moves = JsonConvert.DeserializeObject<Moves>(jsonExample);
 
             foreach (pokemon item in pokemons.pokemon)
             {
