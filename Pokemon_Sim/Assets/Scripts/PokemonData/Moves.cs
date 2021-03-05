@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public class Moves //: MonoBehaviour
+public class Moves 
 {
     public List<moves> moves;
 

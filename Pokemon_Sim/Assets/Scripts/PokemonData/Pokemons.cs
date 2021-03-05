@@ -1,4 +1,6 @@
-﻿public class Pokemons
+﻿using System.Collections.Generic;
+
+public class Pokemons
 {
-    public PokemonData[] pkmns;
+    public List<pokemon> pokemon;
 }
