@@ -5,17 +5,20 @@ public class LoadPokemon : MonoBehaviour
 {
     public GameObject reader;
     public GameObject PokemonPrefab;
-    JsonReader jReader;
+
+    private JsonReader jReader;
 
     private SpriteRenderer spriteRenderer;
     private Sprite pkmn_sprite;
+
     private GameObject pkmnGO;
+    private GameObject PokemonGO_parent;
 
     private int spriteCount = 152;
     private float step = 1.5f;
 
-    private float startX = -3f;
-    private float startY = 2f;
+    private float startX = -4.5f;
+    private float startY = 3.5f;
 
     private Vector3 EndOfField = new Vector3(1.5f, -4, 0);
 
@@ -27,16 +30,13 @@ public class LoadPokemon : MonoBehaviour
 
         spriteRenderer = PokemonPrefab.GetComponent<SpriteRenderer>();
 
-        CreatePokemons();
+        PokemonGO_parent = GameObject.Find("Pokemon");
 
-        for (int i = 0; i < pkmnSprite_names.Count; i++)
-        {
-            Debug.Log(pkmnSprite_names[i]);
-        }
+        CreatePokemons();
     }
 
     /// <summary>
-    /// UNDONE: INSTANTIATE GAMEOBJECT PREFAB WITH SPRITE IMAGES
+    /// DONE: INSTANTIATE GAMEOBJECT PREFAB WITH SPRITE IMAGES
     /// /// </summary>
 
     void CreatePokemons()
@@ -73,14 +73,18 @@ public class LoadPokemon : MonoBehaviour
             }
         }
 
-        for (int i = 2; i < 4; i++)
+
+        for (int i = 1; i < 5; i++)
         {
-            pkmnGO = Instantiate(PokemonPrefab, new Vector3(startX + step, startY - step, 0), Quaternion.identity);
-            pkmnGO.name = pkmnSprite_names[i];
+            pkmnGO = Instantiate(PokemonPrefab);
+            pkmnGO.transform.position = new Vector2(startX + step *i, startY);
+
+            pkmnGO.transform.SetParent(PokemonGO_parent.transform);
+            pkmnGO.name = pkmnSprite_names[i -1];
 
             SpriteRenderer tmp = pkmnGO.GetComponent<SpriteRenderer>();
-            tmp.sprite = spriteList[i];
-            
+            tmp.sprite = spriteList[i - 1];
+
         }
     }
 }

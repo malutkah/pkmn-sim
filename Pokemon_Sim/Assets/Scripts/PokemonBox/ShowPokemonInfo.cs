@@ -13,6 +13,8 @@ public class ShowPokemonInfo : MonoBehaviour
 
     void Start()
     {
+        JsonReader = GameObject.Find("reader");
+
         reader = JsonReader.GetComponent<JsonReader>();
     }
 
@@ -34,9 +36,11 @@ public class ShowPokemonInfo : MonoBehaviour
     public void PokemonOnClick()
     {
         pkmn_name = name;
+
         pkmn_id = Convert.ToInt32(pkmn_name.Substring(0, 3));
 
         Load();
+
     }
 
 
