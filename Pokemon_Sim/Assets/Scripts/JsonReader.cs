@@ -1,60 +1,73 @@
 ﻿using Newtonsoft.Json;
 using UnityEngine;
 
-
 public class JsonReader : MonoBehaviour
 {
-    //public TextAsset jsonfile;
-    //public TextAsset jsonfile_moves;
+    private Moves moves = new Moves();
+    private Pokemons pokemons = new Pokemons();
 
-    public Moves moves = new Moves();
-    public Pokemons pokemons = new Pokemons();    
+    private void Awake()
+    {
+        moves = InitializeMoves();
+        pokemons = InitializePokemons();
+    }
 
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.Alpha1))
         {
-            ShowMoves(moves);
+            InitializeMoves();
         }
 
         if (Input.GetKeyUp(KeyCode.Alpha2))
         {
-            ShowPokemons();
+            InitializePokemons();
         }
     }
 
+    public Moves GetMoves()
+    {
+        return moves;
+    }
 
-    public void ShowMoves(Moves moves)
+    public Pokemons GetPokemons()
+    {
+        return pokemons;
+    }
+
+    Moves InitializeMoves()
     {
         TextAsset jsonfile_moves = Resources.Load("moves") as TextAsset;
+
         moves = new Moves();
 
-        if (jsonfile_moves != null)
+        try
         {
             moves = JsonConvert.DeserializeObject<Moves>(jsonfile_moves.text);
-            //moves = JsonConvert.DeserializeObject<Moves>(jsonExample);
-
-            foreach (moves item in moves.moves)
-            {
-                Debug.Log($"found attack: {item.ename} of type {item.type}");
-            }
         }
+        catch (System.Exception e)
+        {
+            Debug.LogError(e.Message);
+        }
+
+        return moves;
     }
 
-    void ShowPokemons()
+    Pokemons InitializePokemons()
     {
         TextAsset jsonfile_pkmn = Resources.Load("pokedex_Gen1") as TextAsset;
 
-        if (jsonfile_pkmn != null)
+        pokemons = new Pokemons();
+
+        try
         {
             pokemons = JsonConvert.DeserializeObject<Pokemons>(jsonfile_pkmn.text);
-
-            foreach (pokemon item in pokemons.pokemon)
-            {
-                Debug.Log($"found pokemon: {item.name.english} with base attack of {item.@base.attack}");
-            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError(e.Message);
         }
 
+        return pokemons;
     }
 }
-
