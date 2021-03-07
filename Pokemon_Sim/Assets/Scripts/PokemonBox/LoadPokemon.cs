@@ -15,12 +15,13 @@ public class LoadPokemon : MonoBehaviour
     private GameObject PokemonGO_parent;
 
     private int spriteCount = 152;
-    private float step = 1.5f;
 
-    private float startX = -4.5f;
+    private float step = 1.5f;
+    private float startX = 1.5f;
     private float startY = 3.5f;
 
-    private Vector3 EndOfField = new Vector3(1.5f, -4, 0);
+    private Vector3 EndOfField = new Vector3(1.5f, -4, 0.0f);
+    private Vector3 EndOfRow = new Vector3(6.0f, 3.8f, 0.0f);
 
     List<string> pkmnSprite_names = new List<string>();
 
@@ -73,14 +74,28 @@ public class LoadPokemon : MonoBehaviour
             }
         }
 
-
-        for (int i = 1; i < 5; i++)
+        int amountPkmn = 7; // 6
+        for (int i = 1; i < amountPkmn; i++)
         {
             pkmnGO = Instantiate(PokemonPrefab);
-            pkmnGO.transform.position = new Vector2(startX + step *i, startY);
 
-            pkmnGO.transform.SetParent(PokemonGO_parent.transform);
-            pkmnGO.name = pkmnSprite_names[i -1];
+            pkmnGO.transform.localScale = new Vector3(3f, 3f, 1f);
+            pkmnGO.transform.position = new Vector3(startX * (i - 1) - step, 3.8f, 0f);
+
+            if (pkmnGO.transform.position.x == 6.0f) // or i == 6
+            {
+                // beginn a new row
+                pkmnGO.transform.position = new Vector3(startX * (i - 1) - step, 3.8f - step, 0f);
+            }
+            else
+            {
+                pkmnGO.transform.position = new Vector3(startX * (i - 1) - step, 3.8f, 0f);
+            }
+
+            //pkmnGO.transform.SetParent(PokemonGO_parent.transform);
+
+
+            pkmnGO.name = pkmnSprite_names[i - 1];
 
             SpriteRenderer tmp = pkmnGO.GetComponent<SpriteRenderer>();
             tmp.sprite = spriteList[i - 1];
