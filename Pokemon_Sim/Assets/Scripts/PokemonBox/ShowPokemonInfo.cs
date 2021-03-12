@@ -113,7 +113,7 @@ public class ShowPokemonInfo : MonoBehaviour
             ImagePkmn.sprite = Resources.Load<Sprite>($"images/0{pokemon.id}");
         }
 
-        if (pokemon.id >= 1000)
+        if (pokemon.id >= 100)
         {
             ImagePkmn.sprite = Resources.Load<Sprite>($"images/{pokemon.id}");
         }

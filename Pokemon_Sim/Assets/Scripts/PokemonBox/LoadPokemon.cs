@@ -12,13 +12,15 @@ public class LoadPokemon : MonoBehaviour
     private Sprite pkmn_sprite;
 
     private GameObject pkmnGO;
-    private GameObject PokemonGO_parent;
+    private GameObject PkmnBox_1;
+    private GameObject PkmnBox_2;
 
     private int spriteCount = 152;
 
-    private float step = 1.5f;
-    private float startX = 1.5f;
-    private float startY = 3.5f;
+    public float x_Start, y_Start;
+    public int ColumnLength;
+    public int RowLength;
+    public float x_Space, y_Space;
 
     private Vector3 EndOfField = new Vector3(1.5f, -4, 0.0f);
     private Vector3 EndOfRow = new Vector3(6.0f, 3.8f, 0.0f);
@@ -31,13 +33,20 @@ public class LoadPokemon : MonoBehaviour
 
         spriteRenderer = PokemonPrefab.GetComponent<SpriteRenderer>();
 
-        PokemonGO_parent = GameObject.Find("Pokemon");
+        PkmnBox_1 = GameObject.Find("Container");
+        PkmnBox_2 = GameObject.Find("PanelPkmnBox2");
+
+        //if (RowLength > 30)
+        //{
+        //    RowLength = 30;
+        //}
 
         CreatePokemons();
     }
 
     /// <summary>
     /// DONE: INSTANTIATE GAMEOBJECT PREFAB WITH SPRITE IMAGES
+    /// UNDONE: GET THE POSITIONS RIGHT!
     /// /// </summary>
 
     void CreatePokemons()
@@ -74,32 +83,21 @@ public class LoadPokemon : MonoBehaviour
             }
         }
 
-        int amountPkmn = 7; // 6
-        for (int i = 1; i < amountPkmn; i++)
+        for (int i = 0; i < ColumnLength + RowLength; i++)
         {
-            pkmnGO = Instantiate(PokemonPrefab);
+            Vector3 position = new Vector3(x_Start + (x_Space * (i % ColumnLength)), y_Start + (-y_Space * (i / ColumnLength)));
 
-            pkmnGO.transform.localScale = new Vector3(3f, 3f, 1f);
-            pkmnGO.transform.position = new Vector3(startX * (i - 1) - step, 3.8f, 0f);
+            pkmnGO = Instantiate(PokemonPrefab, position, Quaternion.identity);
 
-            if (pkmnGO.transform.position.x == 6.0f) // or i == 6
-            {
-                // beginn a new row
-                pkmnGO.transform.position = new Vector3(startX * (i - 1) - step, 3.8f - step, 0f);
-            }
-            else
-            {
-                pkmnGO.transform.position = new Vector3(startX * (i - 1) - step, 3.8f, 0f);
-            }
+            pkmnGO.transform.localScale = new Vector3(300.0f, 300.0f, 1.0f);
 
-            //pkmnGO.transform.SetParent(PokemonGO_parent.transform);
+            pkmnGO.transform.SetParent(PkmnBox_1.transform, false);
 
-
-            pkmnGO.name = pkmnSprite_names[i - 1];
+            pkmnGO.name = pkmnSprite_names[i];
 
             SpriteRenderer tmp = pkmnGO.GetComponent<SpriteRenderer>();
-            tmp.sprite = spriteList[i - 1];
-
+            tmp.sprite = spriteList[i];
         }
+
     }
 }
