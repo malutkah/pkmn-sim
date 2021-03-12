@@ -88,7 +88,6 @@ public class ShowPokemonInfo : MonoBehaviour
         Text_SpAttack = GameObject.Find("TextPkmnSpAtk").GetComponent<Text>();
         Text_SpDefense = GameObject.Find("TextPkmnSpDef").GetComponent<Text>();
         Text_Speed = GameObject.Find("TextPkmnSpeed").GetComponent<Text>();
-
     }
 
     void ShowText()
@@ -113,9 +112,11 @@ public class ShowPokemonInfo : MonoBehaviour
             ImagePkmn.sprite = Resources.Load<Sprite>($"images/0{pokemon.id}");
         }
 
-        if (pokemon.id >= 100)
+        if (pokemon.id >= 100
+)
         {
             ImagePkmn.sprite = Resources.Load<Sprite>($"images/{pokemon.id}");
         }
     }
+
 }

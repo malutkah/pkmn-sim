@@ -7,6 +7,7 @@ public class LoadPokemon : MonoBehaviour
     public GameObject PokemonPrefab;
 
     private JsonReader jReader;
+    private PlaySettings settings;
 
     private SpriteRenderer spriteRenderer;
     private Sprite pkmn_sprite;
@@ -18,35 +19,38 @@ public class LoadPokemon : MonoBehaviour
     private int spriteCount = 152;
 
     public float x_Start, y_Start;
-    public int ColumnLength;
-    public int RowLength;
     public float x_Space, y_Space;
+    public int PokemonInARow;
+    public int AmountOfPokemon;
 
     private Vector3 EndOfField = new Vector3(1.5f, -4, 0.0f);
     private Vector3 EndOfRow = new Vector3(6.0f, 3.8f, 0.0f);
 
     List<string> pkmnSprite_names = new List<string>();
 
+    /// <summary>
+    /// UNDONE: GET LEVEL
+    /// UNDONE: GET TEAM SIZE
+    /// UNDONE: SHOW POKEMON TEAM SLOTS
+    /// UNDONE: ADD POKEMON TO TEAM
+    /// UNDONE: CALCULATE POKEMON STATS
+    /// </summary>
+
     private void Start()
     {
         jReader = reader.GetComponent<JsonReader>();
+        settings = GameObject.Find("Settings_Handler").GetComponent<PlaySettings>();
 
         spriteRenderer = PokemonPrefab.GetComponent<SpriteRenderer>();
 
         PkmnBox_1 = GameObject.Find("Container");
-        PkmnBox_2 = GameObject.Find("PanelPkmnBox2");
-
-        //if (RowLength > 30)
-        //{
-        //    RowLength = 30;
-        //}
 
         CreatePokemons();
     }
 
     /// <summary>
     /// DONE: INSTANTIATE GAMEOBJECT PREFAB WITH SPRITE IMAGES
-    /// UNDONE: GET THE POSITIONS RIGHT!
+    /// DONE: GET THE POSITIONS RIGHT!
     /// /// </summary>
 
     void CreatePokemons()
@@ -83,9 +87,11 @@ public class LoadPokemon : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < ColumnLength + RowLength; i++)
+        int amountPokemon = (PokemonInARow + AmountOfPokemon) - 5;
+
+        for (int i = 0; i < amountPokemon; i++)
         {
-            Vector3 position = new Vector3(x_Start + (x_Space * (i % ColumnLength)), y_Start + (-y_Space * (i / ColumnLength)));
+            Vector3 position = new Vector3(x_Start + (x_Space * (i % PokemonInARow)), y_Start + (-y_Space * (i / PokemonInARow)));
 
             pkmnGO = Instantiate(PokemonPrefab, position, Quaternion.identity);
 
@@ -100,4 +106,6 @@ public class LoadPokemon : MonoBehaviour
         }
 
     }
+
+
 }
