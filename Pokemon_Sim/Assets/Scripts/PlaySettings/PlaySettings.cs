@@ -5,8 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class PlaySettings : MonoBehaviour
 {
+    [HideInInspector]
     public int level = 0;
+
+    [HideInInspector]
     public int TeamSize = 0;
+
     InputField field;
 
     private void Start()
@@ -24,6 +28,7 @@ public class PlaySettings : MonoBehaviour
         TeamSize = 6;
 
         // get max level
+        GetLevelFromEdit();
 
         // don't destroy on load: Team & Settings_Handler
         DontDestroyOnLoad(gameObject);

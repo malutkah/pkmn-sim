@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +9,7 @@ public class ShowPokemonInfo : MonoBehaviour
     #region Pokemon Stats Text
     private Text Text_Name;
     private Text Text_Level;
+    private Text Text_Hp;
     private Text Text_Attack;
     private Text Text_Defense;
     private Text Text_SpAttack;
@@ -22,21 +22,29 @@ public class ShowPokemonInfo : MonoBehaviour
     int pkmn_id = 0;
 
     #region Pokemon stats
+    float hp;
     float attack;
     float defense;
     float spAttack;
     float spDefense;
     float speed;
+    int level = 5;
     #endregion
 
     pokemon pokemon;
+    //Calculations calc;
 
     public GameObject JsonReader;
     JsonReader reader;
+    PlaySettings settings;
 
     void Start()
     {
         JsonReader = GameObject.Find("reader");
+
+        settings = GameObject.Find("Settings_Handler").GetComponent<PlaySettings>();
+
+        level = settings.level;
 
         reader = JsonReader.GetComponent<JsonReader>();
 
@@ -69,20 +77,25 @@ public class ShowPokemonInfo : MonoBehaviour
         Load();
 
         name_eng = pokemon.name.english;
-        attack = pokemon.@base.attack;
-        defense = pokemon.@base.defense;
-        spAttack = pokemon.@base.sp_attack;
-        spDefense = pokemon.@base.sp_defense;
-        speed = pokemon.@base.speed;
+
+        // calculate stats
+        hp = Calculations.Calculate_HP(pokemon.@base.hp, level);
+        attack = Calculations.Calculate_OtherStats(pokemon.@base.attack, level);
+        defense = Calculations.Calculate_OtherStats(pokemon.@base.defense, level);
+        spAttack = Calculations.Calculate_OtherStats(pokemon.@base.sp_attack, level);
+        spDefense = Calculations.Calculate_OtherStats(pokemon.@base.sp_defense, level);
+        speed = Calculations.Calculate_OtherStats(pokemon.@base.speed, level);
 
         ShowText();
         ShowImage();
+
     }
 
     void InitText()
     {
         Text_Name = GameObject.Find("TextPkmnName").GetComponent<Text>();
         Text_Level = GameObject.Find("TextPkmnLevel").GetComponent<Text>();
+        Text_Hp = GameObject.Find("TextPkmnHp").GetComponent<Text>();
         Text_Attack = GameObject.Find("TextPkmnAtk").GetComponent<Text>();
         Text_Defense = GameObject.Find("TextPkmnDef").GetComponent<Text>();
         Text_SpAttack = GameObject.Find("TextPkmnSpAtk").GetComponent<Text>();
@@ -93,11 +106,14 @@ public class ShowPokemonInfo : MonoBehaviour
     void ShowText()
     {
         Text_Name.text = name_eng;
-        Text_Attack.text = attack.ToString();
-        Text_Defense.text = defense.ToString();
-        Text_SpAttack.text = spAttack.ToString();
-        Text_SpDefense.text = spDefense.ToString();
-        Text_Speed.text = speed.ToString();
+        Text_Level.text = level.ToString();
+
+        Text_Hp.text = Mathf.RoundToInt(hp).ToString();
+        Text_Attack.text = Mathf.RoundToInt(attack).ToString();
+        Text_Defense.text = Mathf.RoundToInt(defense).ToString();
+        Text_SpAttack.text = Mathf.RoundToInt(spAttack).ToString();
+        Text_SpDefense.text = Mathf.RoundToInt(spDefense).ToString();
+        Text_Speed.text = Mathf.RoundToInt(speed).ToString();
     }
 
     void ShowImage()
@@ -118,5 +134,4 @@ public class ShowPokemonInfo : MonoBehaviour
             ImagePkmn.sprite = Resources.Load<Sprite>($"images/{pokemon.id}");
         }
     }
-
 }
