@@ -79,16 +79,15 @@ public class ShowPokemonInfo : MonoBehaviour
         name_eng = pokemon.name.english;
 
         // calculate stats
-        hp = Calculations.Calculate_HP(pokemon.@base.hp, level);
-        attack = Calculations.Calculate_OtherStats(pokemon.@base.attack, level);
-        defense = Calculations.Calculate_OtherStats(pokemon.@base.defense, level);
-        spAttack = Calculations.Calculate_OtherStats(pokemon.@base.sp_attack, level);
-        spDefense = Calculations.Calculate_OtherStats(pokemon.@base.sp_defense, level);
-        speed = Calculations.Calculate_OtherStats(pokemon.@base.speed, level);
+        hp = Calculations.DoHP(pokemon.@base.hp, level);
+        attack = Calculations.DoOtherStats(pokemon.@base.attack, level);
+        defense = Calculations.DoOtherStats(pokemon.@base.defense, level);
+        spAttack = Calculations.DoOtherStats(pokemon.@base.sp_attack, level);
+        spDefense = Calculations.DoOtherStats(pokemon.@base.sp_defense, level);
+        speed = Calculations.DoOtherStats(pokemon.@base.speed, level);
 
         ShowText();
         ShowImage();
-
     }
 
     void InitText()

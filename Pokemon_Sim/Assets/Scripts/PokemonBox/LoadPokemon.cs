@@ -7,7 +7,6 @@ public class LoadPokemon : MonoBehaviour
     public GameObject PokemonPrefab;
 
     private JsonReader jReader;
-    private PlaySettings settings;
 
     private SpriteRenderer spriteRenderer;
     private Sprite pkmn_sprite;
@@ -39,7 +38,6 @@ public class LoadPokemon : MonoBehaviour
     private void Start()
     {
         jReader = reader.GetComponent<JsonReader>();
-        settings = GameObject.Find("Settings_Handler").GetComponent<PlaySettings>();
 
         spriteRenderer = PokemonPrefab.GetComponent<SpriteRenderer>();
 

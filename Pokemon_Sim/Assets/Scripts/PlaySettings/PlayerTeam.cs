@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerTeam : MonoBehaviour
@@ -12,7 +12,17 @@ public class PlayerTeam : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void SetTeam(GameObject TeamMember)
+    public void RemovePokemonFromTeam(GameObject TeamMember)
+    {
+        GameObject pkmnToRemove = Team.Single(r => r.gameObject.name == TeamMember.name);
+
+        if (pkmnToRemove != null)
+        {
+            Team.Remove(pkmnToRemove);
+        }
+    }
+
+    public void AddPokemonToTeam(GameObject TeamMember)
     {
         Team.Add(TeamMember);
     }
