@@ -5,6 +5,12 @@ using UnityEngine.UI;
 public class ShowPokemonInfo : MonoBehaviour
 {
     private Image ImagePkmn;
+    private PlayerTeam team;
+    private pokemon pokemon;
+    private GameObject JsonReader;
+    private GameObject clickedPokemon;
+    private JsonReader reader;
+    private PlaySettings settings;
 
     #region Pokemon Stats Text
     private Text Text_Name;
@@ -17,32 +23,28 @@ public class ShowPokemonInfo : MonoBehaviour
     private Text Text_Speed;
     #endregion
 
-    string pkmn_name = "";
-    string name_eng = "";
-    int pkmn_id = 0;
+    private string pkmn_name = "";
+    private string name_eng = "";
+    private int pkmn_id = 0;
 
     #region Pokemon stats
-    float hp;
-    float attack;
-    float defense;
-    float spAttack;
-    float spDefense;
-    float speed;
-    int level = 5;
+    private float hp;
+    private float attack;
+    private float defense;
+    private float spAttack;
+    private float spDefense;
+    private float speed;
+    private int level = 5;
     #endregion
 
-    pokemon pokemon;
-    //Calculations calc;
 
-    public GameObject JsonReader;
-    JsonReader reader;
-    PlaySettings settings;
-
-    void Start()
+    private void Start()
     {
         JsonReader = GameObject.Find("reader");
 
         settings = GameObject.Find("Settings_Handler").GetComponent<PlaySettings>();
+
+        team = GameObject.Find("TeamHandler").GetComponent<PlayerTeam>();
 
         level = settings.level;
 
@@ -53,12 +55,12 @@ public class ShowPokemonInfo : MonoBehaviour
         InitText();
     }
 
-    void Load()
+    private void Load()
     {
         pokemon = new pokemon();
         pokemon = reader.GetPokemons().pokemon.Find(p => p.id == pkmn_id);
 
-        if (pokemon.type.Count == 2)
+        /*if (pokemon.type.Count == 2)
         {
             Debug.Log($"{pokemon.name.english} ({pokemon.type[0]}/{pokemon.type[1]})");
         }
@@ -66,10 +68,13 @@ public class ShowPokemonInfo : MonoBehaviour
         {
             Debug.Log($"{pokemon.name.english} ({pokemon.type[0]})");
         }
+        */
     }
 
-    public void PokemonOnClick()
+    public void PokemonOnClick(GameObject sender)
     {
+        team.ClickedPokemon = sender;
+
         pkmn_name = name;
 
         pkmn_id = Convert.ToInt32(pkmn_name.Substring(0, 3));
@@ -90,7 +95,8 @@ public class ShowPokemonInfo : MonoBehaviour
         ShowImage();
     }
 
-    void InitText()
+    #region Text and Image
+    private void InitText()
     {
         Text_Name = GameObject.Find("TextPkmnName").GetComponent<Text>();
         Text_Level = GameObject.Find("TextPkmnLevel").GetComponent<Text>();
@@ -102,7 +108,7 @@ public class ShowPokemonInfo : MonoBehaviour
         Text_Speed = GameObject.Find("TextPkmnSpeed").GetComponent<Text>();
     }
 
-    void ShowText()
+    private void ShowText()
     {
         Text_Name.text = name_eng;
         Text_Level.text = level.ToString();
@@ -115,7 +121,7 @@ public class ShowPokemonInfo : MonoBehaviour
         Text_Speed.text = Mathf.RoundToInt(speed).ToString();
     }
 
-    void ShowImage()
+    private void ShowImage()
     {
         if (pokemon.id < 10)
         {
@@ -128,9 +134,10 @@ public class ShowPokemonInfo : MonoBehaviour
         }
 
         if (pokemon.id >= 100
-)
+    )
         {
             ImagePkmn.sprite = Resources.Load<Sprite>($"images/{pokemon.id}");
         }
     }
+    #endregion
 }
