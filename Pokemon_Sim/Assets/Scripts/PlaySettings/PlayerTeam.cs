@@ -16,6 +16,9 @@ public class PlayerTeam : MonoBehaviour
     public Vector3 PokemonOrigPos;
 
     [HideInInspector]
+    public GameObject Parent;
+
+    [HideInInspector]
     public GameObject ClickedPokemon;
 
     private PlaySettings teamInfo;
@@ -26,6 +29,8 @@ public class PlayerTeam : MonoBehaviour
 
     private Color buttonColor;
 
+    private Vector3 oldPos;
+    private Vector3 TeamPos1, TeamPos2, TeamPos3, TeamPos4, TeamPos5, TeamPos6;
 
     private void Awake()
     {
@@ -41,9 +46,13 @@ public class PlayerTeam : MonoBehaviour
         add = GameObject.Find("ButtonAddToTeam").GetComponent<Button>();
         remove = GameObject.Find("ButtonRemoveFromTeam").GetComponent<Button>();
 
+        Parent = GameObject.Find("Container");
+
         buttonColor = add.image.color;
 
         size = teamInfo.TeamSize;
+
+        InitTeamPosititons();
 
         if (Team.Count > 0)
         {
@@ -61,6 +70,8 @@ public class PlayerTeam : MonoBehaviour
             if (pkmnToRemove != null)
             {
                 pkmnToRemove.tag = teamInfo.NotInTeam;
+                RemoveTeamMemeberFromBox(pkmnToRemove);
+
                 Team.Remove(pkmnToRemove);
 
                 #region buttons
@@ -90,6 +101,8 @@ public class PlayerTeam : MonoBehaviour
                     ClickedPokemon.tag = teamInfo.InTeam;
 
                     Debug.Log($"there are {size - Team.Count} postions left");
+
+                    oldPos = PokemonOrigPos;
 
                     PlaceTeamMembersInBox(ClickedPokemon);
 
@@ -124,19 +137,69 @@ public class PlayerTeam : MonoBehaviour
         ///    - get free team positions
         ///    - move pokemon to available positions 
         /// 
-        /// Set new parent
-        /// 
         /// team slot position is tied to the index in 'Team'       
         ///     - Team[0].transform.postiton = new Vector3(-80.0f, 180.0f);
 
         member.transform.SetParent(TeamBox.transform);
 
-        member.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-        //member.transform.position = new Vector3(-80.0f, 180.0f);
+        foreach (var item in Team)
+        {
+            if (item == member)
+            {
+                if (Team.IndexOf(member) == 0)
+                {
+                    member.transform.localPosition = TeamPos1;
+                }
+
+                if (Team.IndexOf(member) == 1)
+                {
+                    member.transform.localPosition = TeamPos2;
+                }
+
+                if (Team.IndexOf(member) == 2)
+                {
+                    member.transform.localPosition = TeamPos3;
+                }
+
+                if (size == 6)
+                {
+                    if (Team.IndexOf(member) == 3)
+                    {
+                        member.transform.localPosition = TeamPos4;
+                    }
+
+                    if (Team.IndexOf(member) == 4)
+                    {
+                        member.transform.localPosition = TeamPos5;
+                    }
+
+                    if (Team.IndexOf(member) == 5)
+                    {
+                        member.transform.localPosition = TeamPos6;
+                    }
+                }
+            }
+        }
+
     }
 
-    private void RemoveTeamMemeberFromBox()
+    private void RemoveTeamMemeberFromBox(GameObject member)
     {
-        Team[0].transform.position = PokemonOrigPos;
+        member.transform.SetParent(Parent.transform, false);
+        member.transform.localPosition = oldPos;
+    }
+
+    private void InitTeamPosititons()
+    {
+        TeamPos1 = new Vector3(-80.0f, 180.0f, 0.0f);
+        TeamPos2 = new Vector3(80.0f, 180.0f, 0.0f);
+        TeamPos3 = new Vector3(-80.0f, 0.0f, 0.0f);
+
+        if (size == 6)
+        {
+            TeamPos4 = new Vector3(80.0f, 0.0f, 0.0f);
+            TeamPos5 = new Vector3(-80.0f, -180.0f, 0.0f);
+            TeamPos6 = new Vector3(80.0f, -180.0f, 0.0f);
+        }
     }
 }

@@ -82,7 +82,7 @@ public class ShowPokemonInfo : MonoBehaviour
     public void PokemonOnClick(GameObject sender)
     {
         team.ClickedPokemon = sender;
-        team.PokemonOrigPos = sender.transform.position;
+        team.PokemonOrigPos = sender.transform.localPosition; //! postion's not right after selecting it in the box
 
         if (sender.tag == settings.InTeam)
         {
