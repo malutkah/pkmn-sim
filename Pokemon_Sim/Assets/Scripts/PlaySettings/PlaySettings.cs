@@ -11,7 +11,15 @@ public class PlaySettings : MonoBehaviour
     [HideInInspector]
     public int TeamSize = 0;
 
-    InputField field;
+    private InputField field;
+
+    #region Tags for pokemon
+    public string InTeam = "InTeam";
+    public string NotInTeam = "NotInTeam";
+    public string InBattle = "InBattle";
+    public string InBattleTeam = "InBattleTeam"; // is battling but in the team
+    public string Dead = "Dead";
+    #endregion
 
     private void Start()
     {
