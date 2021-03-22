@@ -48,9 +48,16 @@ public class PlaySettings : MonoBehaviour
     public void VsThree_OnClick()
     {
         // set team size
+        TeamSize = 3;
+
         // get max level
+        GetLevelFromEdit();
+
         // don't destroy on load: Team & Settings_Handler
+        DontDestroyOnLoad(gameObject);
+
         // Change Scenes
+        SceneManager.LoadScene("PokemonBox");
     }
     #endregion
 

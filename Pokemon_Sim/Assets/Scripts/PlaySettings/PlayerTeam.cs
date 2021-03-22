@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerTeam : MonoBehaviour
@@ -32,31 +33,39 @@ public class PlayerTeam : MonoBehaviour
     private Vector3 oldPos;
     private Vector3 TeamPos1, TeamPos2, TeamPos3, TeamPos4, TeamPos5, TeamPos6;
 
+    private bool TeamIsFull = false;
+    private IDictionary<GameObject, Vector3> pokemonPositions = new Dictionary<GameObject, Vector3>();
+
     private void Awake()
     {
         Team = new List<GameObject>();
         DontDestroyOnLoad(gameObject);
-
     }
 
     private void Start()
     {
+        Scene currenScene = SceneManager.GetActiveScene();
+
         teamInfo = GameObject.Find("Settings_Handler").GetComponent<PlaySettings>();
 
-        add = GameObject.Find("ButtonAddToTeam").GetComponent<Button>();
-        remove = GameObject.Find("ButtonRemoveFromTeam").GetComponent<Button>();
+        if (currenScene.name == "PokemonBox")
+        {
+            add = GameObject.Find("ButtonAddToTeam").GetComponent<Button>();
+            remove = GameObject.Find("ButtonRemoveFromTeam").GetComponent<Button>();
 
-        Parent = GameObject.Find("Container");
+            Parent = GameObject.Find("Container");
 
-        buttonColor = add.image.color;
+            buttonColor = add.image.color;
 
-        size = teamInfo.TeamSize;
+            size = teamInfo.TeamSize;
 
-        InitTeamPosititons();
+            InitTeamPosititons();
+        }
 
         if (Team.Count > 0)
         {
             Team.Clear();
+            pokemonPositions.Clear();
         }
     }
 
@@ -65,6 +74,11 @@ public class PlayerTeam : MonoBehaviour
     {
         if (Team.Count > 0)
         {
+            if (Team.Count == size)
+            {
+                TeamIsFull = false;
+            }
+
             GameObject pkmnToRemove = Team.Single(r => r.gameObject.name == ClickedPokemon.name);
 
             if (pkmnToRemove != null)
@@ -73,6 +87,11 @@ public class PlayerTeam : MonoBehaviour
                 RemoveTeamMemeberFromBox(pkmnToRemove);
 
                 Team.Remove(pkmnToRemove);
+
+                if (pokemonPositions.ContainsKey(pkmnToRemove))
+                {
+                    pokemonPositions.Remove(pkmnToRemove);
+                }
 
                 #region buttons
                 remove.enabled = false;
@@ -91,6 +110,7 @@ public class PlayerTeam : MonoBehaviour
         {
             if (Team.Count < size)
             {
+                // never going to happen, but just in case
                 if (ClickedPokemon.tag == teamInfo.InTeam)
                 {
                     Debug.Log("This Pokemon is already in your team!");
@@ -98,11 +118,14 @@ public class PlayerTeam : MonoBehaviour
                 else
                 {
                     Team.Add(ClickedPokemon);
+                    oldPos = PokemonOrigPos;
+
+                    pokemonPositions.Add(ClickedPokemon, oldPos);
+
                     ClickedPokemon.tag = teamInfo.InTeam;
 
                     Debug.Log($"there are {size - Team.Count} postions left");
 
-                    oldPos = PokemonOrigPos;
 
                     PlaceTeamMembersInBox(ClickedPokemon);
 
@@ -118,6 +141,7 @@ public class PlayerTeam : MonoBehaviour
             else
             {
                 Debug.Log("Your Team is full!");
+                TeamIsFull = false;
             }
         }
     }
@@ -186,7 +210,7 @@ public class PlayerTeam : MonoBehaviour
     private void RemoveTeamMemeberFromBox(GameObject member)
     {
         member.transform.SetParent(Parent.transform, false);
-        member.transform.localPosition = oldPos;
+        member.transform.localPosition = pokemonPositions[member];
     }
 
     private void InitTeamPosititons()
