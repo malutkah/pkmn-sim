@@ -34,6 +34,7 @@ public class PlayerTeam : MonoBehaviour
     private Vector3 TeamPos1, TeamPos2, TeamPos3, TeamPos4, TeamPos5, TeamPos6;
 
     private bool TeamIsFull = false;
+
     private IDictionary<GameObject, Vector3> pokemonPositions = new Dictionary<GameObject, Vector3>();
 
     private void Awake()
@@ -86,11 +87,21 @@ public class PlayerTeam : MonoBehaviour
                 pkmnToRemove.tag = teamInfo.NotInTeam;
                 RemoveTeamMemeberFromBox(pkmnToRemove);
 
+                Vector3 removedPkmnPos = pkmnToRemove.transform.position;
+
                 Team.Remove(pkmnToRemove);
 
                 if (pokemonPositions.ContainsKey(pkmnToRemove))
                 {
                     pokemonPositions.Remove(pkmnToRemove);
+                }
+
+
+
+                // move pokemon one position up
+                foreach (var p in Team)
+                {
+                    
                 }
 
                 #region buttons
@@ -125,7 +136,6 @@ public class PlayerTeam : MonoBehaviour
                     ClickedPokemon.tag = teamInfo.InTeam;
 
                     Debug.Log($"there are {size - Team.Count} postions left");
-
 
                     PlaceTeamMembersInBox(ClickedPokemon);
 
