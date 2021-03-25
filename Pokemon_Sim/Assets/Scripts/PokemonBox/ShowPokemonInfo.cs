@@ -39,6 +39,8 @@ public class ShowPokemonInfo : MonoBehaviour
     private Color buttonColor;
     #endregion
 
+    [SerializeField]
+    private string PokemonName_Debug = "";
 
     private void Start()
     {
@@ -67,16 +69,6 @@ public class ShowPokemonInfo : MonoBehaviour
     {
         pokemon = new pokemon();
         pokemon = reader.GetPokemons().pokemon.Find(p => p.id == pkmn_id);
-
-        /*if (pokemon.type.Count == 2)
-        {
-            Debug.Log($"{pokemon.name.english} ({pokemon.type[0]}/{pokemon.type[1]})");
-        }
-        else
-        {
-            Debug.Log($"{pokemon.name.english} ({pokemon.type[0]})");
-        }
-        */
     }
 
     public void PokemonOnClick(GameObject sender)
@@ -119,6 +111,8 @@ public class ShowPokemonInfo : MonoBehaviour
 
         ShowText();
         ShowImage();
+
+        PokemonName_Debug = name_eng;
     }
 
     #region Text and Image

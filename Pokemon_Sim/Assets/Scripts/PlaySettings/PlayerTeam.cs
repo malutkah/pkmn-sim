@@ -85,6 +85,9 @@ public class PlayerTeam : MonoBehaviour
             if (pkmnToRemove != null)
             {
                 pkmnToRemove.tag = teamInfo.NotInTeam;
+
+                MovePokemonPositionUp(pkmnToRemove);   
+                
                 RemoveTeamMemeberFromBox(pkmnToRemove);
 
                 Vector3 removedPkmnPos = pkmnToRemove.transform.position;
@@ -94,14 +97,6 @@ public class PlayerTeam : MonoBehaviour
                 if (pokemonPositions.ContainsKey(pkmnToRemove))
                 {
                     pokemonPositions.Remove(pkmnToRemove);
-                }
-
-
-
-                // move pokemon one position up
-                foreach (var p in Team)
-                {
-                    
                 }
 
                 #region buttons
@@ -135,7 +130,7 @@ public class PlayerTeam : MonoBehaviour
 
                     ClickedPokemon.tag = teamInfo.InTeam;
 
-                    Debug.Log($"there are {size - Team.Count} postions left");
+                    //Debug.Log($"there are {size - Team.Count} postions left");
 
                     PlaceTeamMembersInBox(ClickedPokemon);
 
@@ -161,7 +156,6 @@ public class PlayerTeam : MonoBehaviour
         return Team;
     }
     #endregion
-
 
     private void PlaceTeamMembersInBox(GameObject member)
     {
@@ -234,6 +228,29 @@ public class PlayerTeam : MonoBehaviour
             TeamPos4 = new Vector3(80.0f, 0.0f, 0.0f);
             TeamPos5 = new Vector3(-80.0f, -180.0f, 0.0f);
             TeamPos6 = new Vector3(80.0f, -180.0f, 0.0f);
+        }
+    }
+
+    private void MovePokemonPositionUp(GameObject removedMember)
+    {
+        //Vector3 memberPos = removedMember.transform.position;
+        int memberId = Team.IndexOf(removedMember);
+
+        bool canMoveUp = (memberId != Team.Count) ? canMoveUp = true : canMoveUp = false;
+
+        if (canMoveUp)
+        {
+            // current member gets position of the predecessor
+
+            foreach (var poke in Team)
+            {
+                if (Team.IndexOf(poke) > memberId)
+                {
+                    Vector3 oldPos = Team[Team.IndexOf(poke) - 1].transform.position;
+
+                    poke.transform.position = Team[Team.IndexOf(poke) - 1].transform.position;
+                }
+            }
         }
     }
 }
