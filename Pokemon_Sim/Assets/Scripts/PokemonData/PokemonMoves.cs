@@ -6,6 +6,8 @@ using UnityEngine;
 public class PokemonMoves : MonoBehaviour
 {
     [SerializeField]
+    private string[] moveNames = new string[2];
+
     private moves[] PokeMoves = new moves[2];
 
     private pokemon pokemon;
@@ -35,7 +37,6 @@ public class PokemonMoves : MonoBehaviour
     private int pkmn_id = 0;
     private string name_eng;
 
-    private int move_id = 0;
     private int move_name;
 
     private string pkmn_type1 = "";
@@ -94,8 +95,10 @@ public class PokemonMoves : MonoBehaviour
     {
         LoadMovesByName("Tackle");
         PokeMoves[0] = moves;
+        moveNames[0] = moves.ename;
 
-        LoadMovesByName("Growl");
+        LoadMovesByName("Vine Whip");        
         PokeMoves[1] = moves;
+        moveNames[1] = moves.ename;
     }
 }
