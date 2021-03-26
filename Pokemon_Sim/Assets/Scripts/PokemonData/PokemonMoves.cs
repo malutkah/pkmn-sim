@@ -5,31 +5,12 @@ using UnityEngine;
 
 public class PokemonMoves : MonoBehaviour
 {
-    public string[] pokemon_moves = new string[4];
+    [SerializeField]
+    private moves[] PokeMoves = new moves[2];
 
     private pokemon pokemon;
     private moves moves;
     private JsonReader reader;
-
-    #region attack lists
-    private List<string> attack_normal = new List<string>();
-    private List<string> attack_fire = new List<string>();
-    private List<string> attack_water = new List<string>();
-    private List<string> attack_dark = new List<string>();
-    private List<string> attack_fairy = new List<string>();
-    private List<string> attack_poison = new List<string>();
-    private List<string> attack_bug = new List<string>();
-    private List<string> attack_ground = new List<string>();
-    private List<string> attack_rock = new List<string>();
-    private List<string> attack_electric = new List<string>();
-    private List<string> attack_steel = new List<string>();
-    private List<string> attack_grass = new List<string>();
-    private List<string> attack_ghost = new List<string>();
-    private List<string> attack_ice = new List<string>();
-    private List<string> attack_fighting = new List<string>();
-    private List<string> attack_dragon = new List<string>();
-    private List<string> attack_psychic = new List<string>();
-    #endregion
 
     #region attack types
     private const string _normal = "normal";
@@ -57,12 +38,29 @@ public class PokemonMoves : MonoBehaviour
     private int move_id = 0;
     private int move_name;
 
+    private string pkmn_type1 = "";
+    private string pkmn_type2 = "";
+
     private void Start()
     {
         reader = GameObject.Find("reader").GetComponent<JsonReader>();
 
         pokemon = new pokemon();
         moves = new moves();
+
+        LoadPokemon();
+
+        if (pokemon.name.english == "Bulbasaur")
+        {
+            BulbasaurAttacks();
+            for (int i = 0; i < PokeMoves.Length; i++)
+            {
+                Debug.Log($"{PokeMoves[i].ename}");
+            }
+        }
+
+        //LoadMovesByName("Tackle");
+        //Debug.Log($"the attack name is {moves.ename} with a power of {moves.power}!");
     }
 
     private void LoadPokemon()
@@ -72,6 +70,13 @@ public class PokemonMoves : MonoBehaviour
         pokemon = reader.GetPokemons().pokemon.Find(p => p.id == pkmn_id);
 
         name_eng = pokemon.name.english;
+
+        pkmn_type1 = pokemon.type[0];
+
+        if (pokemon.type.Count >= 2)
+        {
+            pkmn_type2 = pokemon.type[1];
+        }
     }
 
     private void LoadMovesByType(string type)
@@ -79,5 +84,18 @@ public class PokemonMoves : MonoBehaviour
         moves = reader.GetMoves().moves.Find(m => m.type == type);
     }
 
+    private void LoadMovesByName(string m_name)
+    {
+        moves = reader.GetMoves().moves.Find(m => m.ename == m_name);
+    }
+
     // load attacks to pokemon and add to array
+    private void BulbasaurAttacks()
+    {
+        LoadMovesByName("Tackle");
+        PokeMoves[0] = moves;
+
+        LoadMovesByName("Growl");
+        PokeMoves[1] = moves;
+    }
 }

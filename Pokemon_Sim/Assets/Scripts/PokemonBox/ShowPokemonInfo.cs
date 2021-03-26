@@ -39,7 +39,6 @@ public class ShowPokemonInfo : MonoBehaviour
     private Color buttonColor;
     #endregion
 
-    [SerializeField]
     private string PokemonName_Debug = "";
 
     private void Start()

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6001172362769756320}
   - component: {fileID: 6001172362769756321}
   - component: {fileID: 6001172362769756322}
-  - component: {fileID: 195665491869217901}
+  - component: {fileID: 7870319133521676023}
   m_Layer: 0
   m_Name: 001MS
   m_TagString: NotInTeam
@@ -98,7 +98,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f4e0fdc351b7f549934038e39ceae4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PokemonName_Debug: 
 --- !u!114 &6001172362769756321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,7 +153,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4, y: 0.4}
   m_EdgeRadius: 0
---- !u!114 &195665491869217901
+--- !u!114 &7870319133521676023
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

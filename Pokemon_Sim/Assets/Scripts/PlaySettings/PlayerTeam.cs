@@ -33,8 +33,6 @@ public class PlayerTeam : MonoBehaviour
     private Vector3 oldPos;
     private Vector3 TeamPos1, TeamPos2, TeamPos3, TeamPos4, TeamPos5, TeamPos6;
 
-    private bool TeamIsFull = false;
-
     private IDictionary<GameObject, Vector3> pokemonPositions = new Dictionary<GameObject, Vector3>();
 
     private void Awake()
@@ -75,10 +73,6 @@ public class PlayerTeam : MonoBehaviour
     {
         if (Team.Count > 0)
         {
-            if (Team.Count == size)
-            {
-                TeamIsFull = false;
-            }
 
             GameObject pkmnToRemove = Team.Single(r => r.gameObject.name == ClickedPokemon.name);
 
@@ -146,7 +140,6 @@ public class PlayerTeam : MonoBehaviour
             else
             {
                 Debug.Log("Your Team is full!");
-                TeamIsFull = false;
             }
         }
     }
