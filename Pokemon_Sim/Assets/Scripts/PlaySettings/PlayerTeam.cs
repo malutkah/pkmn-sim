@@ -6,12 +6,10 @@ using UnityEngine.UI;
 
 public class PlayerTeam : MonoBehaviour
 {
+    public List<GameObject> Team;
+
     [SerializeField]
     private GameObject TeamBox;
-
-    private GameObject Settings;
-
-    public List<GameObject> Team;
 
     [HideInInspector]
     public Vector3 PokemonOrigPos;
@@ -24,6 +22,8 @@ public class PlayerTeam : MonoBehaviour
 
     private PlaySettings teamInfo;
 
+    private GameObject settings;
+
     private int size;
 
     private Button add, remove;
@@ -31,7 +31,7 @@ public class PlayerTeam : MonoBehaviour
     private Color buttonColor;
 
     private Vector3 oldPos;
-    private Vector3 TeamPos1, TeamPos2, TeamPos3, TeamPos4, TeamPos5, TeamPos6;
+    private Vector3 teamPos1, teamPos2, teamPos3, teamPos4, teamPos5, teamPos6;
 
     private IDictionary<GameObject, Vector3> pokemonPositions = new Dictionary<GameObject, Vector3>();
 
@@ -73,15 +73,14 @@ public class PlayerTeam : MonoBehaviour
     {
         if (Team.Count > 0)
         {
-
             GameObject pkmnToRemove = Team.Single(r => r.gameObject.name == ClickedPokemon.name);
 
             if (pkmnToRemove != null)
             {
                 pkmnToRemove.tag = teamInfo.NotInTeam;
 
-                MovePokemonPositionUp(pkmnToRemove);   
-                
+                MovePokemonPositionUp(pkmnToRemove);
+
                 RemoveTeamMemeberFromBox(pkmnToRemove);
 
                 Vector3 removedPkmnPos = pkmnToRemove.transform.position;
@@ -169,34 +168,34 @@ public class PlayerTeam : MonoBehaviour
             {
                 if (Team.IndexOf(member) == 0)
                 {
-                    member.transform.localPosition = TeamPos1;
+                    member.transform.localPosition = teamPos1;
                 }
 
                 if (Team.IndexOf(member) == 1)
                 {
-                    member.transform.localPosition = TeamPos2;
+                    member.transform.localPosition = teamPos2;
                 }
 
                 if (Team.IndexOf(member) == 2)
                 {
-                    member.transform.localPosition = TeamPos3;
+                    member.transform.localPosition = teamPos3;
                 }
 
                 if (size == 6)
                 {
                     if (Team.IndexOf(member) == 3)
                     {
-                        member.transform.localPosition = TeamPos4;
+                        member.transform.localPosition = teamPos4;
                     }
 
                     if (Team.IndexOf(member) == 4)
                     {
-                        member.transform.localPosition = TeamPos5;
+                        member.transform.localPosition = teamPos5;
                     }
 
                     if (Team.IndexOf(member) == 5)
                     {
-                        member.transform.localPosition = TeamPos6;
+                        member.transform.localPosition = teamPos6;
                     }
                 }
             }
@@ -212,15 +211,15 @@ public class PlayerTeam : MonoBehaviour
 
     private void InitTeamPosititons()
     {
-        TeamPos1 = new Vector3(-80.0f, 180.0f, 0.0f);
-        TeamPos2 = new Vector3(80.0f, 180.0f, 0.0f);
-        TeamPos3 = new Vector3(-80.0f, 0.0f, 0.0f);
+        teamPos1 = new Vector3(-80.0f, 180.0f, 0.0f);
+        teamPos2 = new Vector3(80.0f, 180.0f, 0.0f);
+        teamPos3 = new Vector3(-80.0f, 0.0f, 0.0f);
 
         if (size == 6)
         {
-            TeamPos4 = new Vector3(80.0f, 0.0f, 0.0f);
-            TeamPos5 = new Vector3(-80.0f, -180.0f, 0.0f);
-            TeamPos6 = new Vector3(80.0f, -180.0f, 0.0f);
+            teamPos4 = new Vector3(80.0f, 0.0f, 0.0f);
+            teamPos5 = new Vector3(-80.0f, -180.0f, 0.0f);
+            teamPos6 = new Vector3(80.0f, -180.0f, 0.0f);
         }
     }
 

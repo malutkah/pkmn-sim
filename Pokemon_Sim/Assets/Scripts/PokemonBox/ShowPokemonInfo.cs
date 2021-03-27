@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ShowPokemonInfo : MonoBehaviour
@@ -24,6 +25,14 @@ public class ShowPokemonInfo : MonoBehaviour
     private Text Text_Speed;
     #endregion
 
+    #region Move Text
+    private Text Text_Move1;
+    private Text Text_Move2;
+    private Text Text_Move3;
+    private Text Text_Move4;
+
+    #endregion
+
     private string pkmn_name = "";
     private string name_eng = "";
     private int pkmn_id = 0;
@@ -43,20 +52,24 @@ public class ShowPokemonInfo : MonoBehaviour
 
     private void Start()
     {
+
         JsonReader = GameObject.Find("reader");
-
         settings = GameObject.Find("Settings_Handler").GetComponent<PlaySettings>();
-
+        team = GameObject.Find("TeamHandler").GetComponent<PlayerTeam>();
         add = GameObject.Find("ButtonAddToTeam").GetComponent<Button>();
         remove = GameObject.Find("ButtonRemoveFromTeam").GetComponent<Button>();
-
-        team = GameObject.Find("TeamHandler").GetComponent<PlayerTeam>();
-
-        level = settings.level;
-
-        reader = JsonReader.GetComponent<JsonReader>();
-
         ImagePkmn = GameObject.Find("ImagePkmn").GetComponent<Image>();
+
+
+        if (settings != null)
+        {
+            level = settings.level;
+        }
+
+        if (JsonReader != null)
+        {
+            reader = JsonReader.GetComponent<JsonReader>();
+        }
 
         InitText();
 
@@ -112,6 +125,8 @@ public class ShowPokemonInfo : MonoBehaviour
         ShowImage();
 
         PokemonName_Debug = name_eng;
+
+        Debug.Log(pokemon.poke_moves[1]);
     }
 
     #region Text and Image
@@ -125,6 +140,11 @@ public class ShowPokemonInfo : MonoBehaviour
         Text_SpAttack = GameObject.Find("TextPkmnSpAtk").GetComponent<Text>();
         Text_SpDefense = GameObject.Find("TextPkmnSpDef").GetComponent<Text>();
         Text_Speed = GameObject.Find("TextPkmnSpeed").GetComponent<Text>();
+
+        Text_Move1 = GameObject.Find("TextMove1").GetComponent<Text>();
+        Text_Move2 = GameObject.Find("TextMove2").GetComponent<Text>();
+        Text_Move3 = GameObject.Find("TextMove3").GetComponent<Text>();
+        Text_Move4 = GameObject.Find("TextMove4").GetComponent<Text>();
     }
 
     private void ShowText()

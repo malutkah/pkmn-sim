@@ -3,10 +3,8 @@ using UnityEngine;
 
 public class LoadPokemon : MonoBehaviour
 {
-    public GameObject reader;
-    public GameObject PokemonPrefab;
-
-    private JsonReader jReader;
+    [SerializeField]
+    private GameObject PokemonPrefab;
 
     private SpriteRenderer spriteRenderer;
     private Sprite pkmn_sprite;
@@ -37,8 +35,6 @@ public class LoadPokemon : MonoBehaviour
 
     private void Start()
     {
-        jReader = reader.GetComponent<JsonReader>();
-
         spriteRenderer = PokemonPrefab.GetComponent<SpriteRenderer>();
 
         PkmnBox_1 = GameObject.Find("Container");

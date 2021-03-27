@@ -6,9 +6,9 @@ using UnityEngine;
 public class PokemonMoves : MonoBehaviour
 {
     [SerializeField]
-    private string[] moveNames = new string[2];
+    private string[] moveNames = new string[4];
 
-    private moves[] PokeMoves = new moves[2];
+    private moves[] pokeMoves = new moves[4];
 
     private pokemon pokemon;
     private moves moves;
@@ -51,13 +51,9 @@ public class PokemonMoves : MonoBehaviour
 
         LoadPokemon();
 
-        if (pokemon.name.english == "Bulbasaur")
+        if (pokemon.id == 3)
         {
-            BulbasaurAttacks();
-            for (int i = 0; i < PokeMoves.Length; i++)
-            {
-                Debug.Log($"{PokeMoves[i].ename}");
-            }
+            ShowPokemonAttacks_Debug();            
         }
 
         //LoadMovesByName("Tackle");
@@ -91,14 +87,12 @@ public class PokemonMoves : MonoBehaviour
     }
 
     // load attacks to pokemon and add to array
-    private void BulbasaurAttacks()
+    private void ShowPokemonAttacks_Debug()
     {
-        LoadMovesByName("Tackle");
-        PokeMoves[0] = moves;
-        moveNames[0] = moves.ename;
-
-        LoadMovesByName("Vine Whip");        
-        PokeMoves[1] = moves;
-        moveNames[1] = moves.ename;
+        foreach (var item in pokemon.poke_moves)
+        {
+            LoadMovesByName(item);
+            Debug.Log($"{item}: power: {moves.power} type: {moves.category}");
+        }
     }
 }
