@@ -52,14 +52,12 @@ public class ShowPokemonInfo : MonoBehaviour
 
     private void Start()
     {
-
         JsonReader = GameObject.Find("reader");
         settings = GameObject.Find("Settings_Handler").GetComponent<PlaySettings>();
         team = GameObject.Find("TeamHandler").GetComponent<PlayerTeam>();
         add = GameObject.Find("ButtonAddToTeam").GetComponent<Button>();
         remove = GameObject.Find("ButtonRemoveFromTeam").GetComponent<Button>();
         ImagePkmn = GameObject.Find("ImagePkmn").GetComponent<Image>();
-
 
         if (settings != null)
         {
@@ -90,19 +88,11 @@ public class ShowPokemonInfo : MonoBehaviour
 
         if (sender.tag == settings.InTeam)
         {
-            add.enabled = false;
-            add.image.color = new Color(255.0f, 255.0f, 255.0f, 0.1f);
-
-            remove.enabled = true;
-            remove.image.color = buttonColor;
+            EnableButtonsAddPokemonToTeam(false);
         }
         else
         {
-            add.enabled = true;
-            add.image.color = buttonColor;
-
-            remove.enabled = false;
-            remove.image.color = new Color(255.0f, 255.0f, 255.0f, 0.1f);
+            EnableButtonsAddPokemonToTeam(true);
         }
 
         pkmn_name = name;
@@ -113,13 +103,7 @@ public class ShowPokemonInfo : MonoBehaviour
 
         name_eng = pokemon.name.english;
 
-        // calculate stats
-        hp = Calculations.DoHP(pokemon.@base.hp, level);
-        attack = Calculations.DoOtherStats(pokemon.@base.attack, level);
-        defense = Calculations.DoOtherStats(pokemon.@base.defense, level);
-        spAttack = Calculations.DoOtherStats(pokemon.@base.sp_attack, level);
-        spDefense = Calculations.DoOtherStats(pokemon.@base.sp_defense, level);
-        speed = Calculations.DoOtherStats(pokemon.@base.speed, level);
+        CalculatePokemonStats();
 
         ShowText();
         ShowImage();
@@ -127,6 +111,35 @@ public class ShowPokemonInfo : MonoBehaviour
         PokemonName_Debug = name_eng;
 
         Debug.Log(pokemon.poke_moves[1]);
+    }
+
+    private void CalculatePokemonStats()
+    {
+        hp = Calculations.DoHP(pokemon.@base.hp, level);
+        attack = Calculations.DoOtherStats(pokemon.@base.attack, level);
+        defense = Calculations.DoOtherStats(pokemon.@base.defense, level);
+        spAttack = Calculations.DoOtherStats(pokemon.@base.sp_attack, level);
+        spDefense = Calculations.DoOtherStats(pokemon.@base.sp_defense, level);
+        speed = Calculations.DoOtherStats(pokemon.@base.speed, level);
+    }
+
+    private void EnableButtonsAddPokemonToTeam(bool addButtonEnabled)
+    {
+        add.enabled = addButtonEnabled;
+        remove.enabled = !addButtonEnabled;
+
+        if (addButtonEnabled)
+        {
+            add.image.color = new Color(255.0f, 255.0f, 255.0f, 0.1f);
+
+            remove.image.color = buttonColor;
+        }
+        else
+        {
+            add.image.color = buttonColor;
+
+            remove.image.color = new Color(255.0f, 255.0f, 255.0f, 0.1f);
+        }
     }
 
     #region Text and Image
@@ -158,6 +171,11 @@ public class ShowPokemonInfo : MonoBehaviour
         Text_SpAttack.text = Mathf.RoundToInt(spAttack).ToString();
         Text_SpDefense.text = Mathf.RoundToInt(spDefense).ToString();
         Text_Speed.text = Mathf.RoundToInt(speed).ToString();
+
+        Text_Move1.text = pokemon.poke_moves[0];
+        Text_Move2.text = pokemon.poke_moves[1];
+        Text_Move3.text = pokemon.poke_moves[2];
+        Text_Move4.text = pokemon.poke_moves[3];
     }
 
     private void ShowImage()

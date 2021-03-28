@@ -234,15 +234,24 @@ public class PlayerTeam : MonoBehaviour
         {
             // current member gets position of the predecessor
 
-            foreach (var poke in Team)
+            for (int i = Team.Count - 1; i > memberId; i--)
             {
-                if (Team.IndexOf(poke) > memberId)
-                {
-                    Vector3 oldPos = Team[Team.IndexOf(poke) - 1].transform.position;
+                GameObject poke = Team[i];
 
-                    poke.transform.position = Team[Team.IndexOf(poke) - 1].transform.position;
-                }
+                //Vector3 oldPos = Team[Team.IndexOf(poke) - 1].transform.position;
+
+                poke.transform.position = Team[Team.IndexOf(poke) - 1].transform.position;
             }
+
+            //foreach (var poke in Team)
+            //{
+            //    if (Team.IndexOf(poke) > memberId)
+            //    {
+            //        Vector3 oldPos = Team[Team.IndexOf(poke) - 1].transform.position;
+
+            //        poke.transform.position = Team[Team.IndexOf(poke) - 1].transform.position;
+            //    }
+            //}
         }
     }
 }
