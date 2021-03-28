@@ -45,7 +45,7 @@ public class ShowPokemonInfo : MonoBehaviour
     private float spDefense;
     private float speed;
     private int level = 5;
-    private Color buttonColor;
+    private Color originalButtonColor;
     #endregion
 
     private string PokemonName_Debug = "";
@@ -72,7 +72,7 @@ public class ShowPokemonInfo : MonoBehaviour
         InitText();
 
         remove.enabled = false;
-        buttonColor = remove.image.color;
+        originalButtonColor = remove.image.color;
     }
 
     private void Load()
@@ -110,7 +110,7 @@ public class ShowPokemonInfo : MonoBehaviour
 
         PokemonName_Debug = name_eng;
 
-        Debug.Log(pokemon.poke_moves[1]);
+        //Debug.Log(pokemon.poke_moves[1]);
     }
 
     private void CalculatePokemonStats()
@@ -130,15 +130,15 @@ public class ShowPokemonInfo : MonoBehaviour
 
         if (addButtonEnabled)
         {
-            add.image.color = new Color(255.0f, 255.0f, 255.0f, 0.1f);
+            add.image.color = originalButtonColor;
 
-            remove.image.color = buttonColor;
+            remove.image.color = new Color(255.0f, 255.0f, 255.0f, 0.1f);
         }
         else
         {
-            add.image.color = buttonColor;
+            add.image.color = new Color(255.0f, 255.0f, 255.0f, 0.1f);
 
-            remove.image.color = new Color(255.0f, 255.0f, 255.0f, 0.1f);
+            remove.image.color = originalButtonColor;
         }
     }
 
