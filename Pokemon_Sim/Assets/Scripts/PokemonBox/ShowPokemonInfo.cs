@@ -48,7 +48,7 @@ public class ShowPokemonInfo : MonoBehaviour
     private Color originalButtonColor;
     #endregion
 
-    private string PokemonName_Debug = "";
+    private bool addedPokemonToTeam = false;
 
     private void Start()
     {
@@ -83,15 +83,15 @@ public class ShowPokemonInfo : MonoBehaviour
 
     public void PokemonOnClick(GameObject sender)
     {
-        team.ClickedPokemon = sender;
-        team.PokemonOrigPos = sender.transform.localPosition;
-
         if (sender.tag == settings.InTeam)
         {
             EnableButtonsAddPokemonToTeam(false);
         }
         else
         {
+            team.ClickedPokemon = sender;
+            team.PokemonOrigPos = sender.transform.localPosition;
+
             EnableButtonsAddPokemonToTeam(true);
         }
 
@@ -107,10 +107,6 @@ public class ShowPokemonInfo : MonoBehaviour
 
         ShowText();
         ShowImage();
-
-        PokemonName_Debug = name_eng;
-
-        //Debug.Log(pokemon.poke_moves[1]);
     }
 
     private void CalculatePokemonStats()

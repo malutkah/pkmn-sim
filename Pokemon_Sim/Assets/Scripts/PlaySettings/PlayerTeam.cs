@@ -8,6 +8,9 @@ public class PlayerTeam : MonoBehaviour
 {
     public List<GameObject> Team;
 
+    [HideInInspector]
+    public bool isPokemonClickable = false;
+
     [SerializeField]
     private GameObject TeamBox;
 
@@ -28,7 +31,7 @@ public class PlayerTeam : MonoBehaviour
 
     private Button add, remove;
 
-    private Color buttonColor;
+    private Color originalButtonColor;
 
     private Vector3 oldPos;
     private Vector3 teamPos1, teamPos2, teamPos3, teamPos4, teamPos5, teamPos6;
@@ -54,7 +57,7 @@ public class PlayerTeam : MonoBehaviour
 
             Parent = GameObject.Find("Container");
 
-            buttonColor = add.image.color;
+            originalButtonColor = add.image.color;
 
             size = teamInfo.TeamSize;
 
@@ -82,9 +85,7 @@ public class PlayerTeam : MonoBehaviour
                 MovePokemonPositionUp(pkmnToRemove);
 
                 RemoveTeamMemeberFromBox(pkmnToRemove);
-
-                Vector3 removedPkmnPos = pkmnToRemove.transform.position;
-
+                
                 Team.Remove(pkmnToRemove);
 
                 if (pokemonPositions.ContainsKey(pkmnToRemove))
@@ -92,13 +93,9 @@ public class PlayerTeam : MonoBehaviour
                     pokemonPositions.Remove(pkmnToRemove);
                 }
 
-                #region buttons
-                remove.enabled = false;
-                remove.image.color = new Color(255.0f, 255.0f, 255.0f, 0.1f);
+                //isPokemonClickable = true;
 
-                add.enabled = true;
-                add.image.color = buttonColor;
-                #endregion
+                EnableButtonsAddPokemonToTeam(true);
             }
         }
     }
@@ -117,23 +114,18 @@ public class PlayerTeam : MonoBehaviour
                 else
                 {
                     Team.Add(ClickedPokemon);
+
                     oldPos = PokemonOrigPos;
 
                     pokemonPositions.Add(ClickedPokemon, oldPos);
 
                     ClickedPokemon.tag = teamInfo.InTeam;
 
-                    //Debug.Log($"there are {size - Team.Count} postions left");
-
                     PlaceTeamMembersInBox(ClickedPokemon);
 
-                    #region buttons
-                    add.enabled = false;
-                    add.image.color = new Color(255.0f, 255.0f, 255.0f, 0.1f);
+                    //isPokemonClickable = false;
 
-                    remove.enabled = true;
-                    remove.image.color = buttonColor;
-                    #endregion
+                    EnableButtonsAddPokemonToTeam(false);
                 }
             }
             else
@@ -151,15 +143,6 @@ public class PlayerTeam : MonoBehaviour
 
     private void PlaceTeamMembersInBox(GameObject member)
     {
-        // check if pokemon is already in team
-
-        /// if max pokemon is not reached
-        ///    - get free team positions
-        ///    - move pokemon to available positions 
-        /// 
-        /// team slot position is tied to the index in 'Team'       
-        ///     - Team[0].transform.postiton = new Vector3(-80.0f, 180.0f);
-
         member.transform.SetParent(TeamBox.transform);
 
         foreach (var item in Team)
@@ -225,7 +208,6 @@ public class PlayerTeam : MonoBehaviour
 
     private void MovePokemonPositionUp(GameObject removedMember)
     {
-        //Vector3 memberPos = removedMember.transform.position;
         int memberId = Team.IndexOf(removedMember);
 
         bool canMoveUp = (memberId != Team.Count) ? canMoveUp = true : canMoveUp = false;
@@ -242,16 +224,25 @@ public class PlayerTeam : MonoBehaviour
 
                 poke.transform.position = Team[Team.IndexOf(poke) - 1].transform.position;
             }
+        }
+    }
 
-            //foreach (var poke in Team)
-            //{
-            //    if (Team.IndexOf(poke) > memberId)
-            //    {
-            //        Vector3 oldPos = Team[Team.IndexOf(poke) - 1].transform.position;
+    private void EnableButtonsAddPokemonToTeam(bool addButtonEnabled)
+    {
+        add.enabled = addButtonEnabled;
+        remove.enabled = !addButtonEnabled;
 
-            //        poke.transform.position = Team[Team.IndexOf(poke) - 1].transform.position;
-            //    }
-            //}
+        if (addButtonEnabled)
+        {
+            add.image.color = originalButtonColor;
+
+            remove.image.color = new Color(255.0f, 255.0f, 255.0f, 0.1f);
+        }
+        else
+        {
+            add.image.color = new Color(255.0f, 255.0f, 255.0f, 0.1f);
+
+            remove.image.color = originalButtonColor;
         }
     }
 }
