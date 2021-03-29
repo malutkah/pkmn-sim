@@ -10,6 +10,8 @@ public class JsonReader : MonoBehaviour
     {
         moves = InitializeMoves();
         pokemons = InitializePokemons();
+
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()

@@ -466,6 +466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Team: []
   isPokemonClickable: 0
+  FightButton: {fileID: 2091772935}
   TeamBox: {fileID: 2062563011}
   PokemonOrigPos: {x: 0, y: 0, z: 0}
   Parent: {fileID: 0}

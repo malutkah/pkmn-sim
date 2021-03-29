@@ -61,6 +61,11 @@ public class PlaySettings : MonoBehaviour
     }
     #endregion
 
+    private void Fight_OnClick()
+    {
+        SceneManager.LoadScene("BattleScene");
+    }
+
     /// DONE: TODO: GET MAX LEVEL FROM INPUT FIELD
     /// 
     public void GetLevelFromEdit()

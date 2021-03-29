@@ -12,6 +12,9 @@ public class PlayerTeam : MonoBehaviour
     public bool isPokemonClickable = false;
 
     [SerializeField]
+    private Button FightButton;
+
+    [SerializeField]
     private GameObject TeamBox;
 
     [HideInInspector]
@@ -46,6 +49,8 @@ public class PlayerTeam : MonoBehaviour
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
+
         Scene currenScene = SceneManager.GetActiveScene();
 
         teamInfo = GameObject.Find("Settings_Handler").GetComponent<PlaySettings>();
@@ -70,6 +75,7 @@ public class PlayerTeam : MonoBehaviour
             pokemonPositions.Clear();
         }
     }
+   
 
     #region Team Stuff
     public void RemovePokemonFromTeam()
