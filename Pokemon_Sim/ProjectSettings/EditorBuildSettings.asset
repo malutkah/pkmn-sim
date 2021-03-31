@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PokemonBox.unity
     guid: 2e7d489214dd1354e849b2b199543518
+  - enabled: 1
+    path: Assets/Scenes/BattleScene.unity
+    guid: fe5a87a23cebcd345bac78a75abe5351
   m_configObjects: {}

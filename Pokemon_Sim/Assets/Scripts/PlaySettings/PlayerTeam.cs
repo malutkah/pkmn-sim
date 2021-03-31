@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -44,13 +45,24 @@ public class PlayerTeam : MonoBehaviour
     private void Awake()
     {
         Team = new List<GameObject>();
-        DontDestroyOnLoad(gameObject);
+    }
+
+    private void Update()
+    {
+        if (Team.Count == size)
+        {
+            FightButton.interactable = true;
+        }
+        else
+        {
+            FightButton.interactable = false;
+        }
+
+        
     }
 
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
-
         Scene currenScene = SceneManager.GetActiveScene();
 
         teamInfo = GameObject.Find("Settings_Handler").GetComponent<PlaySettings>();
@@ -250,5 +262,12 @@ public class PlayerTeam : MonoBehaviour
 
             remove.image.color = originalButtonColor;
         }
+    }
+
+    public void SwitchToFightScene()
+    {
+        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(Team);
+        SceneManager.LoadScene("BattleScene");
     }
 }
