@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlaySettings : MonoBehaviour
 {
@@ -14,10 +14,15 @@ public class PlaySettings : MonoBehaviour
     private InputField field;
 
     #region Tags for pokemon
+    [HideInInspector]
     public string InTeam = "InTeam";
+    [HideInInspector]
     public string NotInTeam = "NotInTeam";
+    [HideInInspector]
     public string InBattle = "InBattle";
+    [HideInInspector]
     public string InBattleTeam = "InBattleTeam"; // is battling but in the team
+    [HideInInspector]
     public string Dead = "Dead";
     #endregion
 
@@ -82,7 +87,7 @@ public class PlaySettings : MonoBehaviour
             level = 50;
             field.text = level.ToString();
         }
-        
+
         if (level > 100)
         {
             level = 100;

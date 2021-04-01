@@ -27,7 +27,7 @@ public class LoadBattle : MonoBehaviour
     {
         playerTeam = GameObject.Find("TeamHandler").GetComponent<PlayerTeam>();
 
-        if (playerTeam.Team != null)
+        if (playerTeam.GetTeam() != null)
         {
             teamList = playerTeam.GetTeam();
             teamSize = teamList.Count;

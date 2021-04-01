@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 public class PlayerTeam : MonoBehaviour
 {
-    public List<GameObject> Team;
+    [SerializeField]
+    private List<GameObject> Team;
 
     [HideInInspector]
     public bool isPokemonClickable = false;
@@ -44,6 +45,7 @@ public class PlayerTeam : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         Team = new List<GameObject>();
     }
 
@@ -56,9 +58,7 @@ public class PlayerTeam : MonoBehaviour
         else
         {
             FightButton.interactable = false;
-        }
-
-        
+        }        
     }
 
     private void Start()
@@ -266,8 +266,11 @@ public class PlayerTeam : MonoBehaviour
 
     public void SwitchToFightScene()
     {
-        DontDestroyOnLoad(gameObject);
-        //DontDestroyOnLoad(Team);
+        foreach (var memeber in Team)
+        {
+            DontDestroyOnLoad(memeber.transform);
+        }
+
         SceneManager.LoadScene("BattleScene");
     }
 }
