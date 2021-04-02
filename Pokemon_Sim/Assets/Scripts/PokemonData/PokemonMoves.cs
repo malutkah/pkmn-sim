@@ -53,7 +53,7 @@ public class PokemonMoves : MonoBehaviour
 
         if (pokemon.id == 3)
         {
-            ShowPokemonAttacks_Debug();            
+            ShowPokemonAttacks_Debug();
         }
 
         //LoadMovesByName("Tackle");
@@ -86,13 +86,12 @@ public class PokemonMoves : MonoBehaviour
         moves = reader.GetMoves().moves.Find(m => m.ename == m_name);
     }
 
-    // load attacks to pokemon and add to array
     private void ShowPokemonAttacks_Debug()
     {
         foreach (var item in pokemon.poke_moves)
         {
             LoadMovesByName(item);
-            Debug.Log($"{item}: power: {moves.power} type: {moves.category}");
+            //Debug.Log($"{item}: power: {moves.power} type: {moves.category}");
         }
     }
 }

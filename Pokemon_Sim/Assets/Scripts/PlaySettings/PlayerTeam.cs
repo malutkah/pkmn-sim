@@ -10,9 +10,6 @@ public class PlayerTeam : MonoBehaviour
     [SerializeField]
     private List<GameObject> Team;
 
-    [HideInInspector]
-    public bool isPokemonClickable = false;
-
     [SerializeField]
     private Button FightButton;
 
@@ -21,9 +18,8 @@ public class PlayerTeam : MonoBehaviour
 
     [HideInInspector]
     public Vector3 PokemonOrigPos;
-
-    [HideInInspector]
-    public GameObject Parent;
+        
+    private GameObject Parent;
 
     [HideInInspector]
     public GameObject ClickedPokemon;
@@ -43,9 +39,11 @@ public class PlayerTeam : MonoBehaviour
 
     private IDictionary<GameObject, Vector3> pokemonPositions = new Dictionary<GameObject, Vector3>();
 
+    #region Unity
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(TeamBox);
         Team = new List<GameObject>();
     }
 
@@ -86,8 +84,8 @@ public class PlayerTeam : MonoBehaviour
             Team.Clear();
             pokemonPositions.Clear();
         }
-    }
-   
+    }   
+    #endregion
 
     #region Team Stuff
     public void RemovePokemonFromTeam()
@@ -110,9 +108,7 @@ public class PlayerTeam : MonoBehaviour
                 {
                     pokemonPositions.Remove(pkmnToRemove);
                 }
-
-                //isPokemonClickable = true;
-
+                
                 EnableButtonsAddPokemonToTeam(true);
             }
         }
@@ -140,9 +136,7 @@ public class PlayerTeam : MonoBehaviour
                     ClickedPokemon.tag = teamInfo.InTeam;
 
                     PlaceTeamMembersInBox(ClickedPokemon);
-
-                    //isPokemonClickable = false;
-
+                    
                     EnableButtonsAddPokemonToTeam(false);
                 }
             }
@@ -159,9 +153,10 @@ public class PlayerTeam : MonoBehaviour
     }
     #endregion
 
+    #region Pokemon placement
     private void PlaceTeamMembersInBox(GameObject member)
     {
-        member.transform.SetParent(TeamBox.transform);
+        member.transform.SetParent(gameObject.transform);
 
         foreach (var item in Team)
         {
@@ -208,20 +203,7 @@ public class PlayerTeam : MonoBehaviour
     {
         member.transform.SetParent(Parent.transform, false);
         member.transform.localPosition = pokemonPositions[member];
-    }
-
-    private void InitTeamPosititons()
-    {
-        teamPos1 = new Vector3(-80.0f, 180.0f, 0.0f);
-        teamPos2 = new Vector3(80.0f, 180.0f, 0.0f);
-        teamPos3 = new Vector3(-80.0f, 0.0f, 0.0f);
-
-        if (size == 6)
-        {
-            teamPos4 = new Vector3(80.0f, 0.0f, 0.0f);
-            teamPos5 = new Vector3(-80.0f, -180.0f, 0.0f);
-            teamPos6 = new Vector3(80.0f, -180.0f, 0.0f);
-        }
+        member.transform.localScale = new Vector3(300.0f, 300.0f, 1.0f);
     }
 
     private void MovePokemonPositionUp(GameObject removedMember)
@@ -244,7 +226,23 @@ public class PlayerTeam : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Other
+    private void InitTeamPosititons()
+    {
+        teamPos1 = new Vector3(6.2f, -0.45f, 0.0f);
+        teamPos2 = new Vector3(7.5f, -.45f, 0.0f);
+        teamPos3 = new Vector3(6.2f, -2.15f, 0.0f);
+
+        if (size == 6)
+        {
+            teamPos4 = new Vector3(7.5f, -2.15f, 0.0f);
+            teamPos5 = new Vector3(6.2f, -3.75f, 0.0f);
+            teamPos6 = new Vector3(7.5f, -3.75f, 0.0f);
+        }
+    }
+    
     private void EnableButtonsAddPokemonToTeam(bool addButtonEnabled)
     {
         add.enabled = addButtonEnabled;
@@ -266,11 +264,7 @@ public class PlayerTeam : MonoBehaviour
 
     public void SwitchToFightScene()
     {
-        foreach (var memeber in Team)
-        {
-            DontDestroyOnLoad(memeber.transform);
-        }
-
         SceneManager.LoadScene("BattleScene");
     }
+    #endregion
 }

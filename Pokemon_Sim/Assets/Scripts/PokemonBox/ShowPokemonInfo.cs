@@ -48,8 +48,6 @@ public class ShowPokemonInfo : MonoBehaviour
     private Color originalButtonColor;
     #endregion
 
-    private bool addedPokemonToTeam = false;
-
     private void Start()
     {
         JsonReader = GameObject.Find("reader");
@@ -85,6 +83,7 @@ public class ShowPokemonInfo : MonoBehaviour
     {
         if (sender.tag == settings.InTeam)
         {
+            team.ClickedPokemon = sender;
             EnableButtonsAddPokemonToTeam(false);
         }
         else

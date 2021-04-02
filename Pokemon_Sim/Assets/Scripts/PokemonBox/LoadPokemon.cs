@@ -42,11 +42,6 @@ public class LoadPokemon : MonoBehaviour
         CreatePokemons();
     }
 
-    /// <summary>
-    /// DONE: INSTANTIATE GAMEOBJECT PREFAB WITH SPRITE IMAGES
-    /// DONE: GET THE POSITIONS RIGHT!
-    /// /// </summary>
-
     void CreatePokemons()
     {
         var spriteCounter = Resources.LoadAll("sprites", typeof(Sprite));
@@ -81,6 +76,12 @@ public class LoadPokemon : MonoBehaviour
             }
         }
 
+        PlacePokemonInBox(spriteList);
+
+    }
+
+    private void PlacePokemonInBox(List<Sprite> spriteList)
+    {
         int amountPokemon = (PokemonInARow + AmountOfPokemon) - 5;
 
         for (int i = 0; i < amountPokemon; i++)
@@ -98,8 +99,5 @@ public class LoadPokemon : MonoBehaviour
             SpriteRenderer tmp = pkmnGO.GetComponent<SpriteRenderer>();
             tmp.sprite = spriteList[i];
         }
-
     }
-
-
 }

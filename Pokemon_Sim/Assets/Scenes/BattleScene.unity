@@ -148,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27560242}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: -9720}
+  m_LocalPosition: {x: 0, y: 0.075, z: -9720}
   m_LocalScale: {x: 1.3, y: 1.3, z: 108}
   m_Children: []
   m_Father: {fileID: 1759182877}
@@ -441,7 +441,7 @@ GameObject:
   - component: {fileID: 604844741}
   - component: {fileID: 604844740}
   m_Layer: 5
-  m_Name: ImagePkmnSlot4
+  m_Name: ImagePkmnSlot3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -459,7 +459,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1895758048}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -673,7 +673,7 @@ GameObject:
   - component: {fileID: 1254939180}
   - component: {fileID: 1254939179}
   m_Layer: 5
-  m_Name: ImagePkmnSlot3
+  m_Name: ImagePkmnSlot4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -691,7 +691,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1895758048}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1103,8 +1103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerTeamSlot1: {fileID: 141955693}
   PlayerTeamSlot2: {fileID: 620067578}
-  PlayerTeamSlot3: {fileID: 1254939179}
-  PlayerTeamSlot4: {fileID: 604844740}
+  PlayerTeamSlot3: {fileID: 604844740}
+  PlayerTeamSlot4: {fileID: 1254939179}
   PlayerTeamSlot5: {fileID: 1912240434}
   PlayerTeamSlot6: {fileID: 1491852317}
 --- !u!1 &1895758047
@@ -1138,8 +1138,8 @@ RectTransform:
   m_Children:
   - {fileID: 141955692}
   - {fileID: 620067577}
-  - {fileID: 1254939178}
   - {fileID: 604844739}
+  - {fileID: 1254939178}
   - {fileID: 1912240433}
   - {fileID: 1491852316}
   m_Father: {fileID: 1931842349}
