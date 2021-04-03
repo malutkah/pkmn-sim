@@ -18,7 +18,7 @@ public class PlayerTeam : MonoBehaviour
 
     [HideInInspector]
     public Vector3 PokemonOrigPos;
-        
+
     private GameObject Parent;
 
     [HideInInspector]
@@ -49,14 +49,17 @@ public class PlayerTeam : MonoBehaviour
 
     private void Update()
     {
-        if (Team.Count == size)
+        if (FightButton != null)
         {
-            FightButton.interactable = true;
+            if (Team.Count == size)
+            {
+                FightButton.interactable = true;
+            }
+            else
+            {
+                FightButton.interactable = false;
+            }
         }
-        else
-        {
-            FightButton.interactable = false;
-        }        
     }
 
     private void Start()
@@ -84,7 +87,7 @@ public class PlayerTeam : MonoBehaviour
             Team.Clear();
             pokemonPositions.Clear();
         }
-    }   
+    }
     #endregion
 
     #region Team Stuff
@@ -101,14 +104,14 @@ public class PlayerTeam : MonoBehaviour
                 MovePokemonPositionUp(pkmnToRemove);
 
                 RemoveTeamMemeberFromBox(pkmnToRemove);
-                
+
                 Team.Remove(pkmnToRemove);
 
                 if (pokemonPositions.ContainsKey(pkmnToRemove))
                 {
                     pokemonPositions.Remove(pkmnToRemove);
                 }
-                
+
                 EnableButtonsAddPokemonToTeam(true);
             }
         }
@@ -136,7 +139,7 @@ public class PlayerTeam : MonoBehaviour
                     ClickedPokemon.tag = teamInfo.InTeam;
 
                     PlaceTeamMembersInBox(ClickedPokemon);
-                    
+
                     EnableButtonsAddPokemonToTeam(false);
                 }
             }
@@ -214,13 +217,9 @@ public class PlayerTeam : MonoBehaviour
 
         if (canMoveUp)
         {
-            // current member gets position of the predecessor
-
             for (int i = Team.Count - 1; i > memberId; i--)
             {
                 GameObject poke = Team[i];
-
-                //Vector3 oldPos = Team[Team.IndexOf(poke) - 1].transform.position;
 
                 poke.transform.position = Team[Team.IndexOf(poke) - 1].transform.position;
             }
@@ -242,7 +241,7 @@ public class PlayerTeam : MonoBehaviour
             teamPos6 = new Vector3(7.5f, -3.75f, 0.0f);
         }
     }
-    
+
     private void EnableButtonsAddPokemonToTeam(bool addButtonEnabled)
     {
         add.enabled = addButtonEnabled;

@@ -8,6 +8,8 @@ TagManager:
   - InTeam
   - InBattle
   - Dead
+  - JsonReader
+  - Settings
   layers:
   - Default
   - TransparentFX

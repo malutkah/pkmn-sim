@@ -21,7 +21,7 @@ public class PlaySettings : MonoBehaviour
     [HideInInspector]
     public string InBattle = "InBattle";
     [HideInInspector]
-    public string InBattleTeam = "InBattleTeam"; // is battling but in the team
+    public string InBattleTeam = "InBattleTeam"; // isn't battling but in the team
     [HideInInspector]
     public string Dead = "Dead";
     #endregion

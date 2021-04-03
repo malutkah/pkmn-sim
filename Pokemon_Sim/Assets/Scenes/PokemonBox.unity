@@ -811,7 +811,7 @@ GameObject:
   - component: {fileID: 379218723}
   m_Layer: 0
   m_Name: reader
-  m_TagString: Untagged
+  m_TagString: JsonReader
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

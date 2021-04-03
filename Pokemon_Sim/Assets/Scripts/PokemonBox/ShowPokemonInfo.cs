@@ -13,6 +13,7 @@ public class ShowPokemonInfo : MonoBehaviour
     private JsonReader reader;
     private PlaySettings settings;
     private Button add, remove;
+    private PokemonInfoHolder infoHolder;
 
     #region Pokemon Stats Text
     private Text Text_Name;
@@ -45,8 +46,15 @@ public class ShowPokemonInfo : MonoBehaviour
     private float spDefense;
     private float speed;
     private int level = 5;
-    private Color originalButtonColor;
     #endregion
+
+    private Color originalButtonColor;
+
+    #region Unity
+    private void Awake()
+    {
+        infoHolder = gameObject.GetComponent<PokemonInfoHolder>();
+    }
 
     private void Start()
     {
@@ -72,6 +80,7 @@ public class ShowPokemonInfo : MonoBehaviour
         remove.enabled = false;
         originalButtonColor = remove.image.color;
     }
+    #endregion
 
     private void Load()
     {
@@ -81,14 +90,15 @@ public class ShowPokemonInfo : MonoBehaviour
 
     public void PokemonOnClick(GameObject sender)
     {
+        team.ClickedPokemon = sender;
+        infoHolder.ClickedPokemon = sender;
+
         if (sender.tag == settings.InTeam)
         {
-            team.ClickedPokemon = sender;
             EnableButtonsAddPokemonToTeam(false);
         }
         else
         {
-            team.ClickedPokemon = sender;
             team.PokemonOrigPos = sender.transform.localPosition;
 
             EnableButtonsAddPokemonToTeam(true);
@@ -110,12 +120,26 @@ public class ShowPokemonInfo : MonoBehaviour
 
     private void CalculatePokemonStats()
     {
+        infoHolder.level = level;
+        infoHolder.poke_name = pokemon.name.english;
+
         hp = Calculations.DoHP(pokemon.@base.hp, level);
+        infoHolder.hp = hp;
+
         attack = Calculations.DoOtherStats(pokemon.@base.attack, level);
+        infoHolder.attack = attack;
+
         defense = Calculations.DoOtherStats(pokemon.@base.defense, level);
+        infoHolder.defense = defense;
+
         spAttack = Calculations.DoOtherStats(pokemon.@base.sp_attack, level);
+        infoHolder.spAttack = spAttack;
+
         spDefense = Calculations.DoOtherStats(pokemon.@base.sp_defense, level);
+        infoHolder.spDefense = spDefense;
+
         speed = Calculations.DoOtherStats(pokemon.@base.speed, level);
+        infoHolder.speed = speed;
     }
 
     private void EnableButtonsAddPokemonToTeam(bool addButtonEnabled)
