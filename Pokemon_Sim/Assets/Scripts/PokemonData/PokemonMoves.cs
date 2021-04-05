@@ -5,10 +5,8 @@ using UnityEngine;
 
 public class PokemonMoves : MonoBehaviour
 {
-    [SerializeField]
-    private string[] moveNames = new string[4];
-
-    private moves[] pokeMoves = new moves[4];
+    //[HideInInspector]
+    public string[] MoveNames = new string[4];
 
     private pokemon pokemon;
     private moves moves;
@@ -50,11 +48,7 @@ public class PokemonMoves : MonoBehaviour
         moves = new moves();
 
         LoadPokemon();
-
-        if (pokemon.id == 3)
-        {
-            ShowPokemonAttacks_Debug();
-        }
+        SaveMoveNames();
 
         //LoadMovesByName("Tackle");
         //Debug.Log($"the attack name is {moves.ename} with a power of {moves.power}!");
@@ -81,17 +75,49 @@ public class PokemonMoves : MonoBehaviour
         moves = reader.GetMoves().moves.Find(m => m.type == type);
     }
 
-    private void LoadMovesByName(string m_name)
+    private void LoadMovesByName(string moveName)
     {
-        moves = reader.GetMoves().moves.Find(m => m.ename == m_name);
+        moves = reader.GetMoves().moves.Find(m => m.ename == moveName);
     }
 
-    private void ShowPokemonAttacks_Debug()
+    private void SaveMoveNames()
     {
-        foreach (var item in pokemon.poke_moves)
+        for (int i = 0; i < 4; i++)
         {
-            LoadMovesByName(item);
-            //Debug.Log($"{item}: power: {moves.power} type: {moves.category}");
+            LoadMovesByName(pokemon.poke_moves[i]);
+            MoveNames[i] = pokemon.poke_moves[i];
         }
     }
+
+    #region get move infos
+    public int GetMovePP(string moveName)
+    {
+        LoadMovesByName(moveName);
+        return moves.pp;
+    }
+
+    public int GetMovePower(string moveName)
+    {
+        LoadMovesByName(moveName);
+        return moves.power;
+    }
+
+    public string GetMoveType(string moveName)
+    {
+        LoadMovesByName(moveName);
+        return moves.type;
+    }
+
+    public int GetMoveAccuracy(string moveName)
+    {
+        LoadMovesByName(moveName);
+        return moves.accuracy;
+    }
+
+    public string GetMoveCategory(string moveName)
+    {
+        LoadMovesByName(moveName);
+        return moves.category;
+    }
+    #endregion
 }

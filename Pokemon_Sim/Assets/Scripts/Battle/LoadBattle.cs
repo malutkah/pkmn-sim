@@ -54,6 +54,7 @@ public class LoadBattle : MonoBehaviour
     #endregion
 
     #region script objects
+    private BattleUI ui;
     private BattleLogic logic;
     private PlaySettings settings;
     private pokemon pokemon;
@@ -85,6 +86,7 @@ public class LoadBattle : MonoBehaviour
         reader = GameObject.FindWithTag("JsonReader").GetComponent<JsonReader>();
         settings = GameObject.FindWithTag("Settings").GetComponent<PlaySettings>();
         logic = gameObject.GetComponent<BattleLogic>();
+        ui = gameObject.GetComponent<BattleUI>();
 
         if (playerTeam.GetTeam() != null)
         {
@@ -92,10 +94,6 @@ public class LoadBattle : MonoBehaviour
             teamSize = teamList.Count;
         }
 
-    }
-
-    private void Start()
-    {
         LoadPlayerPokemonInImageSlots();
     }
     #endregion
@@ -187,6 +185,8 @@ public class LoadBattle : MonoBehaviour
         LoadPokemonInfo(playerPokemon);
 
         Debug.Log($"{pokemon.name.english} was sent into battle");
+        StartCoroutine(ui.BattleIntroSentence($"{pokemon.name.english} was sent into battle"));
+
         InitializePlayerPokemonUiText();
     }
 

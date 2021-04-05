@@ -10,6 +10,7 @@ TagManager:
   - Dead
   - JsonReader
   - Settings
+  - InBattleTeam
   layers:
   - Default
   - TransparentFX
