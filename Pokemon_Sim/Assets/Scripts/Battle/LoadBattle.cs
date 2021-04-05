@@ -54,6 +54,7 @@ public class LoadBattle : MonoBehaviour
     #endregion
 
     #region script objects
+    private BattleLogic logic;
     private PlaySettings settings;
     private pokemon pokemon;
     private JsonReader reader;
@@ -83,6 +84,7 @@ public class LoadBattle : MonoBehaviour
         playerTeam = GameObject.Find("TeamHandler").GetComponent<PlayerTeam>();
         reader = GameObject.FindWithTag("JsonReader").GetComponent<JsonReader>();
         settings = GameObject.FindWithTag("Settings").GetComponent<PlaySettings>();
+        logic = gameObject.GetComponent<BattleLogic>();
 
         if (playerTeam.GetTeam() != null)
         {
@@ -108,7 +110,8 @@ public class LoadBattle : MonoBehaviour
                 pokemonPositions.Add(teamList[i], resetPosition);
                 pokemonParent.Add(teamList[i], PlayerTeamSlot1.transform);
 
-                SentPokemonIntoBattle(teamList[i]);
+                LoadingInfosForPokemonInBattle(teamList[i]);
+                logic.SentPokemonIntoBattle(teamList[i], BattleStationPlayer, settings);
 
                 /* teamList[i].transform.SetParent(PlayerTeamSlot1.transform);
                  teamList[i].transform.localPosition = resetPosition;
@@ -173,30 +176,6 @@ public class LoadBattle : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void SentPokemonIntoBattle(GameObject playerPokemon)
-    {
-        LoadingInfosForPokemonInBattle(playerPokemon);
-
-        playerPokemon.transform.SetParent(BattleStationPlayer.transform);
-        playerPokemon.transform.localPosition = new Vector3(0f, .1f, -9720f);
-        playerPokemon.transform.localScale = new Vector3(1.3f, 1.3f, 108);
-    }
-    #endregion
-
-    #region switchting pokemon
-    // put this in a BattleHandler class
-    private void SwitchPlayerPokemon(GameObject pokemonInTeam)
-    {
-        GameObject pokemonInBattle = GameObject.FindWithTag(settings.InBattle);
-
-        pokemonInBattle.tag = settings.InBattleTeam;
-        pokemonInBattle.transform.SetParent(pokemonParent[pokemonInBattle]);
-
-        pokemonInTeam.tag = settings.InBattle;
-
-        SentPokemonIntoBattle(pokemonInTeam);
     }
     #endregion
 
