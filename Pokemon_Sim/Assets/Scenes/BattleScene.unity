@@ -2077,7 +2077,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 135.83, y: -54}
+  m_AnchoredPosition: {x: 157.2, y: -54}
   m_SizeDelta: {x: 271.73898, y: 70.94358}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &790222730
@@ -2122,7 +2122,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 790222731}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1857290647}
+        m_TargetAssemblyTypeName: BattleLogic, Assembly-CSharp
+        m_MethodName: ExecuteMove_ButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &790222731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2200,7 +2212,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -135.91, y: 59}
+  m_AnchoredPosition: {x: -162.25, y: 59}
   m_SizeDelta: {x: 271.73898, y: 70.94358}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &806649823
@@ -2245,7 +2257,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 806649824}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1857290647}
+        m_TargetAssemblyTypeName: BattleLogic, Assembly-CSharp
+        m_MethodName: ExecuteMove_ButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &806649824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3470,7 +3494,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 135.91, y: 59}
+  m_AnchoredPosition: {x: 157.2, y: 59}
   m_SizeDelta: {x: 271.73898, y: 70.94358}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1274569049
@@ -3515,7 +3539,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1274569050}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1857290647}
+        m_TargetAssemblyTypeName: BattleLogic, Assembly-CSharp
+        m_MethodName: ExecuteMove_ButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1274569050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4607,7 +4643,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -135.91, y: -54}
+  m_AnchoredPosition: {x: -162.8, y: -54}
   m_SizeDelta: {x: 271.73898, y: 70.94358}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1840887888
@@ -4652,7 +4688,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1840887889}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1857290647}
+        m_TargetAssemblyTypeName: BattleLogic, Assembly-CSharp
+        m_MethodName: ExecuteMove_ButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1840887889
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class BattleUI : MonoBehaviour
@@ -66,11 +68,9 @@ public class BattleUI : MonoBehaviour
     }
     #endregion
 
-
-
     #region Coroutines
     public IEnumerator TypeSentence(string sentence)
-    {        
+    {
         DialogText.text = "";
 
         foreach (var letter in sentence)
@@ -92,5 +92,22 @@ public class BattleUI : MonoBehaviour
     }
     #endregion
 
+    #region Power Points
+    public int GetCurrentPPFromMove(int moveNumber)
+    {
+        return moveNumber == 1 ? Convert.ToInt32(Move1CurrentPP.text) : 
+            moveNumber == 2 ? Convert.ToInt32(Move2CurrentPP.text) :
+            moveNumber == 3 ? Convert.ToInt32(Move3CurrentPP.text) : 
+            moveNumber == 4 ? Convert.ToInt32(Move4CurrentPP.text) : 0;
+    }
+
+    public int GetMaxPPFromMove(int moveNumber)
+    {
+        return moveNumber == 1 ? Convert.ToInt32(Move1MaxPP.text) :
+            moveNumber == 2 ? Convert.ToInt32(Move2MaxPP.text) :
+            moveNumber == 3 ? Convert.ToInt32(Move3MaxPP.text) :
+            moveNumber == 4 ? Convert.ToInt32(Move4MaxPP.text) : 0;
+    }
+    #endregion
 
 }

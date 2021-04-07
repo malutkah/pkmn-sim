@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PokemonMoves : MonoBehaviour
 {
@@ -88,11 +89,12 @@ public class PokemonMoves : MonoBehaviour
             MoveNames[i] = pokemon.poke_moves[i];
         }
     }
-
+        
     #region get move infos
     public int GetMovePP(string moveName)
     {
         LoadMovesByName(moveName);
+
         return moves.pp;
     }
 
@@ -120,4 +122,6 @@ public class PokemonMoves : MonoBehaviour
         return moves.category;
     }
     #endregion
+
+    
 }
