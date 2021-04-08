@@ -55,36 +55,42 @@ public class BattleLogic : MonoBehaviour
     #region PowerPoints
     private void DecreaseMovePP(GameObject clickedButton)
     {
-        int currentPP = 0;
+        float currentPP = 0;
         string ppName = "";
+        string ppMaxName = "";
 
         if (clickedButton.name.Contains("1"))
         {
             currentPP = GetPPText_AsInt(clickedButton, "Move1CurrentPP");
             ppName = "Move1CurrentPP";
+            ppMaxName = "Move1MaxPP";
         }
 
         if (clickedButton.name.Contains("2"))
         {
             currentPP = GetPPText_AsInt(clickedButton, "Move2CurrentPP");
             ppName = "Move2CurrentPP";
+            ppMaxName = "Move2MaxPP";
         }
 
         if (clickedButton.name.Contains("3"))
         {
             currentPP = GetPPText_AsInt(clickedButton, "Move3CurrentPP");
             ppName = "Move3CurrentPP";
+            ppMaxName = "Move3MaxPP";
         }
 
         if (clickedButton.name.Contains("4"))
         {
             currentPP = GetPPText_AsInt(clickedButton, "Move4CurrentPP");
             ppName = "Move4CurrentPP";
+            ppMaxName = "Move4MaxPP";
         }
 
         currentPP--;
 
         // change current pp color
+        SetCurrentPPColor(currentPP, clickedButton, ppName, ppMaxName);
 
         if (currentPP <= 0)
         {
@@ -98,9 +104,27 @@ public class BattleLogic : MonoBehaviour
 
     }
 
-    private void SetCurrentPPColor(int currentPP)
+    private void SetCurrentPPColor(float currentPP, GameObject clickedButton, string ppName, string ppMaxName)
     {
+        Color textColor = new Color();
+        ColorUtility.TryParseHtmlString("#000000", out textColor);
 
+        float maxPP = GetPPText_AsInt(clickedButton, ppMaxName);
+
+        float currentPPpercent = currentPP / maxPP * 100;
+
+        if (currentPPpercent <= 60 && currentPPpercent >= 30)
+        {
+            clickedButton.gameObject.transform.Find(ppName).GetComponent<TextMeshProUGUI>().color = new Color(255, 204, 0, 255);
+        }
+        else if (currentPPpercent < 31 && currentPPpercent > 0)
+        {
+            clickedButton.gameObject.transform.Find(ppName).GetComponent<TextMeshProUGUI>().color = new Color(255, 0, 0);
+        }
+        else if (currentPPpercent > 60 || currentPPpercent == 0)
+        {
+            clickedButton.gameObject.transform.Find(ppName).GetComponent<TextMeshProUGUI>().color = textColor;
+        }
     }
 
     private int GetPPText_AsInt(GameObject clickedButton, string move)
