@@ -3,17 +3,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class ShowPokemonInfo : MonoBehaviour
+public class PokemonOnClickHandler : MonoBehaviour
 {
-    private Image ImagePkmn;
     private PlayerTeam team;
+    private PlaySettings settings;
+    private PokemonInfoHolder infoHolder;
+    private JsonReader reader;
+
+    private Image ImagePkmn;
     private pokemon pokemon;
     private GameObject JsonReader;
     private GameObject clickedPokemon;
-    private JsonReader reader;
-    private PlaySettings settings;
     private Button add, remove;
-    private PokemonInfoHolder infoHolder;
 
     #region Pokemon Stats Text
     private Text Text_Name;
@@ -54,6 +55,7 @@ public class ShowPokemonInfo : MonoBehaviour
     private void Awake()
     {
         infoHolder = gameObject.GetComponent<PokemonInfoHolder>();
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -92,6 +94,11 @@ public class ShowPokemonInfo : MonoBehaviour
     {
         team.ClickedPokemon = sender;
         infoHolder.ClickedPokemon = sender;
+
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("BattleScene"))
+        {
+            Debug.Log("Pokemon is in Battle Scene");
+        }
 
         if (sender.tag == settings.InTeam)
         {
