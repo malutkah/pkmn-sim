@@ -14,6 +14,7 @@ public class PokemonOnClickHandler : MonoBehaviour
     private pokemon pokemon;
     private GameObject JsonReader;
     private GameObject clickedPokemon;
+    GameObject oldSender;
     private Button add, remove;
 
     #region Pokemon Stats Text
@@ -38,6 +39,8 @@ public class PokemonOnClickHandler : MonoBehaviour
     private string pkmn_name = "";
     private string name_eng = "";
     private int pkmn_id = 0;
+
+    private bool isClicked = false;
 
     #region Pokemon stats
     private float hp;
@@ -90,39 +93,73 @@ public class PokemonOnClickHandler : MonoBehaviour
         pokemon = reader.GetPokemons().pokemon.Find(p => p.id == pkmn_id);
     }
 
+    private void HighlightSelectedPokemon(GameObject sender)
+    {
+        if (oldSender == null)
+        {
+            sender.transform.parent.GetComponent<Image>().color = new Color(255, 0, 0);
+        }
+
+        if (oldSender != null && oldSender == sender)
+        {
+            sender.transform.parent.GetComponent<Image>().color = new Color(255, 255, 255);
+            oldSender = null;
+        }
+
+        if (oldSender != null && oldSender != sender)
+        {
+            sender.transform.parent.GetComponent<Image>().color = new Color(255, 255, 255);            
+            oldSender.transform.parent.GetComponent<Image>().color = new Color(255, 0, 0);            
+        }
+
+        oldSender = sender;
+    }
+
     public void PokemonOnClick(GameObject sender)
     {
         team.ClickedPokemon = sender;
         infoHolder.ClickedPokemon = sender;
 
+        LoadPokemonData();
+
+        name_eng = pokemon.name.english;
+
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("BattleScene"))
         {
-            Debug.Log("Pokemon is in Battle Scene");
-        }
+            Debug.Log($"{name_eng} is in Battle Scene");
 
-        if (sender.tag == settings.InTeam)
-        {
-            EnableButtonsAddPokemonToTeam(false);
+            // change gameobject parent image color when pokemon is selected
+            // and change color when deselecting
+            HighlightSelectedPokemon(sender);
         }
         else
         {
-            team.PokemonOrigPos = sender.transform.localPosition;
 
-            EnableButtonsAddPokemonToTeam(true);
+            if (sender.tag == settings.InTeam)
+            {
+                EnableButtonsAddPokemonToTeam(false);
+            }
+            else
+            {
+                team.PokemonOrigPos = sender.transform.localPosition;
+
+                EnableButtonsAddPokemonToTeam(true);
+            }
+
+            CalculatePokemonStats();
+
+            ShowText();
+            ShowImage();
         }
+    }
 
+    private void LoadPokemonData()
+    {
         pkmn_name = name;
 
         pkmn_id = Convert.ToInt32(pkmn_name.Substring(0, 3));
 
         Load();
-
-        name_eng = pokemon.name.english;
-
-        CalculatePokemonStats();
-
-        ShowText();
-        ShowImage();
     }
 
     private void CalculatePokemonStats()

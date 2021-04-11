@@ -18,6 +18,7 @@ public class BattleLogic : MonoBehaviour
     public void SentPokemonIntoBattle(GameObject playerPokemon, GameObject battleStation, PlaySettings settings)
     {
         playerPokemon.tag = settings.InBattle;
+        playerPokemon.GetComponent<SpriteRenderer>().sortingOrder = 2;
         playerPokemon.transform.SetParent(battleStation.transform);
         playerPokemon.transform.localPosition = new Vector3(0f, .1f, -9720f);
         playerPokemon.transform.localScale = new Vector3(1.3f, 1.3f, 108);
