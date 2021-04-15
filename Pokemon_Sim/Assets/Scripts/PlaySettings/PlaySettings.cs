@@ -26,6 +26,9 @@ public class PlaySettings : MonoBehaviour
     public string Dead = "Dead";
     #endregion
 
+    [HideInInspector]
+    public GameObject LastClickedPokemon;
+
     private void Start()
     {
         field = GameObject.Find("Input_MaxLvl").GetComponent<InputField>();

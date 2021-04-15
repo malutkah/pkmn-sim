@@ -51,6 +51,11 @@ public class BattleLogic : MonoBehaviour
         // decrease current pp
         DecreaseMovePP(clickedButton);
     }
+
+    public void SwitchPokemon_ButtonClick()
+    {
+
+    }
     #endregion
 
     #region PowerPoints

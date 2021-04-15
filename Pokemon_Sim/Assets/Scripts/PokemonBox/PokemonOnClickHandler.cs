@@ -14,7 +14,7 @@ public class PokemonOnClickHandler : MonoBehaviour
     private pokemon pokemon;
     private GameObject JsonReader;
     private GameObject clickedPokemon;
-    GameObject oldSender;
+    private GameObject oldSender;
     private Button add, remove;
 
     #region Pokemon Stats Text
@@ -95,24 +95,36 @@ public class PokemonOnClickHandler : MonoBehaviour
 
     private void HighlightSelectedPokemon(GameObject sender)
     {
-        if (oldSender == null)
+        if (settings.LastClickedPokemon == null)
         {
             sender.transform.parent.GetComponent<Image>().color = new Color(255, 0, 0);
         }
 
-        if (oldSender != null && oldSender == sender)
+        if (settings.LastClickedPokemon != null && settings.LastClickedPokemon == sender)
         {
-            sender.transform.parent.GetComponent<Image>().color = new Color(255, 255, 255);
-            oldSender = null;
+            if (!isClicked)
+            {
+                sender.transform.parent.GetComponent<Image>().color = new Color(255, 255, 255);
+                isClicked = true;
+            }
+            else
+            {
+                sender.transform.parent.GetComponent<Image>().color = new Color(255, 0, 0);
+                isClicked = false;
+            }
+
+            settings.LastClickedPokemon = null;
         }
 
-        if (oldSender != null && oldSender != sender)
+        if (settings.LastClickedPokemon != null && settings.LastClickedPokemon != sender)
         {
-            sender.transform.parent.GetComponent<Image>().color = new Color(255, 255, 255);            
-            oldSender.transform.parent.GetComponent<Image>().color = new Color(255, 0, 0);            
+            sender.transform.parent.GetComponent<Image>().color = new Color(255, 0, 0);
+            settings.LastClickedPokemon.transform.parent.GetComponent<Image>().color = new Color(255, 255, 255);
+
+            isClicked = isClicked ? isClicked = false : isClicked;
         }
 
-        oldSender = sender;
+        settings.LastClickedPokemon = sender;
     }
 
     public void PokemonOnClick(GameObject sender)
@@ -128,9 +140,10 @@ public class PokemonOnClickHandler : MonoBehaviour
         {
             Debug.Log($"{name_eng} is in Battle Scene");
 
-            // change gameobject parent image color when pokemon is selected
-            // and change color when deselecting
-            HighlightSelectedPokemon(sender);
+            if (sender.tag == settings.InBattleTeam)
+            {
+                HighlightSelectedPokemon(sender);
+            }
         }
         else
         {
