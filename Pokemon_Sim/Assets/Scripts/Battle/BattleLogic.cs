@@ -8,6 +8,11 @@ using UnityEngine.UI;
 
 public class BattleLogic : MonoBehaviour
 {
+    public Button SwitchPokemonButton;
+
+    [HideInInspector]
+    public GameObject ClickedPokemon;
+
     private BattleUI ui;
 
     private void Awake()
@@ -25,16 +30,16 @@ public class BattleLogic : MonoBehaviour
     }
 
     #region switchting pokemon
-    private void SwitchPlayerPokemon(GameObject pokemonInTeam, GameObject battleStation, PlaySettings settings, IDictionary<GameObject, Transform> pokemonParent)
+    private void SwitchPlayerPokemon(GameObject battleStation, PlaySettings settings, IDictionary<GameObject, Transform> pokemonParent)
     {
         GameObject pokemonInBattle = GameObject.FindWithTag(settings.InBattle);
 
         pokemonInBattle.tag = settings.InBattleTeam;
         pokemonInBattle.transform.SetParent(pokemonParent[pokemonInBattle]);
 
-        pokemonInTeam.tag = settings.InBattle;
+        ClickedPokemon.tag = settings.InBattle;
 
-        SentPokemonIntoBattle(pokemonInTeam, battleStation, settings);
+        SentPokemonIntoBattle(ClickedPokemon, battleStation, settings);
     }
     #endregion
 
@@ -54,7 +59,7 @@ public class BattleLogic : MonoBehaviour
 
     public void SwitchPokemon_ButtonClick()
     {
-
+        Debug.Log($"Switching {ClickedPokemon.GetComponent<PokemonInfoHolder>().poke_name} with {GameObject.FindWithTag("InBattle").GetComponent<PokemonInfoHolder>().poke_name}");
     }
     #endregion
 

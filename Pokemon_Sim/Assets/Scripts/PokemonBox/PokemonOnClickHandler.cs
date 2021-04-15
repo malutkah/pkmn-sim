@@ -9,6 +9,7 @@ public class PokemonOnClickHandler : MonoBehaviour
     private PlaySettings settings;
     private PokemonInfoHolder infoHolder;
     private JsonReader reader;
+    private BattleLogic logic;
 
     private Image ImagePkmn;
     private pokemon pokemon;
@@ -98,6 +99,8 @@ public class PokemonOnClickHandler : MonoBehaviour
         if (settings.LastClickedPokemon == null)
         {
             sender.transform.parent.GetComponent<Image>().color = new Color(255, 0, 0);
+
+            logic.SwitchPokemonButton.interactable = true;
         }
 
         if (settings.LastClickedPokemon != null && settings.LastClickedPokemon == sender)
@@ -106,11 +109,15 @@ public class PokemonOnClickHandler : MonoBehaviour
             {
                 sender.transform.parent.GetComponent<Image>().color = new Color(255, 255, 255);
                 isClicked = true;
+
+                logic.SwitchPokemonButton.interactable = false;
             }
             else
             {
                 sender.transform.parent.GetComponent<Image>().color = new Color(255, 0, 0);
                 isClicked = false;
+
+                logic.SwitchPokemonButton.interactable = true;
             }
 
             settings.LastClickedPokemon = null;
@@ -122,6 +129,8 @@ public class PokemonOnClickHandler : MonoBehaviour
             settings.LastClickedPokemon.transform.parent.GetComponent<Image>().color = new Color(255, 255, 255);
 
             isClicked = isClicked ? isClicked = false : isClicked;
+
+            logic.SwitchPokemonButton.interactable = true;
         }
 
         settings.LastClickedPokemon = sender;
@@ -139,6 +148,9 @@ public class PokemonOnClickHandler : MonoBehaviour
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("BattleScene"))
         {
             Debug.Log($"{name_eng} is in Battle Scene");
+            logic = GameObject.Find("BattleManager").GetComponent<BattleLogic>();
+
+            logic.ClickedPokemon = sender;
 
             if (sender.tag == settings.InBattleTeam)
             {
