@@ -12,34 +12,57 @@ public class BattleLogic : MonoBehaviour
 
     [HideInInspector]
     public GameObject ClickedPokemon;
+    [HideInInspector]
+    public IDictionary<GameObject, Transform> pokemonParent;
+    public IDictionary<GameObject, Vector3> pokemonPositions;
 
     private BattleUI ui;
+    private LoadBattle loadBattle;
+    private PlaySettings settings;
 
     private void Awake()
     {
         ui = gameObject.GetComponent<BattleUI>();
-    }
+        loadBattle = gameObject.GetComponent<LoadBattle>();
 
-    public void SentPokemonIntoBattle(GameObject playerPokemon, GameObject battleStation, PlaySettings settings)
-    {
-        playerPokemon.tag = settings.InBattle;
-        playerPokemon.GetComponent<SpriteRenderer>().sortingOrder = 2;
-        playerPokemon.transform.SetParent(battleStation.transform);
-        playerPokemon.transform.localPosition = new Vector3(0f, .1f, -9720f);
-        playerPokemon.transform.localScale = new Vector3(1.3f, 1.3f, 108);
+        pokemonParent = new Dictionary<GameObject, Transform>();
     }
 
     #region switchting pokemon
-    private void SwitchPlayerPokemon(GameObject battleStation, PlaySettings settings, IDictionary<GameObject, Transform> pokemonParent)
+    public void SentPokemonIntoBattle(GameObject playerPokemonInTeam)
     {
+        settings = GameObject.FindWithTag("Settings").GetComponent<PlaySettings>();
+
+        playerPokemonInTeam.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        playerPokemonInTeam.tag = settings.InBattle;
+        playerPokemonInTeam.transform.SetParent(GameObject.FindWithTag("BattleStationPlayer").transform);
+        playerPokemonInTeam.transform.localPosition = new Vector3(0f, .1f, -9720f);
+        playerPokemonInTeam.transform.localScale = new Vector3(1.3f, 1.3f, 108);
+    }
+
+    private void SwitchPlayerPokemon()
+    {
+        loadBattle.GetPokemonParentDict();
+
         GameObject pokemonInBattle = GameObject.FindWithTag(settings.InBattle);
 
-        pokemonInBattle.tag = settings.InBattleTeam;
         pokemonInBattle.transform.SetParent(pokemonParent[pokemonInBattle]);
+
+        ClickedPokemon.transform.parent.GetComponent<Image>().color = new Color(255, 255, 255);
 
         ClickedPokemon.tag = settings.InBattle;
 
-        SentPokemonIntoBattle(ClickedPokemon, battleStation, settings);
+        ReturnPlayerPokemonToTeam(pokemonInBattle);
+        SentPokemonIntoBattle(ClickedPokemon);
+    }
+
+    private void ReturnPlayerPokemonToTeam(GameObject pokemonInBattle)
+    {
+        loadBattle.GetPokemonPositionsDict();
+
+        pokemonInBattle.tag = settings.InBattleTeam;
+        pokemonInBattle.transform.localScale = new Vector3(300f, 300f, 1f);
+        pokemonInBattle.transform.localPosition = pokemonPositions[pokemonInBattle];
     }
     #endregion
 
@@ -59,7 +82,14 @@ public class BattleLogic : MonoBehaviour
 
     public void SwitchPokemon_ButtonClick()
     {
-        Debug.Log($"Switching {ClickedPokemon.GetComponent<PokemonInfoHolder>().poke_name} with {GameObject.FindWithTag("InBattle").GetComponent<PokemonInfoHolder>().poke_name}");
+        //Debug.Log($"Switching {ClickedPokemon.GetComponent<PokemonInfoHolder>().poke_name} with " +
+        //$"{GameObject.FindWithTag("InBattle").GetComponent<PokemonInfoHolder>().poke_name}");
+
+        settings.LastClickedPokemon = null;
+        SwitchPlayerPokemon();
+        loadBattle.LoadingInfosForPokemonInBattle(ClickedPokemon);
+        ui.ShowPokemonMoves();
+        SwitchPokemonButton.interactable = false;
     }
     #endregion
 

@@ -98,6 +98,16 @@ public class LoadBattle : MonoBehaviour
     }
     #endregion
 
+    public void GetPokemonParentDict()
+    {
+        logic.pokemonParent = pokemonParent;
+    }
+
+    public void GetPokemonPositionsDict()
+    {
+        logic.pokemonPositions = pokemonPositions;
+    }
+
     #region Loading Battle Stuff
     private void LoadPlayerPokemonInImageSlots()
     {
@@ -109,7 +119,7 @@ public class LoadBattle : MonoBehaviour
                 pokemonParent.Add(teamList[i], PlayerTeamSlot1.transform);
 
                 LoadingInfosForPokemonInBattle(teamList[i]);
-                logic.SentPokemonIntoBattle(teamList[i], BattleStationPlayer, settings);
+                logic.SentPokemonIntoBattle(teamList[i]);
 
                 /* teamList[i].transform.SetParent(PlayerTeamSlot1.transform);
                  teamList[i].transform.localPosition = resetPosition;
@@ -178,7 +188,7 @@ public class LoadBattle : MonoBehaviour
     #endregion
 
     #region Pokemon
-    private void LoadingInfosForPokemonInBattle(GameObject playerPokemon)
+    public void LoadingInfosForPokemonInBattle(GameObject playerPokemon)
     {
         infoHolder = playerPokemon.GetComponent<PokemonInfoHolder>();
 

@@ -11,6 +11,8 @@ TagManager:
   - JsonReader
   - Settings
   - InBattleTeam
+  - BattleStationPlayer
+  - BattleStationEnemy
   layers:
   - Default
   - TransparentFX

@@ -38,6 +38,11 @@ public class BattleUI : MonoBehaviour
 
     private void Start()
     {
+        ShowPokemonMoves();
+    }
+
+    public void ShowPokemonMoves()
+    {
         playerPokemonInBattle = GameObject.FindGameObjectWithTag("InBattle");
         pokemonMoves = playerPokemonInBattle.GetComponent<PokemonMoves>();
 
