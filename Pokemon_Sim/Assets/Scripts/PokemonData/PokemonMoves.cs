@@ -50,9 +50,6 @@ public class PokemonMoves : MonoBehaviour
 
         LoadPokemon();
         SaveMoveNames();
-
-        //LoadMovesByName("Tackle");
-        //Debug.Log($"the attack name is {moves.ename} with a power of {moves.power}!");
     }
 
     private void LoadPokemon()
@@ -70,12 +67,7 @@ public class PokemonMoves : MonoBehaviour
             pkmn_type2 = pokemon.type[1];
         }
     }
-
-    private void LoadMovesByType(string type)
-    {
-        moves = reader.GetMoves().moves.Find(m => m.type == type);
-    }
-
+    
     private void LoadMovesByName(string moveName)
     {
         moves = reader.GetMoves().moves.Find(m => m.ename == moveName);
@@ -94,7 +86,6 @@ public class PokemonMoves : MonoBehaviour
     public int GetMovePP(string moveName)
     {
         LoadMovesByName(moveName);
-
         return moves.pp;
     }
 

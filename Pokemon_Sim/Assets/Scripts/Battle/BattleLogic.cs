@@ -19,6 +19,7 @@ public class BattleLogic : MonoBehaviour
     private BattleUI ui;
     private LoadBattle loadBattle;
     private PlaySettings settings;
+    private PokemonInfoHolder infoHolder;
 
     private void Awake()
     {
@@ -32,6 +33,7 @@ public class BattleLogic : MonoBehaviour
     public void SentPokemonIntoBattle(GameObject playerPokemonInTeam)
     {
         settings = GameObject.FindWithTag("Settings").GetComponent<PlaySettings>();
+        infoHolder = GameObject.FindWithTag(settings.InBattle).GetComponent<PokemonInfoHolder>();
 
         playerPokemonInTeam.GetComponent<SpriteRenderer>().sortingOrder = 2;
         playerPokemonInTeam.tag = settings.InBattle;
@@ -73,105 +75,108 @@ public class BattleLogic : MonoBehaviour
         GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
         string moveName = clickedButton.GetComponentInChildren<TextMeshProUGUI>().text;
 
-        // display debug text
-        //Debug.Log(moveName);
-
-        // decrease current pp
-        DecreaseMovePP(clickedButton);
+        DecreaseCurrentMovePP(clickedButton);
     }
 
     public void SwitchPokemon_ButtonClick()
     {
-        //Debug.Log($"Switching {ClickedPokemon.GetComponent<PokemonInfoHolder>().poke_name} with " +
-        //$"{GameObject.FindWithTag("InBattle").GetComponent<PokemonInfoHolder>().poke_name}");
-
         settings.LastClickedPokemon = null;
         SwitchPlayerPokemon();
         loadBattle.LoadingInfosForPokemonInBattle(ClickedPokemon);
+        //
+        ShowPokemonCurrentMoves();
+        //
         ui.ShowPokemonMoves();
+        RefreshPPText();
         SwitchPokemonButton.interactable = false;
+    }
+
+    private void ShowPokemonCurrentMoves()
+    {
+        // show current move pp
     }
     #endregion
 
-    #region PowerPoints
-    private void DecreaseMovePP(GameObject clickedButton)
+    private void RefreshPPText()
     {
-        float currentPP = 0;
-        string ppName = "";
-        string ppMaxName = "";
+        int ppTmp = 0;
+        for (int i = 1; i < 5; i++)
+        {
+            ppTmp = ui.GetCurrentPPFromMove(i);
+            SetCurrentPPColor(ppTmp, i);
+        }
+    }
+
+    #region PowerPoints
+    private void DecreaseCurrentMovePP(GameObject clickedButton)
+    {
+        int currentPP = 0;
+        int moveId = 0;
 
         if (clickedButton.name.Contains("1"))
         {
-            currentPP = GetPPText_AsInt(clickedButton, "Move1CurrentPP");
-            ppName = "Move1CurrentPP";
-            ppMaxName = "Move1MaxPP";
+            currentPP = ui.GetCurrentPPFromMove(1);
+            moveId = 1;
         }
 
         if (clickedButton.name.Contains("2"))
         {
-            currentPP = GetPPText_AsInt(clickedButton, "Move2CurrentPP");
-            ppName = "Move2CurrentPP";
-            ppMaxName = "Move2MaxPP";
+            currentPP = ui.GetCurrentPPFromMove(2);
+            moveId = 2;
         }
 
         if (clickedButton.name.Contains("3"))
         {
-            currentPP = GetPPText_AsInt(clickedButton, "Move3CurrentPP");
-            ppName = "Move3CurrentPP";
-            ppMaxName = "Move3MaxPP";
+            currentPP = ui.GetCurrentPPFromMove(3);
+            moveId = 3;
         }
 
         if (clickedButton.name.Contains("4"))
         {
-            currentPP = GetPPText_AsInt(clickedButton, "Move4CurrentPP");
-            ppName = "Move4CurrentPP";
-            ppMaxName = "Move4MaxPP";
+            currentPP = ui.GetCurrentPPFromMove(4);
+            moveId = 4;
         }
 
         currentPP--;
 
-        // change current pp color
-        SetCurrentPPColor(currentPP, clickedButton, ppName, ppMaxName);
+        SetCurrentPPColor(currentPP, moveId);
 
         if (currentPP <= 0)
         {
-            clickedButton.gameObject.transform.Find(ppName).GetComponent<TextMeshProUGUI>().text = "0";
+            ui.SetCurrentPPText(moveId, "0");
+            infoHolder.SetCurrentMovePp(moveId, 0);
             clickedButton.GetComponent<Button>().interactable = false;
         }
         else
         {
-            clickedButton.gameObject.transform.Find(ppName).GetComponent<TextMeshProUGUI>().text = currentPP.ToString();
+            ui.SetCurrentPPText(moveId, currentPP.ToString());
+            infoHolder.SetCurrentMovePp(moveId, currentPP);
         }
 
     }
 
-    private void SetCurrentPPColor(float currentPP, GameObject clickedButton, string ppName, string ppMaxName)
+    private void SetCurrentPPColor(float currentPP, int moveId)
     {
         Color textColor = new Color();
         ColorUtility.TryParseHtmlString("#000000", out textColor);
 
-        float maxPP = GetPPText_AsInt(clickedButton, ppMaxName);
+        //int maxPP = GetPPText_AsInt(clickedButton, ppMaxName);
+        int maxPP = ui.GetMaxPPFromMove(moveId);
 
         float currentPPpercent = currentPP / maxPP * 100;
 
         if (currentPPpercent <= 60 && currentPPpercent >= 30)
         {
-            clickedButton.gameObject.transform.Find(ppName).GetComponent<TextMeshProUGUI>().color = new Color(255, 204, 0, 255);
+            ui.SetCurrentPPTextColor(moveId, new Color(255, 204, 0, 255));
         }
         else if (currentPPpercent < 31 && currentPPpercent > 0)
         {
-            clickedButton.gameObject.transform.Find(ppName).GetComponent<TextMeshProUGUI>().color = new Color(255, 0, 0);
+            ui.SetCurrentPPTextColor(moveId, new Color(255, 0, 0));
         }
         else if (currentPPpercent > 60 || currentPPpercent == 0)
         {
-            clickedButton.gameObject.transform.Find(ppName).GetComponent<TextMeshProUGUI>().color = textColor;
+            ui.SetCurrentPPTextColor(moveId, textColor);
         }
     }
-
-    private int GetPPText_AsInt(GameObject clickedButton, string move)
-    {
-        return Convert.ToInt32(clickedButton.gameObject.transform.Find(move).GetComponent<TextMeshProUGUI>().text);
-    }
-
     #endregion
 }

@@ -100,9 +100,9 @@ public class BattleUI : MonoBehaviour
     #region Power Points
     public int GetCurrentPPFromMove(int moveNumber)
     {
-        return moveNumber == 1 ? Convert.ToInt32(Move1CurrentPP.text) : 
+        return moveNumber == 1 ? Convert.ToInt32(Move1CurrentPP.text) :
             moveNumber == 2 ? Convert.ToInt32(Move2CurrentPP.text) :
-            moveNumber == 3 ? Convert.ToInt32(Move3CurrentPP.text) : 
+            moveNumber == 3 ? Convert.ToInt32(Move3CurrentPP.text) :
             moveNumber == 4 ? Convert.ToInt32(Move4CurrentPP.text) : 0;
     }
 
@@ -112,6 +112,24 @@ public class BattleUI : MonoBehaviour
             moveNumber == 2 ? Convert.ToInt32(Move2MaxPP.text) :
             moveNumber == 3 ? Convert.ToInt32(Move3MaxPP.text) :
             moveNumber == 4 ? Convert.ToInt32(Move4MaxPP.text) : 0;
+    }
+
+    public void SetCurrentPPTextColor(int moveNumber, Color textColor)
+    {
+        Move1CurrentPP.color = moveNumber == 1 ? Move1CurrentPP.color = textColor :
+        Move2CurrentPP.color = moveNumber == 2 ? Move2CurrentPP.color = textColor :
+        Move3CurrentPP.color = moveNumber == 3 ? Move3CurrentPP.color = textColor :
+        Move4CurrentPP.color = moveNumber == 4 ? Move4CurrentPP.color = textColor :
+        Move4CurrentPP.color = textColor;
+    }
+
+    public void SetCurrentPPText(int moveNumber, string value)
+    {
+        Move1CurrentPP.text = moveNumber == 1 ? Move1CurrentPP.text = value :
+        Move2CurrentPP.text = moveNumber == 2 ? Move2CurrentPP.text = value :
+        Move3CurrentPP.text = moveNumber == 3 ? Move3CurrentPP.text = value :
+        Move4CurrentPP.text = moveNumber == 4 ? Move4CurrentPP.text = value :
+        Move4CurrentPP.text = "ERROR";
     }
     #endregion
 
