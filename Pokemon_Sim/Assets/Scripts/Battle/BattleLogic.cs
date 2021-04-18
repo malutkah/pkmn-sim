@@ -33,13 +33,14 @@ public class BattleLogic : MonoBehaviour
     public void SentPokemonIntoBattle(GameObject playerPokemonInTeam)
     {
         settings = GameObject.FindWithTag("Settings").GetComponent<PlaySettings>();
-        infoHolder = GameObject.FindWithTag(settings.InBattle).GetComponent<PokemonInfoHolder>();
 
         playerPokemonInTeam.GetComponent<SpriteRenderer>().sortingOrder = 2;
         playerPokemonInTeam.tag = settings.InBattle;
         playerPokemonInTeam.transform.SetParent(GameObject.FindWithTag("BattleStationPlayer").transform);
         playerPokemonInTeam.transform.localPosition = new Vector3(0f, .1f, -9720f);
         playerPokemonInTeam.transform.localScale = new Vector3(1.3f, 1.3f, 108);
+
+        infoHolder = GameObject.FindWithTag(settings.InBattle).GetComponent<PokemonInfoHolder>();
     }
 
     private void SwitchPlayerPokemon()
@@ -144,13 +145,13 @@ public class BattleLogic : MonoBehaviour
         if (currentPP <= 0)
         {
             ui.SetCurrentPPText(moveId, "0");
-            infoHolder.SetCurrentMovePp(moveId, 0);
+            //infoHolder.SetCurrentMovePp(moveId, 0);
             clickedButton.GetComponent<Button>().interactable = false;
         }
         else
         {
             ui.SetCurrentPPText(moveId, currentPP.ToString());
-            infoHolder.SetCurrentMovePp(moveId, currentPP);
+            //infoHolder.SetCurrentMovePp(moveId, currentPP);
         }
 
     }

@@ -1,10 +1,19 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlaySettings : MonoBehaviour
 {
+    [SerializeField]
+    private TextMeshProUGUI progressText;
+    [SerializeField]
+    private Slider loadingSlider;
+    [SerializeField]
+    private GameObject loadingScreen;
+
     [HideInInspector]
     public int level = 0;
 
@@ -50,7 +59,8 @@ public class PlaySettings : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         // Change Scenes
-        SceneManager.LoadScene("PokemonBox");
+        //SceneManager.LoadScene("PokemonBox");
+        StartCoroutine(LoadAsync("PokemonBox"));
     }
 
     public void VsThree_OnClick()
@@ -65,17 +75,34 @@ public class PlaySettings : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         // Change Scenes
-        SceneManager.LoadScene("PokemonBox");
+        //SceneManager.LoadScene("PokemonBox");
+        StartCoroutine(LoadAsync("PokemonBox"));
     }
     #endregion
 
     private void Fight_OnClick()
     {
-        SceneManager.LoadScene("BattleScene");
+        //SceneManager.LoadScene("BattleScene");
+        StartCoroutine(LoadAsync("BattleScene"));
     }
 
-    /// DONE: TODO: GET MAX LEVEL FROM INPUT FIELD
-    /// 
+    private IEnumerator LoadAsync(string sceneName)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+
+        loadingScreen.SetActive(true);
+
+        while (!operation.isDone)
+        {
+            float loadingProgress = Mathf.Clamp01(operation.progress / .9f);
+            loadingSlider.value = loadingProgress;
+
+            progressText.text = $"{loadingProgress * 100}%";
+
+            yield return null;
+        }
+    }
+    
     public void GetLevelFromEdit()
     {
         if (field.text == "")
@@ -97,10 +124,6 @@ public class PlaySettings : MonoBehaviour
             field.text = level.ToString();
         }
     }
-
-    /// UNDONE: TODO: SAVE SETTINGS GLOBAL (DON'T DESTROY ON LOAD)
-    /// UNDONE: PASS ON MAX LEVEL
-    /// </summary>
-    /// 
+   
 
 }
