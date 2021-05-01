@@ -125,11 +125,27 @@ public class BattleUI : MonoBehaviour
 
     public void SetCurrentPPText(int moveNumber, string value)
     {
-        Move1CurrentPP.text = moveNumber == 1 ? Move1CurrentPP.text = value :
-        Move2CurrentPP.text = moveNumber == 2 ? Move2CurrentPP.text = value :
-        Move3CurrentPP.text = moveNumber == 3 ? Move3CurrentPP.text = value :
-        Move4CurrentPP.text = moveNumber == 4 ? Move4CurrentPP.text = value :
-        Move4CurrentPP.text = "ERROR";
+        switch (moveNumber)
+        {
+            case 1:
+                Move1CurrentPP.text = value;
+                break;
+            case 2:
+                Move2CurrentPP.text = value;
+                break;
+            case 3:
+                Move3CurrentPP.text = value;
+                break;
+            case 4:
+                Move4CurrentPP.text = value;
+                break;
+        }
+
+        //Move1CurrentPP.text = moveNumber == 1 ? Move1CurrentPP.text = value :
+        //Move2CurrentPP.text = moveNumber == 2 ? Move2CurrentPP.text = value :
+        //Move3CurrentPP.text = moveNumber == 3 ? Move3CurrentPP.text = value :
+        //Move4CurrentPP.text = moveNumber == 4 ? Move4CurrentPP.text = value :
+        //Move4CurrentPP.text = "ERROR";
     }
     #endregion
 
