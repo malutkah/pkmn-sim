@@ -204,7 +204,7 @@ public class LoadBattle : MonoBehaviour
     {
         PlayerPokemonName.text = pokemon.name.english;
         PlayerPokemonMaxHp.text = infoHolder.hp.ToString();
-        PlayerPokemonCurrentHp.text = infoHolder.hp.ToString();
+        PlayerPokemonCurrentHp.text = infoHolder.hp.ToString(); // TODO: runden
         PlayerPokemonLevel.text = infoHolder.level.ToString();
     }
 

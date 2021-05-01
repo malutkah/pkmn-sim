@@ -116,6 +116,7 @@ public class BattleUI : MonoBehaviour
 
     public void SetCurrentPPTextColor(int moveNumber, Color textColor)
     {
+        //TODO: like SetCurrentPPText with switch
         Move1CurrentPP.color = moveNumber == 1 ? Move1CurrentPP.color = textColor :
         Move2CurrentPP.color = moveNumber == 2 ? Move2CurrentPP.color = textColor :
         Move3CurrentPP.color = moveNumber == 3 ? Move3CurrentPP.color = textColor :
