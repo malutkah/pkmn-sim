@@ -26,11 +26,11 @@ public class LoadPokemon : MonoBehaviour
     List<string> pkmnSprite_names = new List<string>();
 
     /// <summary>
-    /// UNDONE: GET LEVEL
-    /// UNDONE: GET TEAM SIZE
-    /// UNDONE: SHOW POKEMON TEAM SLOTS
-    /// UNDONE: ADD POKEMON TO TEAM
-    /// UNDONE: CALCULATE POKEMON STATS
+    /// DONE: GET LEVEL
+    /// DONE: GET TEAM SIZE
+    /// DONE: SHOW POKEMON TEAM SLOTS
+    /// DONE: ADD POKEMON TO TEAM
+    /// DONE: CALCULATE POKEMON STATS
     /// </summary>
 
     private void Start()

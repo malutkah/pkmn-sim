@@ -98,12 +98,12 @@ public class LoadBattle : MonoBehaviour
     }
     #endregion
 
-    public void GetPokemonParentDict()
+    public void SetPokemonParentDictionary()
     {
         logic.pokemonParent = pokemonParent;
     }
 
-    public void GetPokemonPositionsDict()
+    public void SetPokemonPositionsDictionary()
     {
         logic.pokemonPositions = pokemonPositions;
     }
@@ -204,7 +204,7 @@ public class LoadBattle : MonoBehaviour
     {
         PlayerPokemonName.text = pokemon.name.english;
         PlayerPokemonMaxHp.text = infoHolder.hp.ToString();
-        PlayerPokemonCurrentHp.text = infoHolder.hp.ToString(); // TODO: runden
+        PlayerPokemonCurrentHp.text = Mathf.Round(infoHolder.hp).ToString(); // DONE: runden
         PlayerPokemonLevel.text = infoHolder.level.ToString();
     }
 

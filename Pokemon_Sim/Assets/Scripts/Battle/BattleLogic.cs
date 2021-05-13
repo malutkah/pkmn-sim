@@ -21,12 +21,16 @@ public class BattleLogic : MonoBehaviour
     private PlaySettings settings;
     private PokemonInfoHolder infoHolder;
 
+    private bool firstLoad;
+
     private void Awake()
     {
         ui = gameObject.GetComponent<BattleUI>();
         loadBattle = gameObject.GetComponent<LoadBattle>();
 
         pokemonParent = new Dictionary<GameObject, Transform>();
+
+        firstLoad = true;
     }
 
     #region switchting pokemon
@@ -45,7 +49,7 @@ public class BattleLogic : MonoBehaviour
 
     private void SwitchPlayerPokemon()
     {
-        loadBattle.GetPokemonParentDict();
+        loadBattle.SetPokemonParentDictionary();
 
         GameObject pokemonInBattle = GameObject.FindWithTag(settings.InBattle);
 
@@ -61,7 +65,7 @@ public class BattleLogic : MonoBehaviour
 
     private void ReturnPlayerPokemonToTeam(GameObject pokemonInBattle)
     {
-        loadBattle.GetPokemonPositionsDict();
+        loadBattle.SetPokemonPositionsDictionary();
 
         pokemonInBattle.tag = settings.InBattleTeam;
         pokemonInBattle.transform.localScale = new Vector3(300f, 300f, 1f);
@@ -84,20 +88,30 @@ public class BattleLogic : MonoBehaviour
         settings.LastClickedPokemon = null;
         SwitchPlayerPokemon();
         loadBattle.LoadingInfosForPokemonInBattle(ClickedPokemon);
-        //
-        ShowPokemonCurrentMoves();
-        //
-        ui.ShowPokemonMoves();
+
+        if (!firstLoad)
+        {
+            ShowPokemonCurrentMoves();
+        }
+
+        ui.ShowPokemonMoves(firstLoad);
         RefreshPPText();
         SwitchPokemonButton.interactable = false;
+
+        firstLoad = false;
     }
 
     private void ShowPokemonCurrentMoves()
     {
         // show current move pp
+        ui.Move1CurrentPP.text = infoHolder.GetCurrentMovePp(1).ToString();
+        ui.Move2CurrentPP.text = infoHolder.GetCurrentMovePp(2).ToString();
+        ui.Move3CurrentPP.text = infoHolder.GetCurrentMovePp(3).ToString();
+        ui.Move4CurrentPP.text = infoHolder.GetCurrentMovePp(4).ToString();
     }
     #endregion
 
+    #region PowerPoints
     private void RefreshPPText()
     {
         int ppTmp = 0;
@@ -108,7 +122,6 @@ public class BattleLogic : MonoBehaviour
         }
     }
 
-    #region PowerPoints
     private void DecreaseCurrentMovePP(GameObject clickedButton)
     {
         int currentPP = 0;
@@ -144,13 +157,15 @@ public class BattleLogic : MonoBehaviour
 
         if (currentPP <= 0)
         {
-            ui.SetCurrentPPText(moveId, "0");
+            infoHolder.SetCurrentMovePp(moveId, 0);
+            ui.SetCurrentPPText(moveId, infoHolder.GetCurrentMovePp(moveId).ToString());
             //infoHolder.SetCurrentMovePp(moveId, 0);
             clickedButton.GetComponent<Button>().interactable = false;
         }
         else
         {
-            ui.SetCurrentPPText(moveId, currentPP.ToString());
+            infoHolder.SetCurrentMovePp(moveId, currentPP);
+            ui.SetCurrentPPText(moveId, infoHolder.GetCurrentMovePp(moveId).ToString());
             //infoHolder.SetCurrentMovePp(moveId, currentPP);
         }
 

@@ -44,7 +44,7 @@ public class PlaySettings : MonoBehaviour
     }
 
     /// <summary>
-    /// UNDONE: TODO: BUTTON CLICKS
+    /// DONE: TODO: BUTTON CLICKS
     /// 
     #region BUTTON CLICKS
     public void VsSix_OnClick()

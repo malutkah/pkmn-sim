@@ -12,22 +12,26 @@ public class BattleUI : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI Move1Text;
     [SerializeField]
-    private TextMeshProUGUI Move1MaxPP, Move1CurrentPP;
+    private TextMeshProUGUI Move1MaxPP;
+    public TextMeshProUGUI Move1CurrentPP;
 
     [SerializeField]
     private TextMeshProUGUI Move2Text;
     [SerializeField]
-    private TextMeshProUGUI Move2MaxPP, Move2CurrentPP;
+    private TextMeshProUGUI Move2MaxPP;
+    public TextMeshProUGUI Move2CurrentPP;
 
     [SerializeField]
     private TextMeshProUGUI Move3Text;
     [SerializeField]
-    private TextMeshProUGUI Move3MaxPP, Move3CurrentPP;
+    private TextMeshProUGUI Move3MaxPP;
+    public TextMeshProUGUI Move3CurrentPP;
 
     [SerializeField]
     private TextMeshProUGUI Move4Text;
     [SerializeField]
-    private TextMeshProUGUI Move4MaxPP, Move4CurrentPP;
+    private TextMeshProUGUI Move4MaxPP;
+    public TextMeshProUGUI Move4CurrentPP;
     #endregion
 
     [SerializeField]
@@ -38,16 +42,16 @@ public class BattleUI : MonoBehaviour
 
     private void Start()
     {
-        ShowPokemonMoves();
+        ShowPokemonMoves(true);
     }
 
-    public void ShowPokemonMoves()
+    public void ShowPokemonMoves(bool firstLoad)
     {
         playerPokemonInBattle = GameObject.FindGameObjectWithTag("InBattle");
         pokemonMoves = playerPokemonInBattle.GetComponent<PokemonMoves>();
 
         ShowPokemonMoveText();
-        ShowPokemonMovePP();
+        ShowPokemonMovePP(firstLoad);
     }
 
     #region Show move info
@@ -59,17 +63,20 @@ public class BattleUI : MonoBehaviour
         Move4Text.text = pokemonMoves.MoveNames[3];
     }
 
-    private void ShowPokemonMovePP()
+    private void ShowPokemonMovePP(bool firstLoad)
     {
         Move1MaxPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[0]).ToString();
         Move2MaxPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[1]).ToString();
         Move3MaxPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[2]).ToString();
         Move4MaxPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[3]).ToString();
 
-        Move1CurrentPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[0]).ToString();
-        Move2CurrentPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[1]).ToString();
-        Move3CurrentPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[2]).ToString();
-        Move4CurrentPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[3]).ToString();
+        if (firstLoad)
+        {
+            Move1CurrentPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[0]).ToString();
+            Move2CurrentPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[1]).ToString();
+            Move3CurrentPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[2]).ToString();
+            Move4CurrentPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[3]).ToString();
+        }
     }
     #endregion
 
@@ -116,12 +123,28 @@ public class BattleUI : MonoBehaviour
 
     public void SetCurrentPPTextColor(int moveNumber, Color textColor)
     {
-        //TODO: like SetCurrentPPText with switch
-        Move1CurrentPP.color = moveNumber == 1 ? Move1CurrentPP.color = textColor :
-        Move2CurrentPP.color = moveNumber == 2 ? Move2CurrentPP.color = textColor :
-        Move3CurrentPP.color = moveNumber == 3 ? Move3CurrentPP.color = textColor :
-        Move4CurrentPP.color = moveNumber == 4 ? Move4CurrentPP.color = textColor :
-        Move4CurrentPP.color = textColor;
+        //DONE: like SetCurrentPPText with switch
+        switch (moveNumber)
+        {
+            case 1:
+                Move1CurrentPP.color = textColor;
+                break;
+            case 2:
+                Move2CurrentPP.color = textColor;
+                break;
+            case 3:
+                Move3CurrentPP.color = textColor;
+                break;
+            case 4:
+                Move4CurrentPP.color = textColor;
+                break;
+        }
+
+        //Move1CurrentPP.color = moveNumber == 1 ? Move1CurrentPP.color = textColor :
+        //Move2CurrentPP.color = moveNumber == 2 ? Move2CurrentPP.color = textColor :
+        //Move3CurrentPP.color = moveNumber == 3 ? Move3CurrentPP.color = textColor :
+        //Move4CurrentPP.color = moveNumber == 4 ? Move4CurrentPP.color = textColor :
+        //Move4CurrentPP.color = textColor;
     }
 
     public void SetCurrentPPText(int moveNumber, string value)
