@@ -70,7 +70,7 @@ public class BattleUI : MonoBehaviour
         Move3MaxPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[2]).ToString();
         Move4MaxPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[3]).ToString();
 
-        if (firstLoad)
+        if (!firstLoad)
         {
             Move1CurrentPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[0]).ToString();
             Move2CurrentPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[1]).ToString();
@@ -110,7 +110,7 @@ public class BattleUI : MonoBehaviour
         return moveNumber == 1 ? Convert.ToInt32(Move1CurrentPP.text) :
             moveNumber == 2 ? Convert.ToInt32(Move2CurrentPP.text) :
             moveNumber == 3 ? Convert.ToInt32(Move3CurrentPP.text) :
-            moveNumber == 4 ? Convert.ToInt32(Move4CurrentPP.text) : 0;
+            moveNumber == 4 ? Convert.ToInt32(Move4CurrentPP.text) : 69;
     }
 
     public int GetMaxPPFromMove(int moveNumber)
@@ -118,7 +118,7 @@ public class BattleUI : MonoBehaviour
         return moveNumber == 1 ? Convert.ToInt32(Move1MaxPP.text) :
             moveNumber == 2 ? Convert.ToInt32(Move2MaxPP.text) :
             moveNumber == 3 ? Convert.ToInt32(Move3MaxPP.text) :
-            moveNumber == 4 ? Convert.ToInt32(Move4MaxPP.text) : 0;
+            moveNumber == 4 ? Convert.ToInt32(Move4MaxPP.text) : 1337;
     }
 
     public void SetCurrentPPTextColor(int moveNumber, Color textColor)
@@ -139,6 +139,13 @@ public class BattleUI : MonoBehaviour
                 Move4CurrentPP.color = textColor;
                 break;
         }
+
+        /*
+         Set current pp when switching pokemon
+
+            show current pp correctly from info holder
+         
+         */
 
         //Move1CurrentPP.color = moveNumber == 1 ? Move1CurrentPP.color = textColor :
         //Move2CurrentPP.color = moveNumber == 2 ? Move2CurrentPP.color = textColor :

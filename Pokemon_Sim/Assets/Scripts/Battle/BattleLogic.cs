@@ -159,14 +159,12 @@ public class BattleLogic : MonoBehaviour
         {
             infoHolder.SetCurrentMovePp(moveId, 0);
             ui.SetCurrentPPText(moveId, infoHolder.GetCurrentMovePp(moveId).ToString());
-            //infoHolder.SetCurrentMovePp(moveId, 0);
             clickedButton.GetComponent<Button>().interactable = false;
         }
         else
         {
             infoHolder.SetCurrentMovePp(moveId, currentPP);
             ui.SetCurrentPPText(moveId, infoHolder.GetCurrentMovePp(moveId).ToString());
-            //infoHolder.SetCurrentMovePp(moveId, currentPP);
         }
 
     }
