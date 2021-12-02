@@ -26,26 +26,10 @@ public class PokemonInfoHolder : MonoBehaviour
 
     public void SetCurrentMovePp(int moveId, int value)
     {
-        switch (moveId)
-        {
-            case 1:
-                Move1CurrentPp = value;
-                break;
-            case 2:
-                Move2CurrentPp = value;
-                break;
-            case 3:
-                Move3CurrentPp = value;
-                break;
-            case 4:
-                Move4CurrentPp = value;
-                break;
-        }
-
-        //Move1CurrentPp = moveId == 1 ? Move1CurrentPp = value :
-        //    Move2CurrentPp = moveId == 2 ? Move2CurrentPp = value :
-        //    Move3CurrentPp = moveId == 3 ? Move3CurrentPp = value :
-        //    Move4CurrentPp = moveId == 4 ? Move4CurrentPp = value : Move4CurrentPp = 0;
+        Move1CurrentPp = moveId == 1 ? Move1CurrentPp = value :
+            Move2CurrentPp = moveId == 2 ? Move2CurrentPp = value :
+            Move3CurrentPp = moveId == 3 ? Move3CurrentPp = value :
+            Move4CurrentPp = moveId == 4 ? Move4CurrentPp = value : Move4CurrentPp = 0;
     }
 
     public int GetCurrentMovePp(int moveId)
@@ -53,6 +37,6 @@ public class PokemonInfoHolder : MonoBehaviour
         return moveId == 1 ? Move1CurrentPp :
             moveId == 2 ? Move2CurrentPp :
             moveId == 3 ? Move3CurrentPp :
-            moveId == 4 ? Move4CurrentPp : 420;
+            moveId == 4 ? Move4CurrentPp : 0;
     }
 }
