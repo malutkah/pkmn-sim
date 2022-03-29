@@ -107,10 +107,19 @@ public class BattleUI : MonoBehaviour
     #region Power Points
     public int GetCurrentPPFromMove(int moveNumber)
     {
-        return moveNumber == 1 ? Convert.ToInt32(Move1CurrentPP.text) :
-            moveNumber == 2 ? Convert.ToInt32(Move2CurrentPP.text) :
-            moveNumber == 3 ? Convert.ToInt32(Move3CurrentPP.text) :
-            moveNumber == 4 ? Convert.ToInt32(Move4CurrentPP.text) : 0;
+        switch (moveNumber)
+        {
+            case 1:
+                return Convert.ToInt32(Move1CurrentPP.text);
+            case 2:
+                return Convert.ToInt32(Move2CurrentPP.text);
+            case 3:
+                return Convert.ToInt32(Move3CurrentPP.text);
+            case 4:
+                return Convert.ToInt32(Move4CurrentPP.text);
+            default:
+                return 0;
+        }
     }
 
     public int GetMaxPPFromMove(int moveNumber)
@@ -139,12 +148,6 @@ public class BattleUI : MonoBehaviour
                 Move4CurrentPP.color = textColor;
                 break;
         }
-
-        //Move1CurrentPP.color = moveNumber == 1 ? Move1CurrentPP.color = textColor :
-        //Move2CurrentPP.color = moveNumber == 2 ? Move2CurrentPP.color = textColor :
-        //Move3CurrentPP.color = moveNumber == 3 ? Move3CurrentPP.color = textColor :
-        //Move4CurrentPP.color = moveNumber == 4 ? Move4CurrentPP.color = textColor :
-        //Move4CurrentPP.color = textColor;
     }
 
     public void SetCurrentPPText(int moveNumber, string value)
@@ -164,12 +167,6 @@ public class BattleUI : MonoBehaviour
                 Move4CurrentPP.text = value;
                 break;
         }
-
-        //Move1CurrentPP.text = moveNumber == 1 ? Move1CurrentPP.text = value :
-        //Move2CurrentPP.text = moveNumber == 2 ? Move2CurrentPP.text = value :
-        //Move3CurrentPP.text = moveNumber == 3 ? Move3CurrentPP.text = value :
-        //Move4CurrentPP.text = moveNumber == 4 ? Move4CurrentPP.text = value :
-        //Move4CurrentPP.text = "ERROR";
     }
     #endregion
 
