@@ -44,7 +44,7 @@ public class BattleLogic : MonoBehaviour
         playerPokemonInTeam.transform.localPosition = new Vector3(0f, .1f, -9720f);
         playerPokemonInTeam.transform.localScale = new Vector3(1.3f, 1.3f, 108);
 
-        infoHolder = GameObject.FindWithTag(settings.InBattle).GetComponent<PokemonInfoHolder>();
+        infoHolder = playerPokemonInTeam.GetComponent<PokemonInfoHolder>(); // GameObject.FindWithTag(settings.InBattle)
     }
 
     private void SwitchPlayerPokemon()

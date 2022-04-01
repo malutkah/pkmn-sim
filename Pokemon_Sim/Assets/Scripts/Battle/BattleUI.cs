@@ -39,6 +39,7 @@ public class BattleUI : MonoBehaviour
 
     private GameObject playerPokemonInBattle;
     private PokemonMoves pokemonMoves;
+    private PokemonInfoHolder infoHolder;
 
     private void Start()
     {
@@ -48,6 +49,7 @@ public class BattleUI : MonoBehaviour
     public void ShowPokemonMoves(bool firstLoad)
     {
         playerPokemonInBattle = GameObject.FindGameObjectWithTag("InBattle");
+        infoHolder = playerPokemonInBattle.GetComponent<PokemonInfoHolder>();
         pokemonMoves = playerPokemonInBattle.GetComponent<PokemonMoves>();
 
         ShowPokemonMoveText();
@@ -72,10 +74,10 @@ public class BattleUI : MonoBehaviour
 
         if (firstLoad)
         {
-            Move1CurrentPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[0]).ToString();
-            Move2CurrentPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[1]).ToString();
-            Move3CurrentPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[2]).ToString();
-            Move4CurrentPP.text = pokemonMoves.GetMovePP(pokemonMoves.MoveNames[3]).ToString();
+            Move1CurrentPP.text = infoHolder.GetCurrentMovePp(1).ToString();
+            Move2CurrentPP.text = infoHolder.GetCurrentMovePp(2).ToString();
+            Move3CurrentPP.text = infoHolder.GetCurrentMovePp(3).ToString();
+            Move4CurrentPP.text = infoHolder.GetCurrentMovePp(4).ToString();
         }
     }
     #endregion

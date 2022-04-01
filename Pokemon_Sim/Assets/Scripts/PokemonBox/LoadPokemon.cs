@@ -15,13 +15,13 @@ public class LoadPokemon : MonoBehaviour
 
     private int spriteCount = 152;
 
+    private Vector3 EndOfField = new Vector3(1.5f, -4, 0.0f);
+    private Vector3 EndOfRow = new Vector3(6.0f, 3.8f, 0.0f);
+
     public float x_Start, y_Start;
     public float x_Space, y_Space;
     public int PokemonInARow;
     public int AmountOfPokemon;
-
-    private Vector3 EndOfField = new Vector3(1.5f, -4, 0.0f);
-    private Vector3 EndOfRow = new Vector3(6.0f, 3.8f, 0.0f);
 
     List<string> pkmnSprite_names = new List<string>();
 

@@ -8,6 +8,7 @@ public class PokemonOnClickHandler : MonoBehaviour
     private PlayerTeam team;
     private PlaySettings settings;
     private PokemonInfoHolder infoHolder;
+    private PokemonMoves pokeMoves;
     private JsonReader reader;
     private BattleLogic logic;
 
@@ -42,6 +43,7 @@ public class PokemonOnClickHandler : MonoBehaviour
     private int pkmn_id = 0;
 
     private bool isClicked = false;
+    private bool firstLoad;
 
     #region Pokemon stats
     private float hp;
@@ -59,6 +61,7 @@ public class PokemonOnClickHandler : MonoBehaviour
     private void Awake()
     {
         infoHolder = gameObject.GetComponent<PokemonInfoHolder>();
+        pokeMoves = GetComponent<PokemonMoves>();
         DontDestroyOnLoad(gameObject);
     }
 
@@ -84,6 +87,7 @@ public class PokemonOnClickHandler : MonoBehaviour
         InitText();
 
         remove.enabled = false;
+        firstLoad = true;
         originalButtonColor = remove.image.color;
     }
     #endregion
@@ -142,6 +146,15 @@ public class PokemonOnClickHandler : MonoBehaviour
         infoHolder.ClickedPokemon = sender;
 
         LoadPokemonData();
+
+        if (firstLoad)
+        {
+            infoHolder.SetCurrentMovePp(1, pokeMoves.GetMovePP(pokeMoves.MoveNames[0]));
+            infoHolder.SetCurrentMovePp(2, pokeMoves.GetMovePP(pokeMoves.MoveNames[1]));
+            infoHolder.SetCurrentMovePp(3, pokeMoves.GetMovePP(pokeMoves.MoveNames[2]));
+            infoHolder.SetCurrentMovePp(4, pokeMoves.GetMovePP(pokeMoves.MoveNames[3]));
+            firstLoad = false;
+        }
 
         name_eng = pokemon.name.english;
 

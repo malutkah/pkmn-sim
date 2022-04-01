@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,19 +25,55 @@ public class PokemonInfoHolder : MonoBehaviour
     public int Move4CurrentPp;
     #endregion
 
+    private PokemonMoves pokeMoves;
+
+    private void Awake()
+    {
+        pokeMoves = GetComponent<PokemonMoves>();
+    }
+
     public void SetCurrentMovePp(int moveId, int value)
     {
-        Move1CurrentPp = moveId == 1 ? Move1CurrentPp = value :
-            Move2CurrentPp = moveId == 2 ? Move2CurrentPp = value :
-            Move3CurrentPp = moveId == 3 ? Move3CurrentPp = value :
-            Move4CurrentPp = moveId == 4 ? Move4CurrentPp = value : Move4CurrentPp = 0;
+        if (moveId == 1)
+        {
+            Move1CurrentPp = value;
+        }
+        if (moveId == 2)
+        {
+            Move2CurrentPp = value;
+        }
+        if (moveId == 3)
+        {
+            Move3CurrentPp = value;
+        }
+        if (moveId == 4)
+        {
+            Move4CurrentPp = value;
+        }
+
     }
 
     public int GetCurrentMovePp(int moveId)
     {
-        return moveId == 1 ? Move1CurrentPp :
-            moveId == 2 ? Move2CurrentPp :
-            moveId == 3 ? Move3CurrentPp :
-            moveId == 4 ? Move4CurrentPp : 0;
+        if (moveId == 1)
+        {
+            return Move1CurrentPp;
+        }
+        else if (moveId == 2)
+        {
+            return Move2CurrentPp;
+        }
+        else if (moveId == 3)
+        {
+            return Move3CurrentPp;
+        }
+        else if (moveId == 4)
+        {
+            return Move4CurrentPp;
+        }
+        else
+        {
+            return -1;
+        }
     }
 }
