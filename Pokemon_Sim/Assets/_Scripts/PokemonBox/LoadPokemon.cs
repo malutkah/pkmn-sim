@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class LoadPokemon : MonoBehaviour
 {
+    private const float x_Start = -323f, y_Start = 4850f;
+    private const float x_Space = 170, y_Space = 150;
+
     [SerializeField]
     private GameObject PokemonPrefab;
 
@@ -18,8 +21,6 @@ public class LoadPokemon : MonoBehaviour
     private Vector3 EndOfField = new Vector3(1.5f, -4, 0.0f);
     private Vector3 EndOfRow = new Vector3(6.0f, 3.8f, 0.0f);
 
-    public float x_Start, y_Start;
-    public float x_Space, y_Space;
     public int PokemonInARow;
     public int AmountOfPokemon;
 
@@ -77,7 +78,6 @@ public class LoadPokemon : MonoBehaviour
         }
 
         PlacePokemonInBox(spriteList);
-
     }
 
     private void PlacePokemonInBox(List<Sprite> spriteList)
@@ -99,5 +99,5 @@ public class LoadPokemon : MonoBehaviour
             SpriteRenderer tmp = pkmnGO.GetComponent<SpriteRenderer>();
             tmp.sprite = spriteList[i];
         }
-    }
+    }    
 }

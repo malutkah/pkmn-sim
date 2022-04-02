@@ -34,17 +34,27 @@ public class BattleLogic : MonoBehaviour
     }
 
     #region switchting pokemon
-    public void SentPokemonIntoBattle(GameObject playerPokemonInTeam)
+    public void SentPokemonIntoBattle(GameObject pokemonInTeam, bool isEnemy = false)
     {
         settings = GameObject.FindWithTag("Settings").GetComponent<PlaySettings>();
 
-        playerPokemonInTeam.GetComponent<SpriteRenderer>().sortingOrder = 2;
-        playerPokemonInTeam.tag = settings.InBattle;
-        playerPokemonInTeam.transform.SetParent(GameObject.FindWithTag("BattleStationPlayer").transform);
-        playerPokemonInTeam.transform.localPosition = new Vector3(0f, .1f, -9720f);
-        playerPokemonInTeam.transform.localScale = new Vector3(1.3f, 1.3f, 108);
+        pokemonInTeam.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        pokemonInTeam.tag = settings.InBattle;
 
-        infoHolder = playerPokemonInTeam.GetComponent<PokemonInfoHolder>(); // GameObject.FindWithTag(settings.InBattle)
+        if (!isEnemy)
+        {
+            pokemonInTeam.transform.SetParent(GameObject.FindWithTag("BattleStationPlayer").transform);
+            pokemonInTeam.transform.localPosition = new Vector3(0f, .1f, -9720f);
+        }
+        else
+        {
+            pokemonInTeam.transform.SetParent(GameObject.FindWithTag("BattleStationEnemy").transform);
+            pokemonInTeam.transform.localPosition = new Vector3(0f, 0.075f, -9720f);
+        }
+
+        pokemonInTeam.transform.localScale = new Vector3(1.3f, 1.3f, 108);
+
+        infoHolder = pokemonInTeam.GetComponent<PokemonInfoHolder>();
     }
 
     private void SwitchPlayerPokemon()

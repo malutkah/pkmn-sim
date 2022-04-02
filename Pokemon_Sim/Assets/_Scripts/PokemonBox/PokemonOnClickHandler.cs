@@ -186,6 +186,12 @@ public class PokemonOnClickHandler : MonoBehaviour
 
             CalculatePokemonStats();
 
+            infoHolder.PrimaryType = pokemon.type[0];
+            if (pokemon.type.Count == 2)
+            {
+                infoHolder.SecondaryType = pokemon.type[1];
+            }
+
             ShowText();
             ShowImage();
         }

@@ -51,14 +51,7 @@ public class PlayerTeam : MonoBehaviour
     {
         if (FightButton != null)
         {
-            if (Team.Count == size)
-            {
-                FightButton.interactable = true;
-            }
-            else
-            {
-                FightButton.interactable = false;
-            }
+            FightButton.interactable = Team.Count == size;
         }
     }
 
@@ -213,7 +206,7 @@ public class PlayerTeam : MonoBehaviour
     {
         int memberId = Team.IndexOf(removedMember);
 
-        bool canMoveUp = (memberId != Team.Count) ? canMoveUp = true : canMoveUp = false;
+        bool canMoveUp = memberId != Team.Count;
 
         if (canMoveUp)
         {

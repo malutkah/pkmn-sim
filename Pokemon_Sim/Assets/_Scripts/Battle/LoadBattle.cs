@@ -19,6 +19,15 @@ public class LoadBattle : MonoBehaviour
     private TextMeshProUGUI PlayerPokemonCurrentHp;
     [SerializeField]
     private TextMeshProUGUI PlayerPokemonLevel;
+
+    [SerializeField]
+    private TextMeshProUGUI EnemyPokemonName;
+    [SerializeField]
+    private TextMeshProUGUI EnemyPokemonMaxHp;
+    [SerializeField]
+    private TextMeshProUGUI EnemyPokemonCurrentHp;
+    [SerializeField]
+    private TextMeshProUGUI EnemyPokemonLevel;
     #endregion
 
     #region battle stations
@@ -87,6 +96,7 @@ public class LoadBattle : MonoBehaviour
         settings = GameObject.FindWithTag("Settings").GetComponent<PlaySettings>();
         logic = gameObject.GetComponent<BattleLogic>();
         ui = gameObject.GetComponent<BattleUI>();
+        playerHealthBar = PlayerHealthBar.GetComponent<HealthBar>();
 
         if (playerTeam.GetTeam() != null)
         {
@@ -95,6 +105,11 @@ public class LoadBattle : MonoBehaviour
         }
 
         LoadPlayerPokemonInImageSlots();
+    }
+
+    private void Start()
+    {
+        playerHealthBar.SetMaxPlayerHp(infoHolder.hp);
     }
     #endregion
 
@@ -119,15 +134,16 @@ public class LoadBattle : MonoBehaviour
                 pokemonParent.Add(teamList[i], PlayerTeamSlot1.transform);
 
                 LoadingInfosForPokemonInBattle(teamList[i]);
-                logic.SentPokemonIntoBattle(teamList[i]);
+                LoadingInfosForPokemonInBattle(EnemyManager.instance.enemyTeam[i], true);
 
-                /* teamList[i].transform.SetParent(PlayerTeamSlot1.transform);
-                 teamList[i].transform.localPosition = resetPosition;
-                 teamList[i].transform.localScale = pokemonLocalScale; */
+                logic.SentPokemonIntoBattle(teamList[i]);
+                logic.SentPokemonIntoBattle(EnemyManager.instance.enemyTeam[i], true);
             }
 
             if (i == 1)
             {
+                EnemyManager.instance.enemyTeam[i].SetActive(false);
+
                 pokemonPositions.Add(teamList[i], resetPosition);
                 pokemonParent.Add(teamList[i], PlayerTeamSlot2.transform);
 
@@ -139,6 +155,8 @@ public class LoadBattle : MonoBehaviour
 
             if (i == 2)
             {
+                EnemyManager.instance.enemyTeam[i].SetActive(false);
+
                 pokemonPositions.Add(teamList[i], resetPosition);
                 pokemonParent.Add(teamList[i], PlayerTeamSlot3.transform);
 
@@ -152,6 +170,8 @@ public class LoadBattle : MonoBehaviour
             {
                 if (i == 3)
                 {
+                    EnemyManager.instance.enemyTeam[i].SetActive(false);
+
                     pokemonPositions.Add(teamList[i], resetPosition);
                     pokemonParent.Add(teamList[i], PlayerTeamSlot4.transform);
 
@@ -163,6 +183,8 @@ public class LoadBattle : MonoBehaviour
 
                 if (i == 4)
                 {
+                    EnemyManager.instance.enemyTeam[i].SetActive(false);
+
                     pokemonPositions.Add(teamList[i], resetPosition);
                     pokemonParent.Add(teamList[i], PlayerTeamSlot5.transform);
 
@@ -174,6 +196,8 @@ public class LoadBattle : MonoBehaviour
 
                 if (i == 5)
                 {
+                    EnemyManager.instance.enemyTeam[i].SetActive(false);
+
                     pokemonPositions.Add(teamList[i], resetPosition);
                     pokemonParent.Add(teamList[i], PlayerTeamSlot6.transform);
 
@@ -188,16 +212,23 @@ public class LoadBattle : MonoBehaviour
     #endregion
 
     #region Pokemon
-    public void LoadingInfosForPokemonInBattle(GameObject playerPokemon)
+    public void LoadingInfosForPokemonInBattle(GameObject pkmn, bool isEnemy = false)
     {
-        infoHolder = playerPokemon.GetComponent<PokemonInfoHolder>();
+        infoHolder = pkmn.GetComponent<PokemonInfoHolder>();
 
-        LoadPokemonInfo(playerPokemon);
+        LoadPokemonInfo(pkmn);
 
-        Debug.Log($"{pokemon.name.english} was sent into battle");
-        StartCoroutine(ui.BattleIntroSentence($"{pokemon.name.english} was sent into battle"));
+        if (!isEnemy)
+        {
+            Debug.Log($"{pokemon.name.english} was sent into battle");
+            StartCoroutine(ui.BattleIntroSentence($"{pokemon.name.english} was sent into battle"));
 
-        InitializePlayerPokemonUiText();
+            InitializePlayerPokemonUiText();
+        }
+        else
+        {
+            InitializeEnemyPokemonUiText();
+        }
     }
 
     private void InitializePlayerPokemonUiText()
@@ -206,6 +237,14 @@ public class LoadBattle : MonoBehaviour
         PlayerPokemonMaxHp.text = infoHolder.hp.ToString();
         PlayerPokemonCurrentHp.text = Mathf.Round(infoHolder.hp).ToString(); // DONE: runden
         PlayerPokemonLevel.text = infoHolder.level.ToString();
+    }
+
+    private void InitializeEnemyPokemonUiText()
+    {
+        EnemyPokemonName.text = pokemon.name.english;
+        EnemyPokemonMaxHp.text = infoHolder.hp.ToString();
+        EnemyPokemonCurrentHp.text = Mathf.Round(infoHolder.hp).ToString(); // DONE: runden
+        EnemyPokemonLevel.text = infoHolder.level.ToString();
     }
 
     private void LoadPokemonInfo(GameObject pkmn)

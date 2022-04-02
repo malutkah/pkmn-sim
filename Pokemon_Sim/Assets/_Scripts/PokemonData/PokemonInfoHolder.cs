@@ -25,6 +25,9 @@ public class PokemonInfoHolder : MonoBehaviour
     public int Move4CurrentPp;
     #endregion
 
+    public string PrimaryType;
+    public string SecondaryType;
+
     private PokemonMoves pokeMoves;
 
     private void Awake()

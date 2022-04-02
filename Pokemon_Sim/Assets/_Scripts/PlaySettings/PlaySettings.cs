@@ -7,6 +7,8 @@ using TMPro;
 
 public class PlaySettings : MonoBehaviour
 {
+    public static PlaySettings instance;
+
     [SerializeField]
     private TextMeshProUGUI progressText;
     [SerializeField]
@@ -37,6 +39,14 @@ public class PlaySettings : MonoBehaviour
 
     [HideInInspector]
     public GameObject LastClickedPokemon;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     private void Start()
     {
