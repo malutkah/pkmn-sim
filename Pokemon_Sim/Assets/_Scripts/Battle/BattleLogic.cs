@@ -21,6 +21,9 @@ public class BattleLogic : MonoBehaviour
     private PlaySettings settings;
     private PokemonInfoHolder infoHolder;
 
+    private GameObject p_pkmnInBattle;
+    private GameObject e_pkmnInBattle;
+
     private bool firstLoad;
 
     private void Awake()
@@ -43,11 +46,13 @@ public class BattleLogic : MonoBehaviour
 
         if (!isEnemy)
         {
+            p_pkmnInBattle = pokemonInTeam;
             pokemonInTeam.transform.SetParent(GameObject.FindWithTag("BattleStationPlayer").transform);
             pokemonInTeam.transform.localPosition = new Vector3(0f, .1f, -9720f);
         }
         else
         {
+            e_pkmnInBattle = pokemonInTeam;
             pokemonInTeam.transform.SetParent(GameObject.FindWithTag("BattleStationEnemy").transform);
             pokemonInTeam.transform.localPosition = new Vector3(0f, 0.075f, -9720f);
         }
@@ -87,10 +92,25 @@ public class BattleLogic : MonoBehaviour
     public void ExecuteMove_ButtonClick()
     {
         // get button name
-        GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
+        GameObject clickedButton = EventSystem.current.currentSelectedGameObject;     
         string moveName = clickedButton.GetComponentInChildren<TextMeshProUGUI>().text;
 
+        ExecuteMove(moveName);
+        
         DecreaseCurrentMovePP(clickedButton);
+    }
+
+    public void ExecuteMove(string moveName, bool playerAttack = true)
+    {
+        // get move
+        moves attackerMove = playerAttack
+            ? p_pkmnInBattle.GetComponent<PokemonMoves>().GetMoveByName(moveName)
+            : e_pkmnInBattle.GetComponent<PokemonMoves>().GetMoveByName(moveName);
+
+
+        Calculations.DoDamageCalculation(attackerMove, p_pkmnInBattle.GetComponent<PokemonInfoHolder>(), e_pkmnInBattle.GetComponent<PokemonInfoHolder>(), playerAttack);
+
+
     }
 
     public void SwitchPokemon_ButtonClick()

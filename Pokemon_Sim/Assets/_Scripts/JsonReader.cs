@@ -14,19 +14,6 @@ public class JsonReader : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.Alpha1))
-        {
-            InitializeMoves();
-        }
-
-        if (Input.GetKeyUp(KeyCode.Alpha2))
-        {
-            InitializePokemons();
-        }
-    }
-
     public Moves GetMoves()
     {
         return moves;
