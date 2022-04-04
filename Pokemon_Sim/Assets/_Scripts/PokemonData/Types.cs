@@ -88,7 +88,20 @@ public static class Types
     {
         float value = 0f;
 
-
+        if (pokemonType == grass || pokemonType == fairy)
+        {
+            value = 2f;
+        }
+        else if (pokemonType == normal || pokemonType == fight || pokemonType == fly || pokemonType == bug || pokemonType == fire
+             || pokemonType == water || pokemonType == dragon || pokemonType == dark || pokemonType == elec || pokemonType == psy
+             || pokemonType == ice)
+        {
+            value = 1f;
+        }
+        else if (pokemonType == poison || pokemonType == ground || pokemonType == rock || pokemonType == ghost)
+        {
+            value = 0.5f;
+        }
 
         return value;
     }
@@ -96,7 +109,19 @@ public static class Types
     {
         float value = 0f;
 
-
+        if (pokemonType == poison || pokemonType == rock || pokemonType == fire || pokemonType == steel || pokemonType == elec)
+        {
+            value = 2f;
+        }
+        else if (pokemonType == normal || pokemonType == fight || pokemonType == ground || pokemonType == ghost || pokemonType == dark
+         || pokemonType == water || pokemonType == psy || pokemonType == ice || pokemonType == dragon || pokemonType == fairy)
+        {
+            value = 1f;
+        }
+        else if (pokemonType == bug || pokemonType == grass)
+        {
+            value = 0.5f;
+        }
 
         return value;
     }
@@ -104,7 +129,20 @@ public static class Types
     {
         float value = 0f;
 
-
+        if (pokemonType == fly || pokemonType == bug || pokemonType == fire || pokemonType == ice)
+        {
+            value = 2f;
+        }
+        else if (pokemonType == normal || pokemonType == grass || pokemonType == water || pokemonType == elec || pokemonType == fairy
+         || pokemonType == poison || pokemonType == ghost || pokemonType == dark || pokemonType == psy || pokemonType == dragon
+          || pokemonType == rock)
+        {
+            value = 1f;
+        }
+        else if (pokemonType == fight || pokemonType == ground || pokemonType == steel)
+        {
+            value = 0.5f;
+        }
 
         return value;
     }
@@ -112,7 +150,20 @@ public static class Types
     {
         float value = 0f;
 
-
+        if (pokemonType == grass || pokemonType == psy || pokemonType == dark)
+        {
+            value = 2f;
+        }
+        else if (pokemonType == normal || pokemonType == ground || pokemonType == rock || pokemonType == bug || pokemonType == water
+         || pokemonType == elec || pokemonType == ice || pokemonType == dragon)
+        {
+            value = 1f;
+        }
+        else if (pokemonType == fight || pokemonType == steel || pokemonType == fire || pokemonType == poison || pokemonType == ghost
+         || pokemonType == fly || pokemonType == fairy)
+        {
+            value = 0.5f;
+        }
 
         return value;
     }
