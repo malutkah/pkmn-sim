@@ -25,16 +25,14 @@ public class PlaySettings : MonoBehaviour
     private InputField field;
 
     #region Tags for pokemon
-    [HideInInspector]
-    public string InTeam = "InTeam";
-    [HideInInspector]
-    public string NotInTeam = "NotInTeam";
-    [HideInInspector]
-    public string InBattle = "InBattle";
-    [HideInInspector]
-    public string InBattleTeam = "InBattleTeam"; // isn't battling but in the team
-    [HideInInspector]
-    public string Dead = "Dead";
+    [HideInInspector] public string InTeam = "InTeam";
+    [HideInInspector] public string InTeamEnemy = "InTeamEnemy";
+    [HideInInspector] public string NotInTeam = "NotInTeam";
+    [HideInInspector] public string InBattle = "InBattle";
+    [HideInInspector] public string InBattleEnemy = "InBattleEnemy";
+    [HideInInspector] public string InBattleTeam = "InBattleTeam"; // isn't battling but in the team
+    [HideInInspector] public string InBattleTeamEnemy = "InBattleTeamEnemy"; // isn't battling but in the team
+    [HideInInspector] public string Dead = "Dead";
     #endregion
 
     [HideInInspector]
@@ -112,7 +110,7 @@ public class PlaySettings : MonoBehaviour
             yield return null;
         }
     }
-    
+
     public void GetLevelFromEdit()
     {
         if (field.text == "")
@@ -134,6 +132,6 @@ public class PlaySettings : MonoBehaviour
             field.text = level.ToString();
         }
     }
-   
+
 
 }

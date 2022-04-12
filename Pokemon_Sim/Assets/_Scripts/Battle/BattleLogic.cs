@@ -42,16 +42,17 @@ public class BattleLogic : MonoBehaviour
         settings = GameObject.FindWithTag("Settings").GetComponent<PlaySettings>();
 
         pokemonInTeam.GetComponent<SpriteRenderer>().sortingOrder = 2;
-        pokemonInTeam.tag = settings.InBattle;
 
         if (!isEnemy)
         {
+            pokemonInTeam.tag = settings.InBattle;
             p_pkmnInBattle = pokemonInTeam;
             pokemonInTeam.transform.SetParent(GameObject.FindWithTag("BattleStationPlayer").transform);
             pokemonInTeam.transform.localPosition = new Vector3(0f, .1f, -9720f);
         }
         else
         {
+            pokemonInTeam.tag = settings.InBattleEnemy;
             e_pkmnInBattle = pokemonInTeam;
             pokemonInTeam.transform.SetParent(GameObject.FindWithTag("BattleStationEnemy").transform);
             pokemonInTeam.transform.localPosition = new Vector3(0f, 0.075f, -9720f);
@@ -92,11 +93,11 @@ public class BattleLogic : MonoBehaviour
     public void ExecuteMove_ButtonClick()
     {
         // get button name
-        GameObject clickedButton = EventSystem.current.currentSelectedGameObject;     
+        GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
         string moveName = clickedButton.GetComponentInChildren<TextMeshProUGUI>().text;
 
         ExecuteMove(moveName);
-        
+
         DecreaseCurrentMovePP(clickedButton);
     }
 
