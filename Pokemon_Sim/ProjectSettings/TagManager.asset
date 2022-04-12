@@ -13,6 +13,9 @@ TagManager:
   - InBattleTeam
   - BattleStationPlayer
   - BattleStationEnemy
+  - InBattleEnemy
+  - InTeamEnemy
+  - InBattleTeamEnemy
   layers:
   - Default
   - TransparentFX
