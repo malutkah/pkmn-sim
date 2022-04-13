@@ -3,9 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PokemonStatus
+{
+    NONE,
+    BURNED,
+    FROZEN,
+    PARALYZED,
+    POISONED,
+    SLEEPING,
+    CONFUSED,
+    DEAD
+}
+
 public class PokemonInfoHolder : MonoBehaviour
 {
     public GameObject ClickedPokemon;
+
+    public PokemonStatus status;
 
     #region Pokemon stats    
     public float hp;
@@ -25,15 +39,13 @@ public class PokemonInfoHolder : MonoBehaviour
     public int Move4CurrentPp;
     #endregion
 
+    private void Start()
+    {
+        status = PokemonStatus.NONE;
+    }
+
     public string PrimaryType;
     public string SecondaryType;
-
-    private PokemonMoves pokeMoves;
-
-    private void Awake()
-    {
-        pokeMoves = GetComponent<PokemonMoves>();
-    }
 
     public void SetCurrentMovePp(int moveId, int value)
     {

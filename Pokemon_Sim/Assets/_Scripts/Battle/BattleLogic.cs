@@ -110,8 +110,6 @@ public class BattleLogic : MonoBehaviour
 
 
         Calculations.DoDamageCalculation(attackerMove, p_pkmnInBattle.GetComponent<PokemonInfoHolder>(), e_pkmnInBattle.GetComponent<PokemonInfoHolder>(), playerAttack);
-
-
     }
 
     public void SwitchPokemon_ButtonClick()

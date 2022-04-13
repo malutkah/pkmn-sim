@@ -9,7 +9,6 @@ public class LoadPokemon : MonoBehaviour
     [SerializeField]
     private GameObject PokemonPrefab;
 
-    private SpriteRenderer spriteRenderer;
     private Sprite pkmn_sprite;
 
     private GameObject pkmnGO;
@@ -36,8 +35,6 @@ public class LoadPokemon : MonoBehaviour
 
     private void Start()
     {
-        spriteRenderer = PokemonPrefab.GetComponent<SpriteRenderer>();
-
         PkmnBox_1 = GameObject.Find("Container");
 
         CreatePokemons();
@@ -45,8 +42,7 @@ public class LoadPokemon : MonoBehaviour
 
     void CreatePokemons()
     {
-        var spriteCounter = Resources.LoadAll("sprites", typeof(Sprite));
-        // spriteCount = 152; //spriteCounter.Length;
+        // spriteCount = 152;
 
         List<Sprite> spriteList = new List<Sprite>();
 

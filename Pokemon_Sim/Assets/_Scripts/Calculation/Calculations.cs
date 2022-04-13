@@ -44,6 +44,15 @@ public static class Calculations
 
     #endregion
 
+    #region Calculation extras
+
+    private static float basedamage;
+
+    private static bool useSpecial = false;
+    private static bool isStatusMove = false;
+
+    #endregion
+
     private static void InitStats(moves attackerMove, PokemonInfoHolder playerPokemonInfo, PokemonInfoHolder enemyPokemonInfo)
     {
         p_hp = playerPokemonInfo.hp;
@@ -95,17 +104,65 @@ public static class Calculations
     // not effection = 0.5
     // no effect = 0
 
-    private static float GetEffectivness(string pokemonType)
+    public static float GetEffectivness(string pokemonType, string _moveType)
     {
         float effectValueMultiplicator = 0f;
 
-        switch (moveType)
+        switch (_moveType)
         {
             case Types.normal:
                 effectValueMultiplicator = Types.NormalVs(pokemonType);
                 break;
-
-            default:
+            case Types.fight:
+                effectValueMultiplicator = Types.FightingVs(pokemonType);
+                break;
+            case Types.fly:
+                effectValueMultiplicator = Types.FlyingVs(pokemonType);
+                break;
+            case Types.poison:
+                effectValueMultiplicator = Types.PoisonVs(pokemonType);
+                break;
+            case Types.ground:
+                effectValueMultiplicator = Types.GroundVs(pokemonType);
+                break;
+            case Types.rock:
+                effectValueMultiplicator = Types.RockVs(pokemonType);
+                break;
+            case Types.bug:
+                effectValueMultiplicator = Types.BugVs(pokemonType);
+                break;
+            case Types.ghost:
+                effectValueMultiplicator = Types.GhostVs(pokemonType);
+                break;
+            case Types.steel:
+                effectValueMultiplicator = Types.SteelVs(pokemonType);
+                break;
+            case Types.fire:
+                effectValueMultiplicator = Types.FireVs(pokemonType);
+                break;
+            case Types.water:
+                effectValueMultiplicator = Types.WaterVs(pokemonType);
+                break;
+            case Types.grass:
+                effectValueMultiplicator = Types.GrassVs(pokemonType);
+                break;
+            case Types.elec:
+                effectValueMultiplicator = Types.ElectricVs(pokemonType);
+                break;
+            case Types.psy:
+                effectValueMultiplicator = Types.PsychicVs(pokemonType);
+                break;
+            case Types.ice:
+                effectValueMultiplicator = Types.IceVs(pokemonType);
+                break;
+            case Types.dragon:
+                effectValueMultiplicator = Types.DragonVs(pokemonType);
+                break;
+            case Types.dark:
+                effectValueMultiplicator = Types.DarkVs(pokemonType);
+                break;
+            case Types.fairy:
+                effectValueMultiplicator = Types.FairyVs(pokemonType);
                 break;
         }
 
@@ -116,39 +173,231 @@ public static class Calculations
 
     #region Damage Calculation
 
+    public static bool IsCritical(moves attackingMove)
+    {
+        bool hit = false;
+
+
+
+        return hit;
+    }
+
     public static float DoDamageCalculation(moves attackerMove, PokemonInfoHolder playerPokemonInfo, PokemonInfoHolder enemyPokemonInfo, bool playerAttack)
     {
+        PokemonInfoHolder attackingPokemon = playerAttack ? playerPokemonInfo : enemyPokemonInfo;
+
         InitStats(attackerMove, playerPokemonInfo, enemyPokemonInfo);
 
         float totalDamage = 0f;
         float baseDamage = 1f;
         float F1 = 1f, F2 = 1f, F3 = 1f;
         float critical = 1f;
+        int criticalStep = 1;
+        float critAccuracy = 4.16f;
         float Z = 0f;
         float type1 = 1f;
         float type2 = 1f;
         bool stab = false;
         float stabBonus = 1f;
+        int level = 0;
+        float sp_attack = 1f;
+        float sp_defense = 1f;
+        isStatusMove = false;
 
         // player attacks enemy
         if (playerAttack)
         {
             // player move type VS. enemy's type
-            type1 = GetEffectivness(e_primaryType);
+            type1 = GetEffectivness(e_primaryType, moveType);
+            level = playerPokemonInfo.level;
 
             if (p_secondaryType != "")
             {
-                type2 = GetEffectivness(e_secondaryType);
+                type2 = GetEffectivness(e_secondaryType, moveType);
+            }
+        }
+        else
+        {
+            // enemy attacks player
+            // enemy move type VS. player's type
+            type1 = GetEffectivness(p_primaryType, moveType);
+            level = enemyPokemonInfo.level;
+
+            if (e_secondaryType != "")
+            {
+                type2 = GetEffectivness(p_secondaryType, moveType);
             }
         }
 
+        if (attackerMove.category == "physical")
+        {
+            useSpecial = false;
+        }
+        else if (attackerMove.category == "special")
+        {
+            useSpecial = true;
 
+            if (attackerMove.power == 0)
+            {
+                isStatusMove = true;
+            }
+        }
 
+        criticalStep = MoveManager.GetMoveStep(attackerMove);
+
+        critAccuracy = criticalStep == 2 ? 12.5f : criticalStep == 3 ? 50f : criticalStep == 4 ? 100 : critAccuracy;
+
+        critical = WasACritical(critAccuracy) ? 1.5f : critical;
+
+        stab = attackerMove.type == attackingPokemon.PrimaryType || (type2 != 1f ? attackerMove.type == attackingPokemon.SecondaryType : false);
+        stabBonus = stab ? 1.5f : stabBonus;
+
+        Z = Random.Range(85, 100);
+
+        baseDamage = CalaculateBasedamage(attackerMove);
+
+        F1 = Calculate_F1(attackerMove, attackingPokemon);
+        F2 = Calculate_F2();
+        F3 = Calculate_F3();
+
+        if (!isStatusMove)
+        {
+            sp_attack = CalculateSp_Attack(attackerMove, attackingPokemon);
+            sp_defense = CalculateSp_Defense(attackerMove, attackingPokemon);
+        }
+        else
+        {
+            // do status move
+            return 0;
+        }
+
+        totalDamage = ((level * (2 / 5) + 2) * basedamage * (sp_attack / (50 * sp_defense)) * F1 + 2) * critical * F2 * (Z / 100) * stabBonus * type1 * type2 * F3;
 
         return totalDamage;
     }
 
     #endregion
+
+    private static bool WasACritical(float critAccuracy)
+    {
+        return Random.Range(0, 100) <= critAccuracy;
+    }
+
+    private static bool IsAttackStab(moves attackMove, PokemonInfoHolder attackinPokemon)
+    {
+        if (attackMove.type == attackinPokemon.PrimaryType)
+        {
+            return true;
+        }
+        else if (attackMove.type == attackinPokemon.SecondaryType)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private static float CalculateSp_Attack(moves attackerMove, PokemonInfoHolder attackinPokemon)
+    {
+        float attack = 0f;
+        float stat = 1f;
+        float sv = 1f;
+        float ff = 1f;
+        float _if = 1f;
+
+        if (!useSpecial)
+        {
+            // pyhsical attack
+            stat = attackinPokemon.attack;
+        }
+        else
+        {
+            // special attack
+
+            // attack is a status moves
+            if (attackerMove.power == 0)
+            {
+                isStatusMove = true;
+                return 1f;
+            }
+        }
+
+        attack = stat * sv * ff * _if;
+
+        return attack;
+    }
+
+    private static float CalculateSp_Defense(moves attackerMove, PokemonInfoHolder attackinPokemon)
+    {
+        float defense = 0f;
+        float stat = 1f;
+        float mod = 1f;
+        float sv = 1f;
+
+        if (!useSpecial)
+        {
+            // pyhsical attack
+            stat = attackinPokemon.defense;
+        }
+        else if (attackerMove.category == "special")
+        {
+            // special attack
+            stat = attackinPokemon.spDefense;
+        }
+
+        defense = stat * sv * mod;
+
+        return defense;
+    }
+
+    private static float CalaculateBasedamage(moves attackerMove)
+    {
+        float value = 0f;
+        float rh = 1;
+        float bs = 1;
+        float it = 1;
+        float lv = 1;
+        float ls = 1;
+        float nm = 1;
+        float af = 1;
+        float zf = 1;
+
+        ls = attackerMove.ename == "Mud Sport" ? 0.5f : 1f;
+        nm = attackerMove.ename == "Water Sport" ? 0.5f : 1f;
+
+        bs = attackerMove.power;
+
+        value = rh * bs * it * lv * ls * nm * af * zf;
+
+        return value;
+    }
+
+    private static float Calculate_F1(moves attackingMove, PokemonInfoHolder attackingPokemon)
+    {
+        float value = 1f;
+        float burn = 1f;
+        float twoVs2 = 1f;
+        float sr = 1f;
+        float ff = 1f;
+        float rl = 1f;
+
+        // get if attacking pokemon is burning
+        // get if reflector or light shield is active
+
+        value = burn * rl * twoVs2 * sr * ff;
+
+        return value;
+    }
+
+    private static float Calculate_F2()
+    {
+        return 1f;
+    }
+
+    private static float Calculate_F3()
+    {
+        return 1f;
+    }
 
     #region Damage calc info
 
@@ -201,6 +450,7 @@ public static class Calculations
      * F1 = BRT * RL * 2V2 * SR * FF
      * BRT = 0.5 wenn verbrennung, default: 1
      * RL: default 1 | Reflektor & Lichtschild | Reflektor? RL 0.5 for physisch angr., Lichtschild? RL 0.5 for spezial angr.
+     * SR: sonnen-/regentanz, default: 1 | Regnet es, beträgt der Faktor für Wasser-Attacken 1,5 und für Feuer-Attacken℅0,5. Scheint dagegen die Sonne, gilt für Feuer-Attacken der Wert 1,5 und für Wasser-Attacken 0,5
      * 2V2 = 1
      * FF = 1 (Feuerfaenger)
      */
