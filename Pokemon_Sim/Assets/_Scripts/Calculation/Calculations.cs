@@ -187,6 +187,7 @@ public static class Calculations
         PokemonInfoHolder attackingPokemon = playerAttack ? playerPokemonInfo : enemyPokemonInfo;
 
         InitStats(attackerMove, playerPokemonInfo, enemyPokemonInfo);
+        MoveManager.attackingPokemon = attackingPokemon;
 
         float totalDamage = 0f;
         float baseDamage = 1f;
@@ -243,7 +244,7 @@ public static class Calculations
             }
         }
 
-        criticalStep = MoveManager.GetMoveStep(attackerMove);
+        criticalStep = MoveManager.GetMoveCriticalStep(attackerMove);
 
         critAccuracy = criticalStep == 2 ? 12.5f : criticalStep == 3 ? 50f : criticalStep == 4 ? 100 : critAccuracy;
 
@@ -309,10 +310,12 @@ public static class Calculations
         {
             // pyhsical attack
             stat = attackinPokemon.attack;
+            sv = attackinPokemon.pokemonStatStepValue_attack;
         }
         else
         {
             // special attack
+            sv = attackinPokemon.pokemonStatStepValue_spAttack;
 
             // attack is a status moves
             if (attackerMove.power == 0)
@@ -327,7 +330,7 @@ public static class Calculations
         return attack;
     }
 
-    private static float CalculateSp_Defense(moves attackerMove, PokemonInfoHolder attackinPokemon)
+    private static float CalculateSp_Defense(moves attackerMove, PokemonInfoHolder attackingPokemon)
     {
         float defense = 0f;
         float stat = 1f;
@@ -337,13 +340,16 @@ public static class Calculations
         if (!useSpecial)
         {
             // pyhsical attack
-            stat = attackinPokemon.defense;
+            stat = attackingPokemon.defense;
+            sv = attackingPokemon.pokemonStatStepValue_defense;
         }
         else if (attackerMove.category == "special")
         {
             // special attack
-            stat = attackinPokemon.spDefense;
+            sv = attackingPokemon.pokemonStatStepValue_spDefense;
+            stat = attackingPokemon.spDefense;
         }
+
 
         defense = stat * sv * mod;
 
@@ -482,6 +488,7 @@ public static class Calculations
      * superzahn & naturzorn halbieren immer die KP
      * guillotine, hornbohrer, eiseskalte, geofissur immer one hit => schaden = kp des gegners
      * psywelle: schaden = Level * x | x => rnd 0.5 - 1.5
+     * nachtnebel: schaden in hoehe des enemy levels
      */
 
     // Volltreffer

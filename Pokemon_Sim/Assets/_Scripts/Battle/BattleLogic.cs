@@ -103,13 +103,34 @@ public class BattleLogic : MonoBehaviour
 
     public void ExecuteMove(string moveName, bool playerAttack = true)
     {
+        bool hit = true;
+
         // get move
         moves attackerMove = playerAttack
             ? p_pkmnInBattle.GetComponent<PokemonMoves>().GetMoveByName(moveName)
             : e_pkmnInBattle.GetComponent<PokemonMoves>().GetMoveByName(moveName);
 
+        PokemonInfoHolder infoHolderPlayerPkmn = p_pkmnInBattle.GetComponent<PokemonInfoHolder>();
+        PokemonInfoHolder infoHolderEnemyPkmn = e_pkmnInBattle.GetComponent<PokemonInfoHolder>();
 
-        Calculations.DoDamageCalculation(attackerMove, p_pkmnInBattle.GetComponent<PokemonInfoHolder>(), e_pkmnInBattle.GetComponent<PokemonInfoHolder>(), playerAttack);
+        hit = UnityEngine.Random.Range(0, 100) <= attackerMove.accuracy;
+
+        if (hit)
+        {
+            // is attack status, normal, or uses other calculations
+            if (attackerMove.type == "special" && attackerMove.power == 0)
+            {
+
+            }
+
+            Calculations.DoDamageCalculation(attackerMove, infoHolderPlayerPkmn, infoHolderEnemyPkmn, playerAttack);
+            
+            // MoveManager.ExecuteMoveEffect(attackerMove);
+        }
+        else 
+        {
+            Debug.Log("Missed");
+        }
     }
 
     public void SwitchPokemon_ButtonClick()

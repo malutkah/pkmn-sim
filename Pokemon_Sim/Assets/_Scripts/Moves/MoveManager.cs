@@ -4,7 +4,9 @@ public static class MoveManager
 {
     // handle moves and such like status moves
 
-    public static int GetMoveStep(moves attackingMove)
+    public static PokemonInfoHolder attackingPokemon;
+
+    public static int GetMoveCriticalStep(moves attackingMove)
     {
         int step = 1;
 
@@ -24,4 +26,29 @@ public static class MoveManager
 
         return step;
     }
+
+    private static void ExecuteMoveEffect(moves attackerMove)
+    {
+
+    }
+
+    private static bool DoesAttackDoDamage(moves attackerMove)
+    {
+        bool doesDamage = false;
+
+
+
+        return doesDamage;
+    }
+
+    #region all the moves
+
+    private static void Execute_SwordDance()
+    {
+        // increases the attack stat of the attackin Pokemon for 2 steps (SV)
+
+        
+    }
+
+    #endregion
 }

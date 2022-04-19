@@ -2368,10 +2368,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 894632421}
-  - component: {fileID: 894632420}
   - component: {fileID: 894632417}
   - component: {fileID: 894632419}
   - component: {fileID: 894632418}
+  - component: {fileID: 894632420}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -2441,25 +2441,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 894632416}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b1dbcbc37b75634291c86c3c5559610, type: 3}
+  m_Script: {fileID: 11500000, guid: 84a044fceb4432b47a029805f4d06447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerHealthBar: {fileID: 147735669}
-  PlayerPokemonName: {fileID: 1815515432}
-  PlayerPokemonMaxHp: {fileID: 1755084109}
-  PlayerPokemonCurrentHp: {fileID: 584340970}
-  PlayerPokemonLevel: {fileID: 1064044334}
-  EnemyPokemonName: {fileID: 248201003}
-  EnemyPokemonMaxHp: {fileID: 957754171}
-  EnemyPokemonCurrentHp: {fileID: 1163812238}
-  EnemyPokemonLevel: {fileID: 904253547}
+  PokemonPrefab: {fileID: 6001172362769756325, guid: c22645250b3f5084face9f3dc48774dd, type: 3}
   BattleStationPlayer: {fileID: 189159425}
-  PlayerTeamSlot1: {fileID: 0}
-  PlayerTeamSlot2: {fileID: 0}
-  PlayerTeamSlot3: {fileID: 0}
-  PlayerTeamSlot4: {fileID: 0}
-  PlayerTeamSlot5: {fileID: 0}
-  PlayerTeamSlot6: {fileID: 0}
+  BattleStationEnemy: {fileID: 1697189977}
 --- !u!4 &894632421
 Transform:
   m_ObjectHideFlags: 0

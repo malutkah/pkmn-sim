@@ -4014,8 +4014,7 @@
             "jname": "\u30b8\u30e3\u30a4\u30ed\u30dc\u30fc\u30eb", 
             "power": 0, 
             "pp": 5, 
-            "tm": 74, 
-            "type": "Steel"
+             "type": "Steel"
         }, 
         {
             "accuracy": 0, 
@@ -4038,7 +4037,7 @@
             "power": 65, 
             "pp": 10, 
             "type": "Water"
-        }, 
+        },
         {
             "accuracy": 100, 
             "category": "physical", 
