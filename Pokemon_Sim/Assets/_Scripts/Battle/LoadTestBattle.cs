@@ -1,39 +1,76 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class LoadTestBattle : MonoBehaviour
 {
-    public GameObject PokemonPrefab;
+    [SerializeField] private GameObject PlayerHealthBar;
+
+    #region UI Elements
+    [SerializeField] private TextMeshProUGUI PlayerPokemonName;
+    [SerializeField] private TextMeshProUGUI PlayerPokemonMaxHp;
+    [SerializeField] private TextMeshProUGUI PlayerPokemonCurrentHp;
+    [SerializeField] private TextMeshProUGUI PlayerPokemonLevel;
+
+    [SerializeField] private TextMeshProUGUI EnemyPokemonName;
+    [SerializeField] private TextMeshProUGUI EnemyPokemonMaxHp;
+    [SerializeField] private TextMeshProUGUI EnemyPokemonCurrentHp;
+    [SerializeField] private TextMeshProUGUI EnemyPokemonLevel;
+    #endregion
+
+    public GameObject PlayerPokemonPrefab;
+    public GameObject EnemyPokemonPrefab;
     public GameObject BattleStationPlayer;
     public GameObject BattleStationEnemy;
+    public JsonReader reader;
 
+    private pokemon playerPkmn, enemyPkmn;
+
+    private PokemonInfoHolder playerInfoHolder, enemyInfoHolder;
+
+    private void Awake()
+    {
+        playerInfoHolder = PlayerPokemonPrefab.GetComponent<PokemonInfoHolder>();
+        enemyInfoHolder = EnemyPokemonPrefab.GetComponent<PokemonInfoHolder>();
+    }
 
     void Start()
     {
-        CreatePlayerPokmeon();
-        CreateEnemyPokmeon();
+        LoadPlayerPokmeon();
+        LoadEnemyPokmeon();
     }
 
-    void Update()
+    private void InitializePlayerPokemonUiText()
     {
-        
+        PlayerPokemonName.text = playerPkmn.name.english;
+        PlayerPokemonMaxHp.text = playerInfoHolder.hp.ToString();
+        PlayerPokemonCurrentHp.text = Mathf.Round(playerInfoHolder.hp).ToString(); // DONE: runden
+        PlayerPokemonLevel.text = playerInfoHolder.level.ToString();
     }
 
-    private void CreatePlayerPokmeon()
+    private void InitializeEnemyPokemonUiText()
     {
-        Sprite newSprite = Resources.Load<Sprite>("sprites/009MS");
-        string pkmnSpriteName = newSprite.name;
-
-        var pkmnGo = Instantiate(PokemonPrefab, new Vector3(0f, 0f), Quaternion.identity);
-        pkmnGo.transform.SetParent(BattleStationPlayer.transform);
-        pkmnGo.transform.localScale = new Vector3(300.0f, 300.0f, 1.0f);
-
-        pkmnGo.name = pkmnSpriteName;
+        EnemyPokemonName.text = enemyPkmn.name.english;
+        EnemyPokemonMaxHp.text = enemyInfoHolder.hp.ToString();
+        EnemyPokemonCurrentHp.text = Mathf.Round(enemyInfoHolder.hp).ToString(); // DONE: runden
+        EnemyPokemonLevel.text = enemyInfoHolder.level.ToString();
     }
 
-    private void CreateEnemyPokmeon()
+    private void LoadPlayerPokmeon()
     {
+        var id = Convert.ToInt32(PlayerPokemonPrefab.name.Substring(0, 3));
+        playerPkmn = new pokemon();
 
+        reader.GetPokemons().pokemon.Find(p => p.id == id);
+    }
+
+    private void LoadEnemyPokmeon()
+    {
+        var id = Convert.ToInt32(EnemyPokemonPrefab.name.Substring(0, 3));
+        enemyPkmn = new pokemon();
+
+        reader.GetPokemons().pokemon.Find(p => p.id == id);
     }
 }

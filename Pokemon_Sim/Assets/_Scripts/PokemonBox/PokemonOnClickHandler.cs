@@ -67,28 +67,32 @@ public class PokemonOnClickHandler : MonoBehaviour
 
     private void Start()
     {
-        JsonReader = GameObject.Find("reader");
-        settings = GameObject.Find("Settings_Handler").GetComponent<PlaySettings>();
-        team = GameObject.Find("TeamHandler").GetComponent<PlayerTeam>();
-        add = GameObject.Find("ButtonAddToTeam").GetComponent<Button>();
-        remove = GameObject.Find("ButtonRemoveFromTeam").GetComponent<Button>();
-        ImagePkmn = GameObject.Find("ImagePkmn").GetComponent<Image>();
-
-        if (settings != null)
+        if (SceneManager.GetActiveScene().name != "BattleCalcuTesting")
         {
-            level = settings.level;
+
+            JsonReader = GameObject.Find("reader");
+            settings = GameObject.Find("Settings_Handler").GetComponent<PlaySettings>();
+            team = GameObject.Find("TeamHandler").GetComponent<PlayerTeam>();
+            add = GameObject.Find("ButtonAddToTeam").GetComponent<Button>();
+            remove = GameObject.Find("ButtonRemoveFromTeam").GetComponent<Button>();
+            ImagePkmn = GameObject.Find("ImagePkmn").GetComponent<Image>();
+
+            if (settings != null)
+            {
+                level = settings.level;
+            }
+
+            if (JsonReader != null)
+            {
+                reader = JsonReader.GetComponent<JsonReader>();
+            }
+
+            InitText();
+
+            remove.enabled = false;
+            firstLoad = true;
+            originalButtonColor = remove.image.color;
         }
-
-        if (JsonReader != null)
-        {
-            reader = JsonReader.GetComponent<JsonReader>();
-        }
-
-        InitText();
-
-        remove.enabled = false;
-        firstLoad = true;
-        originalButtonColor = remove.image.color;
     }
     #endregion
 
@@ -199,7 +203,7 @@ public class PokemonOnClickHandler : MonoBehaviour
 
     private void LoadPokemonData()
     {
-        pkmn_name = name;
+        pkmn_name = gameObject.name;
 
         pkmn_id = Convert.ToInt32(pkmn_name.Substring(0, 3));
 
