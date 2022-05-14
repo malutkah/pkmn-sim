@@ -36,7 +36,7 @@ public class TypeCalculation : MonoBehaviour
 
         effectValueMultiplicator = type1 * type2;
 
-        string tmpText = effectValueMultiplicator == 2 ? "Super Effective" : effectValueMultiplicator == 0.5f ? "Not Effective" : effectValueMultiplicator == 1 ? "Normal" : "Nothing";
+        string tmpText = effectValueMultiplicator == 2 ? "Super Effective" : effectValueMultiplicator == 0.5f ? "Not Effective" : effectValueMultiplicator == 1 ? "Normal" : effectValueMultiplicator == 4 ? "Double super effective" : "Nothing";
 
         valueText.text = tmpText; // effectValueMultiplicator.ToString();
     }

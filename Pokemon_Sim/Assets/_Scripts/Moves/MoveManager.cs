@@ -6,6 +6,9 @@ public static class MoveManager
 
     public static PokemonInfoHolder attackingPokemon;
 
+    private static int increaseStatBy;
+    private static int decreaseStatBy;
+
     public static int GetMoveCriticalStep(moves attackingMove)
     {
         int step = 1;
@@ -27,9 +30,17 @@ public static class MoveManager
         return step;
     }
 
-    private static void ExecuteMoveEffect(moves attackerMove)
+    public static void ExecuteMoveEffect(moves attackerMove)
     {
+        switch (attackerMove.ename)
+        {
+            case "Sword Dance":
+                Execute_SwordDance();
+                break;
 
+            default:
+                break;
+        }
     }
 
     private static bool DoesAttackDoDamage(moves attackerMove)
@@ -46,8 +57,10 @@ public static class MoveManager
     private static void Execute_SwordDance()
     {
         // increases the attack stat of the attackin Pokemon for 2 steps (SV)
+        increaseStatBy = 2;
+        attackingPokemon.IncreasePokemonStatStep_Attack(increaseStatBy);
 
-        
+        // game manage write text ("attack increased by 2")
     }
 
     #endregion
