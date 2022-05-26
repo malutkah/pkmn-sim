@@ -36,6 +36,16 @@ public class BattleLogic : MonoBehaviour
         firstLoad = true;
     }
 
+    public void SetPkmnInBattle(GameObject pkmn, bool isPlayer)
+    {
+        if (isPlayer)
+            p_pkmnInBattle = pkmn;
+        else
+            e_pkmnInBattle = pkmn;
+
+        infoHolder = pkmn.GetComponent<PokemonInfoHolder>();
+    }
+
     #region switchting pokemon
     public void SentPokemonIntoBattle(GameObject pokemonInTeam, bool isEnemy = false)
     {
@@ -124,10 +134,10 @@ public class BattleLogic : MonoBehaviour
             }
 
             Calculations.DoDamageCalculation(attackerMove, infoHolderPlayerPkmn, infoHolderEnemyPkmn, playerAttack);
-            
+
             // MoveManager.ExecuteMoveEffect(attackerMove);
         }
-        else 
+        else
         {
             Debug.Log("Missed");
         }

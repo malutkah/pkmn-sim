@@ -2489,6 +2489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerHealthBar: {fileID: 147735669}
+  Level: 70
   PlayerPokemonName: {fileID: 1815515432}
   PlayerPokemonMaxHp: {fileID: 1755084109}
   PlayerPokemonCurrentHp: {fileID: 584340970}

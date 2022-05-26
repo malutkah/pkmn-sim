@@ -20,7 +20,12 @@ public class PokemonMoves : MonoBehaviour
     private string pkmn_type1 = "";
     private string pkmn_type2 = "";
 
-    private void Start()
+    private void Awake()
+    {
+        Init();
+    }
+
+    public void Init()
     {
         reader = GameObject.Find("reader").GetComponent<JsonReader>();
 
@@ -31,7 +36,7 @@ public class PokemonMoves : MonoBehaviour
         SaveMoveNames();
     }
 
-    private void LoadPokemon()
+    public void LoadPokemon()
     {
         pkmn_id = Convert.ToInt32(name.Substring(0, 3));
 
@@ -52,7 +57,7 @@ public class PokemonMoves : MonoBehaviour
         _moves = reader.GetMoves().moves.Find(m => m.ename == moveName);
     }
 
-    private void SaveMoveNames()
+    public void SaveMoveNames()
     {
         for (int i = 0; i < 4; i++)
         {
