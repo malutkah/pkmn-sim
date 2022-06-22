@@ -43,7 +43,6 @@ public class LoadTestBattle : MonoBehaviour
         playerMoves = PlayerPokemonPrefab.GetComponent<PokemonMoves>();
         enemyMoves = EnemyPokemonPrefab.GetComponent<PokemonMoves>();
 
-
         playerMoves.Init();
         playerMoves.Init();
 
@@ -112,5 +111,7 @@ public class LoadTestBattle : MonoBehaviour
         enemyPkmn = new pokemon();
 
         enemyPkmn = reader.GetPokemons().pokemon.Find(p => p.id == id);
+
+        Debug.Log($"{enemyPkmn.type[0]}");
     }
 }

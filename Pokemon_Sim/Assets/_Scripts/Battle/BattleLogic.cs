@@ -133,7 +133,8 @@ public class BattleLogic : MonoBehaviour
 
             }
 
-            Calculations.DoDamageCalculation(attackerMove, infoHolderPlayerPkmn, infoHolderEnemyPkmn, playerAttack);
+            var dmg = Calculations.DoDamageCalculation(attackerMove, infoHolderPlayerPkmn, infoHolderEnemyPkmn, playerAttack);
+            //Debug.Log($"{dmg} Damage");
 
             // MoveManager.ExecuteMoveEffect(attackerMove);
         }
@@ -226,7 +227,6 @@ public class BattleLogic : MonoBehaviour
         {
             infoHolder.SetCurrentMovePp(moveId, currentPP);
             ui.SetCurrentPPText(moveId, infoHolder.GetCurrentMovePp(moveId).ToString());
-            //infoHolder.SetCurrentMovePp(moveId, currentPP);
         }
 
     }

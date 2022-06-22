@@ -46,8 +46,6 @@ public static class Calculations
 
     #region Calculation extras
 
-    private static float basedamage;
-
     private static bool useSpecial = false;
     private static bool isStatusMove = false;
 
@@ -108,6 +106,9 @@ public static class Calculations
     {
         float effectValueMultiplicator = 0f;
 
+        Debug.Log($"Pokemon type {pokemonType}");
+        Debug.Log($"Move type {_moveType}");
+
         switch (_moveType)
         {
             case Types.normal:
@@ -166,6 +167,7 @@ public static class Calculations
                 break;
         }
 
+        Debug.Log($"Effect Value Multi: {effectValueMultiplicator}");
         return effectValueMultiplicator;
     }
 
@@ -185,6 +187,9 @@ public static class Calculations
     public static float DoDamageCalculation(moves attackerMove, PokemonInfoHolder playerPokemonInfo, PokemonInfoHolder enemyPokemonInfo, bool playerAttack)
     {
         PokemonInfoHolder attackingPokemon = playerAttack ? playerPokemonInfo : enemyPokemonInfo;
+        PokemonInfoHolder enemyPokmn = enemyPokemonInfo;
+
+        Debug.Log($"is enemy info null? {enemyPokemonInfo == null}");
 
         InitStats(attackerMove, playerPokemonInfo, enemyPokemonInfo);
         MoveManager.attackingPokemon = attackingPokemon;
@@ -209,6 +214,7 @@ public static class Calculations
         if (playerAttack)
         {
             // player move type VS. enemy's type
+            Debug.Log($"{e_primaryType}");
             type1 = GetEffectivness(e_primaryType, moveType);
             level = playerPokemonInfo.level;
 
@@ -256,6 +262,7 @@ public static class Calculations
         Z = Random.Range(85, 100);
 
         baseDamage = CalaculateBasedamage(attackerMove);
+        //Debug.Log($"Base Damage: {baseDamage}");
 
         F1 = Calculate_F1(attackerMove, attackingPokemon);
         F2 = Calculate_F2();
@@ -269,10 +276,14 @@ public static class Calculations
         else
         {
             // do status move
+            Debug.Log($"Well, shit");
             return 0;
         }
 
-        totalDamage = ((level * (2 / 5) + 2) * basedamage * (sp_attack / (50 * sp_defense)) * F1 + 2) * critical * F2 * (Z / 100) * stabBonus * type1 * type2 * F3;
+        Debug.Log($"(({level} * ({2} / {5}) + {2}) * {baseDamage} * ({sp_attack} / ({50} * {sp_defense})) * {F1} + {2}) * {critical} * {F2} * ({Z} / {100}) * {stabBonus} * {type1} * {type2} * {F3}");
+
+        totalDamage = ((level * (2 / 5) + 2) * baseDamage * (sp_attack / (50 * sp_defense)) * F1 + 2) * critical * F2 * (Z / 100) * stabBonus * type1 * type2 * F3;
+
 
         return totalDamage;
     }
