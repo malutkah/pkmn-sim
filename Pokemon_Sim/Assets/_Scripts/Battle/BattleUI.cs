@@ -34,6 +34,11 @@ public class BattleUI : MonoBehaviour
     public TextMeshProUGUI Move4CurrentPP;
     #endregion
 
+    #region HP ui
+    [SerializeField] private TextMeshProUGUI PlayerPokemonCurrentHp;
+    [SerializeField] private TextMeshProUGUI EnemyPokemonCurrentHp;
+    #endregion
+
     [SerializeField]
     private TextMeshProUGUI DialogText;
 
@@ -172,4 +177,17 @@ public class BattleUI : MonoBehaviour
     }
     #endregion
 
+    #region HP
+
+    public void SetCurrentPlayerHPText(float newHp)
+    {
+        PlayerPokemonCurrentHp.text = Mathf.Round(newHp).ToString();
+    }
+
+    public void SetCurrentEnemyHPText(float newHp)
+    {
+        EnemyPokemonCurrentHp.text = Mathf.Round(newHp).ToString();
+    }
+
+    #endregion
 }

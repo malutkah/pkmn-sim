@@ -483,7 +483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5365fe22dc3bfd4080ce5b53a438c8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHpSlider: {fileID: 147735672}
+  hpSlider: {fileID: 147735672}
 --- !u!114 &147735672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 1
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2436,6 +2436,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SwitchPokemonButton: {fileID: 0}
+  playerHealthBar: {fileID: 147735671}
+  enemyHealthBar: {fileID: 1145385178}
   ClickedPokemon: {fileID: 0}
 --- !u!114 &894632418
 MonoBehaviour:
@@ -2488,7 +2490,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a044fceb4432b47a029805f4d06447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerHealthBar: {fileID: 147735669}
   Level: 70
   PlayerPokemonName: {fileID: 1815515432}
   PlayerPokemonMaxHp: {fileID: 1755084109}
@@ -2498,6 +2499,8 @@ MonoBehaviour:
   EnemyPokemonMaxHp: {fileID: 957754171}
   EnemyPokemonCurrentHp: {fileID: 1163812238}
   EnemyPokemonLevel: {fileID: 904253547}
+  playerHealthBar: {fileID: 147735671}
+  enemyHealthBar: {fileID: 1145385178}
   PlayerPokemonPrefab: {fileID: 6001172361339281185}
   EnemyPokemonPrefab: {fileID: 1921576125}
   BattleStationPlayer: {fileID: 189159425}
@@ -3450,7 +3453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5365fe22dc3bfd4080ce5b53a438c8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHpSlider: {fileID: 1145385179}
+  hpSlider: {fileID: 1145385179}
 --- !u!114 &1145385179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3497,7 +3500,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 1
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:

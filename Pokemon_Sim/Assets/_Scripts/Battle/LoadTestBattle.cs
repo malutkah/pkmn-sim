@@ -6,7 +6,7 @@ using TMPro;
 
 public class LoadTestBattle : MonoBehaviour
 {
-    [SerializeField] private GameObject PlayerHealthBar;
+    //[SerializeField] private GameObject PlayerHealthBar;
     [SerializeField] private int Level;
 
     #region UI Elements
@@ -20,6 +20,9 @@ public class LoadTestBattle : MonoBehaviour
     [SerializeField] private TextMeshProUGUI EnemyPokemonCurrentHp;
     [SerializeField] private TextMeshProUGUI EnemyPokemonLevel;
     #endregion
+
+    public HealthBar playerHealthBar;
+    public HealthBar enemyHealthBar;
 
     public GameObject PlayerPokemonPrefab;
     public GameObject EnemyPokemonPrefab;
@@ -67,6 +70,12 @@ public class LoadTestBattle : MonoBehaviour
         InitializeEnemyPokemonUiText();
     }
 
+    private void Start()
+    {
+        playerHealthBar.SetMaxHp(playerInfoHolder.hp);
+        enemyHealthBar.SetMaxHp(enemyInfoHolder.hp);
+    }
+
     private void InitializePlayerPokemonUiText()
     {
         PlayerPokemonName.text = playerPkmn.name.english;
@@ -87,8 +96,8 @@ public class LoadTestBattle : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            playerInfoHolder.SetCurrentMovePp(i+1, playerMoves.GetMovePP(playerMoves.MoveNames[i]));
-            enemyInfoHolder.SetCurrentMovePp(i+1, playerMoves.GetMovePP(playerMoves.MoveNames[i]));
+            playerInfoHolder.SetCurrentMovePp(i + 1, playerMoves.GetMovePP(playerMoves.MoveNames[i]));
+            enemyInfoHolder.SetCurrentMovePp(i + 1, playerMoves.GetMovePP(playerMoves.MoveNames[i]));
         }
     }
 
@@ -96,13 +105,15 @@ public class LoadTestBattle : MonoBehaviour
     {
         infoHolder.level = Level;
         infoHolder.hp = Calculations.DoHP(pkmn.@base.hp, Level);
+        infoHolder.CurrentPokemonHp = infoHolder.hp;
+
         infoHolder.attack = Calculations.DoOtherStats(pkmn.@base.attack, Level);
         infoHolder.defense = Calculations.DoOtherStats(pkmn.@base.defense, Level);
         infoHolder.spAttack = Calculations.DoOtherStats(pkmn.@base.sp_attack, Level);
         infoHolder.spDefense = Calculations.DoOtherStats(pkmn.@base.sp_defense, Level);
         infoHolder.speed = Calculations.DoOtherStats(pkmn.@base.speed, Level);
         infoHolder.PrimaryType = pkmn.type[0];
-        
+
         if (pkmn.type.Count == 2) infoHolder.SecondaryType = pkmn.type[1];
     }
 

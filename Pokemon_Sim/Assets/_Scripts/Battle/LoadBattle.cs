@@ -109,7 +109,7 @@ public class LoadBattle : MonoBehaviour
 
     private void Start()
     {
-        playerHealthBar.SetMaxPlayerHp(infoHolder.hp);
+        playerHealthBar.SetMaxHp(infoHolder.hp);
     }
     #endregion
 

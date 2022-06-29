@@ -21,6 +21,8 @@ public class PokemonInfoHolder : MonoBehaviour
 
     public PokemonStatus status;
 
+    public float CurrentPokemonHp;
+
     #region Pokemon stats    
     public float hp;
     public float attack;

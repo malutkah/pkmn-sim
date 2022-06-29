@@ -9,6 +9,8 @@ using UnityEngine.UI;
 public class BattleLogic : MonoBehaviour
 {
     public Button SwitchPokemonButton;
+    public HealthBar playerHealthBar;
+    public HealthBar enemyHealthBar;
 
     [HideInInspector]
     public GameObject ClickedPokemon;
@@ -113,8 +115,6 @@ public class BattleLogic : MonoBehaviour
 
     public void ExecuteMove(string moveName, bool playerAttack = true)
     {
-        bool hit = true;
-
         // get move
         moves attackerMove = playerAttack
             ? p_pkmnInBattle.GetComponent<PokemonMoves>().GetMoveByName(moveName)
@@ -123,7 +123,7 @@ public class BattleLogic : MonoBehaviour
         PokemonInfoHolder infoHolderPlayerPkmn = p_pkmnInBattle.GetComponent<PokemonInfoHolder>();
         PokemonInfoHolder infoHolderEnemyPkmn = e_pkmnInBattle.GetComponent<PokemonInfoHolder>();
 
-        hit = UnityEngine.Random.Range(0, 100) <= attackerMove.accuracy;
+        bool hit = UnityEngine.Random.Range(0, 100) <= attackerMove.accuracy;
 
         if (hit)
         {
@@ -132,9 +132,21 @@ public class BattleLogic : MonoBehaviour
             {
 
             }
+            else
+            {
+                var dmg = Calculations.DoDamageCalculation(attackerMove, infoHolderPlayerPkmn, infoHolderEnemyPkmn, playerAttack);
+                Debug.Log($"{(int)dmg} Damage");
 
-            var dmg = Calculations.DoDamageCalculation(attackerMove, infoHolderPlayerPkmn, infoHolderEnemyPkmn, playerAttack);
-            Debug.Log($"{(int)dmg} Damage");
+                // healthbar damage
+                if (playerAttack)
+                {
+                    enemyHealthBar.SetHP(dmg);
+                    infoHolderEnemyPkmn.CurrentPokemonHp -= dmg;
+                    infoHolderEnemyPkmn.CurrentPokemonHp = infoHolderEnemyPkmn.CurrentPokemonHp <= 0 ? 0 : infoHolderEnemyPkmn.CurrentPokemonHp;
+
+                    ui.SetCurrentEnemyHPText(infoHolderEnemyPkmn.CurrentPokemonHp);                    
+                }
+            }
 
             // MoveManager.ExecuteMoveEffect(attackerMove);
         }

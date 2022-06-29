@@ -6,17 +6,17 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     [SerializeField]
-    private Slider playerHpSlider;
+    private Slider hpSlider;
 
-    public void SetMaxPlayerHp(float hp)
+    public void SetMaxHp(float hp)
     {
-        playerHpSlider.maxValue = hp;
-        playerHpSlider.value = hp;
+        hpSlider.maxValue = hp;
+        hpSlider.value = hp;
     }
 
 
-    public void SetPlayerHP(float hp)
+    public void SetHP(float hp)
     {
-        playerHpSlider.value = hp;
+        hpSlider.value -= hp;
     }
 }
