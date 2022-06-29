@@ -49,6 +49,12 @@ public class LoadTestBattle : MonoBehaviour
         LoadPlayerPokemon();
         LoadEnemyPokemon();
 
+        playerInfoHolder.PrimaryType = playerPkmn.type[0];
+        playerInfoHolder.SecondaryType = playerPkmn.type.Count == 2 ? playerInfoHolder.SecondaryType = playerPkmn.type[1] : "";
+
+        enemyInfoHolder.PrimaryType = enemyPkmn.type[0];
+        enemyInfoHolder.SecondaryType = enemyPkmn.type.Count == 2 ? enemyInfoHolder.SecondaryType = enemyPkmn.type[1] : "";
+
         CalculatePokemonBaseStats(playerInfoHolder, playerPkmn);
         CalculatePokemonBaseStats(enemyInfoHolder, enemyPkmn);
 
@@ -95,6 +101,9 @@ public class LoadTestBattle : MonoBehaviour
         infoHolder.spAttack = Calculations.DoOtherStats(pkmn.@base.sp_attack, Level);
         infoHolder.spDefense = Calculations.DoOtherStats(pkmn.@base.sp_defense, Level);
         infoHolder.speed = Calculations.DoOtherStats(pkmn.@base.speed, Level);
+        infoHolder.PrimaryType = pkmn.type[0];
+        
+        if (pkmn.type.Count == 2) infoHolder.SecondaryType = pkmn.type[1];
     }
 
     private void LoadPlayerPokemon()

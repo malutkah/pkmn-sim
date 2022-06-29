@@ -128,13 +128,13 @@ public class BattleLogic : MonoBehaviour
         if (hit)
         {
             // is attack status, normal, or uses other calculations
-            if (attackerMove.type == "special" && attackerMove.power == 0)
+            if (attackerMove.category == "special" && attackerMove.power == 0)
             {
 
             }
 
             var dmg = Calculations.DoDamageCalculation(attackerMove, infoHolderPlayerPkmn, infoHolderEnemyPkmn, playerAttack);
-            //Debug.Log($"{dmg} Damage");
+            Debug.Log($"{(int)dmg} Damage");
 
             // MoveManager.ExecuteMoveEffect(attackerMove);
         }

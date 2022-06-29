@@ -106,8 +106,8 @@ public static class Calculations
     {
         float effectValueMultiplicator = 0f;
 
-        Debug.Log($"Pokemon type {pokemonType}");
-        Debug.Log($"Move type {_moveType}");
+        //Debug.Log($"Pokemon type {pokemonType}");
+        //Debug.Log($"Move type {_moveType}");
 
         switch (_moveType)
         {
@@ -167,7 +167,7 @@ public static class Calculations
                 break;
         }
 
-        Debug.Log($"Effect Value Multi: {effectValueMultiplicator}");
+        //Debug.Log($"Effect Value Multi: {effectValueMultiplicator}");
         return effectValueMultiplicator;
     }
 
@@ -175,26 +175,16 @@ public static class Calculations
 
     #region Damage Calculation
 
-    public static bool IsCritical(moves attackingMove)
-    {
-        bool hit = false;
-
-
-
-        return hit;
-    }
-
     public static float DoDamageCalculation(moves attackerMove, PokemonInfoHolder playerPokemonInfo, PokemonInfoHolder enemyPokemonInfo, bool playerAttack)
     {
         PokemonInfoHolder attackingPokemon = playerAttack ? playerPokemonInfo : enemyPokemonInfo;
-        PokemonInfoHolder enemyPokmn = enemyPokemonInfo;
+        PokemonInfoHolder defendingPokemon = playerAttack ? enemyPokemonInfo : playerPokemonInfo;
 
-        Debug.Log($"is enemy info null? {enemyPokemonInfo == null}");
+        //Debug.Log($"is enemy info null? {enemyPokemonInfo == null}");
 
         InitStats(attackerMove, playerPokemonInfo, enemyPokemonInfo);
         MoveManager.attackingPokemon = attackingPokemon;
 
-        float totalDamage = 0f;
         float baseDamage = 1f;
         float F1 = 1f, F2 = 1f, F3 = 1f;
         float critical = 1f;
@@ -214,14 +204,10 @@ public static class Calculations
         if (playerAttack)
         {
             // player move type VS. enemy's type
-            Debug.Log($"{e_primaryType}");
             type1 = GetEffectivness(e_primaryType, moveType);
             level = playerPokemonInfo.level;
 
-            if (p_secondaryType != "")
-            {
-                type2 = GetEffectivness(e_secondaryType, moveType);
-            }
+            type2 = e_secondaryType != "" ? GetEffectivness(e_secondaryType, moveType) : 1;
         }
         else
         {
@@ -230,10 +216,7 @@ public static class Calculations
             type1 = GetEffectivness(p_primaryType, moveType);
             level = enemyPokemonInfo.level;
 
-            if (e_secondaryType != "")
-            {
-                type2 = GetEffectivness(p_secondaryType, moveType);
-            }
+            type2 = p_secondaryType != "" ? GetEffectivness(p_secondaryType, moveType) : 1;
         }
 
         if (attackerMove.category == "physical")
@@ -255,6 +238,8 @@ public static class Calculations
         critAccuracy = criticalStep == 2 ? 12.5f : criticalStep == 3 ? 50f : criticalStep == 4 ? 100 : critAccuracy;
 
         critical = WasACritical(critAccuracy) ? 1.5f : critical;
+
+        if (critical == 1.5f) Debug.Log("Critical Hit!");
 
         stab = attackerMove.type == attackingPokemon.PrimaryType || (type2 != 1f ? attackerMove.type == attackingPokemon.SecondaryType : false);
         stabBonus = stab ? 1.5f : stabBonus;
@@ -280,12 +265,18 @@ public static class Calculations
             return 0;
         }
 
-        Debug.Log($"(({level} * ({2} / {5}) + {2}) * {baseDamage} * ({sp_attack} / ({50} * {sp_defense})) * {F1} + {2}) * {critical} * {F2} * ({Z} / {100}) * {stabBonus} * {type1} * {type2} * {F3}");
+        //Debug.Log($"(({level} * ({2} / {5}) + {2}) * {baseDamage} * ({sp_attack} / ({50} * {sp_defense})) * {F1} + {2}) * {critical} * {F2} * ({Z} / {100}) * {stabBonus} * {type1} * {type2} * {F3}");
 
-        totalDamage = ((level * (2 / 5) + 2) * baseDamage * (sp_attack / (50 * sp_defense)) * F1 + 2) * critical * F2 * (Z / 100) * stabBonus * type1 * type2 * F3;
+        // version 1 => not very accurate
+        var totalDamage1 = ((level * (2 / 5) + 2) * baseDamage * (sp_attack / (50 * sp_defense)) * F1 + 2) * critical * F2 * (Z / 100) * stabBonus * type1 * type2 * F3;
 
+        // version 2
+        var _attack = useSpecial ? attackingPokemon.spAttack : attackingPokemon.attack;
+        var _defense = useSpecial ? defendingPokemon.spDefense : defendingPokemon.defense;
 
-        return totalDamage;
+        var totalDamage2 = ( ( ( (2 * level) / 5 ) + 2 * attackerMove.power * _attack / _defense ) / 50 + 2 ) * 1 * 1 * 1 * critical * (Z / 100) * stabBonus * type1 * type2;
+
+        return totalDamage2 * 10;
     }
 
     #endregion
@@ -360,7 +351,6 @@ public static class Calculations
             sv = attackingPokemon.pokemonStatStepValue_spDefense;
             stat = attackingPokemon.spDefense;
         }
-
 
         defense = stat * sv * mod;
 
