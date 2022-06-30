@@ -101,16 +101,42 @@ public class BattleLogic : MonoBehaviour
     }
     #endregion
 
+    #region Enemy control
+
+    public void EnemyAttack(string moveName)
+    {
+        Debug.Log($"Enemy uses {moveName}");
+        ExecuteMove(moveName, false);
+    }
+
+    #endregion
+
     #region button clicks
     public void ExecuteMove_ButtonClick()
     {
-        // get button name
-        GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
-        string moveName = clickedButton.GetComponentInChildren<TextMeshProUGUI>().text;
+        if (GameManager.instance.Phase == Phases.CHOOSING)
+        {
+            // get button name
+            GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
+            string moveName = clickedButton.GetComponentInChildren<TextMeshProUGUI>().text;
 
-        ExecuteMove(moveName);
+            // comapare player speed with enemy speed
+            if (GameManager.instance.IsPlayerFaster())
+            {
+                // if player faster
+                ExecuteMove(moveName);
+                DecreaseCurrentMovePP(clickedButton);
+            }
+            else
+            {
+                // enemy chooses
+                    // attack
+                    // switch (comes later, first only attacking)
+                Debug.Log("Enemy is faster.");
+                GameManager.instance.EnemyDecides();
+            }
 
-        DecreaseCurrentMovePP(clickedButton);
+        }
     }
 
     public void ExecuteMove(string moveName, bool playerAttack = true)
@@ -144,7 +170,15 @@ public class BattleLogic : MonoBehaviour
                     infoHolderEnemyPkmn.CurrentPokemonHp -= dmg;
                     infoHolderEnemyPkmn.CurrentPokemonHp = infoHolderEnemyPkmn.CurrentPokemonHp <= 0 ? 0 : infoHolderEnemyPkmn.CurrentPokemonHp;
 
-                    ui.SetCurrentEnemyHPText(infoHolderEnemyPkmn.CurrentPokemonHp);                    
+                    ui.SetCurrentEnemyHPText(infoHolderEnemyPkmn.CurrentPokemonHp);
+                }
+                else
+                {
+                    playerHealthBar.SetHP(dmg);
+                    infoHolderPlayerPkmn.CurrentPokemonHp -= dmg;
+                    infoHolderPlayerPkmn.CurrentPokemonHp = infoHolderPlayerPkmn.CurrentPokemonHp <= 0 ? 0 : infoHolderPlayerPkmn.CurrentPokemonHp;
+
+                    ui.SetCurrentPlayerHPText(infoHolderPlayerPkmn.CurrentPokemonHp);
                 }
             }
 

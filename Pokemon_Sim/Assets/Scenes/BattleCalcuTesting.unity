@@ -2412,10 +2412,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 894632421}
+  - component: {fileID: 894632418}
   - component: {fileID: 894632420}
   - component: {fileID: 894632417}
-  - component: {fileID: 894632418}
   - component: {fileID: 894632419}
+  - component: {fileID: 894632422}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -2453,6 +2454,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PokemonInBattle_Enemy: {fileID: 0}
   PokemonInBattle_Player: {fileID: 0}
+  Phase: 6
+  ai: {fileID: 894632422}
+  logic: {fileID: 894632417}
 --- !u!114 &894632419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2477,6 +2481,8 @@ MonoBehaviour:
   Move4Text: {fileID: 1387193201}
   Move4MaxPP: {fileID: 1361078330}
   Move4CurrentPP: {fileID: 2102286968}
+  PlayerPokemonCurrentHp: {fileID: 584340970}
+  EnemyPokemonCurrentHp: {fileID: 1163812238}
   DialogText: {fileID: 2062784078}
 --- !u!114 &894632420
 MonoBehaviour:
@@ -2520,6 +2526,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &894632422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894632416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80dddf2d85d4ab8468499042ffc564a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tier: 0
 --- !u!1 &895813459
 GameObject:
   m_ObjectHideFlags: 0
@@ -5674,6 +5693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ClickedPokemon: {fileID: 0}
   status: 0
+  CurrentPokemonHp: 0
   hp: 0
   attack: 0
   defense: 0
@@ -6812,6 +6832,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ClickedPokemon: {fileID: 0}
   status: 0
+  CurrentPokemonHp: 0
   hp: 0
   attack: 0
   defense: 0
