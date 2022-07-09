@@ -9,21 +9,29 @@ using UnityEngine.UI;
 public class BattleLogic : MonoBehaviour
 {
     public Button SwitchPokemonButton;
+
     public HealthBar playerHealthBar;
+
     public HealthBar enemyHealthBar;
 
     [HideInInspector]
     public GameObject ClickedPokemon;
+
     [HideInInspector]
     public IDictionary<GameObject, Transform> pokemonParent;
+
     public IDictionary<GameObject, Vector3> pokemonPositions;
 
     private BattleUI ui;
+
     private LoadBattle loadBattle;
+
     private PlaySettings settings;
+
     private PokemonInfoHolder infoHolder;
 
     private GameObject p_pkmnInBattle;
+
     private GameObject e_pkmnInBattle;
 
     private bool firstLoad;
@@ -48,10 +56,15 @@ public class BattleLogic : MonoBehaviour
         infoHolder = pkmn.GetComponent<PokemonInfoHolder>();
     }
 
+
     #region switchting pokemon
-    public void SentPokemonIntoBattle(GameObject pokemonInTeam, bool isEnemy = false)
+    public void SentPokemonIntoBattle(
+        GameObject pokemonInTeam,
+        bool isEnemy = false
+    )
     {
-        settings = GameObject.FindWithTag("Settings").GetComponent<PlaySettings>();
+        settings =
+            GameObject.FindWithTag("Settings").GetComponent<PlaySettings>();
 
         pokemonInTeam.GetComponent<SpriteRenderer>().sortingOrder = 2;
 
@@ -59,15 +72,25 @@ public class BattleLogic : MonoBehaviour
         {
             pokemonInTeam.tag = settings.InBattle;
             p_pkmnInBattle = pokemonInTeam;
-            pokemonInTeam.transform.SetParent(GameObject.FindWithTag("BattleStationPlayer").transform);
-            pokemonInTeam.transform.localPosition = new Vector3(0f, .1f, -9720f);
+            pokemonInTeam
+                .transform
+                .SetParent(GameObject
+                    .FindWithTag("BattleStationPlayer")
+                    .transform);
+            pokemonInTeam.transform.localPosition =
+                new Vector3(0f, .1f, -9720f);
         }
         else
         {
             pokemonInTeam.tag = settings.InBattleEnemy;
             e_pkmnInBattle = pokemonInTeam;
-            pokemonInTeam.transform.SetParent(GameObject.FindWithTag("BattleStationEnemy").transform);
-            pokemonInTeam.transform.localPosition = new Vector3(0f, 0.075f, -9720f);
+            pokemonInTeam
+                .transform
+                .SetParent(GameObject
+                    .FindWithTag("BattleStationEnemy")
+                    .transform);
+            pokemonInTeam.transform.localPosition =
+                new Vector3(0f, 0.075f, -9720f);
         }
 
         pokemonInTeam.transform.localScale = new Vector3(1.3f, 1.3f, 108);
@@ -83,7 +106,8 @@ public class BattleLogic : MonoBehaviour
 
         pokemonInBattle.transform.SetParent(pokemonParent[pokemonInBattle]);
 
-        ClickedPokemon.transform.parent.GetComponent<Image>().color = new Color(255, 255, 255);
+        ClickedPokemon.transform.parent.GetComponent<Image>().color =
+            new Color(255, 255, 255);
 
         ClickedPokemon.tag = settings.InBattle;
 
@@ -97,19 +121,24 @@ public class BattleLogic : MonoBehaviour
 
         pokemonInBattle.tag = settings.InBattleTeam;
         pokemonInBattle.transform.localScale = new Vector3(300f, 300f, 1f);
-        pokemonInBattle.transform.localPosition = pokemonPositions[pokemonInBattle];
+        pokemonInBattle.transform.localPosition =
+            pokemonPositions[pokemonInBattle];
     }
     #endregion
 
-    #region Enemy control
 
+
+    #region Enemy control
     public void EnemyAttack(string moveName)
     {
         Debug.Log($"Enemy uses {moveName}");
         ExecuteMove(moveName, false);
     }
 
+
     #endregion
+
+
 
     #region button clicks
     public void ExecuteMove_ButtonClick()
@@ -117,8 +146,10 @@ public class BattleLogic : MonoBehaviour
         if (GameManager.instance.Phase == Phases.CHOOSING)
         {
             // get button name
-            GameObject clickedButton = EventSystem.current.currentSelectedGameObject;
-            string moveName = clickedButton.GetComponentInChildren<TextMeshProUGUI>().text;
+            GameObject clickedButton =
+                EventSystem.current.currentSelectedGameObject;
+            string moveName =
+                clickedButton.GetComponentInChildren<TextMeshProUGUI>().text;
 
             // comapare player speed with enemy speed
             if (GameManager.instance.IsPlayerFaster())
@@ -126,28 +157,35 @@ public class BattleLogic : MonoBehaviour
                 // if player faster
                 ExecuteMove(moveName);
                 DecreaseCurrentMovePP(clickedButton);
+                // Coroutine
             }
             else
             {
                 // enemy chooses
-                    // attack
-                    // switch (comes later, first only attacking)
+                // attack
+                // switch (comes later, first only attacking)
                 Debug.Log("Enemy is faster.");
                 GameManager.instance.EnemyDecides();
             }
-
         }
     }
 
     public void ExecuteMove(string moveName, bool playerAttack = true)
     {
         // get move
-        moves attackerMove = playerAttack
-            ? p_pkmnInBattle.GetComponent<PokemonMoves>().GetMoveByName(moveName)
-            : e_pkmnInBattle.GetComponent<PokemonMoves>().GetMoveByName(moveName);
+        moves attackerMove =
+            playerAttack
+                ? p_pkmnInBattle
+                    .GetComponent<PokemonMoves>()
+                    .GetMoveByName(moveName)
+                : e_pkmnInBattle
+                    .GetComponent<PokemonMoves>()
+                    .GetMoveByName(moveName);
 
-        PokemonInfoHolder infoHolderPlayerPkmn = p_pkmnInBattle.GetComponent<PokemonInfoHolder>();
-        PokemonInfoHolder infoHolderEnemyPkmn = e_pkmnInBattle.GetComponent<PokemonInfoHolder>();
+        PokemonInfoHolder infoHolderPlayerPkmn =
+            p_pkmnInBattle.GetComponent<PokemonInfoHolder>();
+        PokemonInfoHolder infoHolderEnemyPkmn =
+            e_pkmnInBattle.GetComponent<PokemonInfoHolder>();
 
         bool hit = UnityEngine.Random.Range(0, 100) <= attackerMove.accuracy;
 
@@ -156,7 +194,6 @@ public class BattleLogic : MonoBehaviour
             // is attack status, normal, or uses other calculations
             if (attackerMove.category == "special" && attackerMove.power == 0)
             {
-
             }
             else
             {
@@ -165,21 +202,9 @@ public class BattleLogic : MonoBehaviour
 
                 // healthbar damage
                 if (playerAttack)
-                {
-                    enemyHealthBar.SetHP(dmg);
-                    infoHolderEnemyPkmn.CurrentPokemonHp -= dmg;
-                    infoHolderEnemyPkmn.CurrentPokemonHp = infoHolderEnemyPkmn.CurrentPokemonHp <= 0 ? 0 : infoHolderEnemyPkmn.CurrentPokemonHp;
-
-                    ui.SetCurrentEnemyHPText(infoHolderEnemyPkmn.CurrentPokemonHp);
-                }
+                    DoDamage(playerAttack, infoHolderEnemyPkmn, dmg);
                 else
-                {
-                    playerHealthBar.SetHP(dmg);
-                    infoHolderPlayerPkmn.CurrentPokemonHp -= dmg;
-                    infoHolderPlayerPkmn.CurrentPokemonHp = infoHolderPlayerPkmn.CurrentPokemonHp <= 0 ? 0 : infoHolderPlayerPkmn.CurrentPokemonHp;
-
-                    ui.SetCurrentPlayerHPText(infoHolderPlayerPkmn.CurrentPokemonHp);
-                }
+                    DoDamage(playerAttack, infoHolderPlayerPkmn, dmg);
             }
 
             // MoveManager.ExecuteMoveEffect(attackerMove);
@@ -188,6 +213,15 @@ public class BattleLogic : MonoBehaviour
         {
             Debug.Log("Missed");
         }
+    }
+
+    private void DoDamage(bool palyerAttack, PokemonInfoHolder infoHolderDefendingPkmn, float damage)
+    {
+        enemyHealthBar.SetHP(damage);
+        infoHolderDefendingPkmn.CurrentPokemonHp -= damage;
+        infoHolderDefendingPkmn.CurrentPokemonHp = infoHolderDefendingPkmn.CurrentPokemonHp <= 0 ? 0 : infoHolderDefendingPkmn.CurrentPokemonHp;
+
+        ui.SetCurrentEnemyHPText(infoHolderDefendingPkmn.CurrentPokemonHp);
     }
 
     public void SwitchPokemon_ButtonClick()
@@ -217,6 +251,8 @@ public class BattleLogic : MonoBehaviour
         ui.Move4CurrentPP.text = infoHolder.GetCurrentMovePp(4).ToString();
     }
     #endregion
+
+
 
     #region PowerPoints
     private void RefreshPPText()
@@ -265,16 +301,20 @@ public class BattleLogic : MonoBehaviour
         if (currentPP <= 0)
         {
             infoHolder.SetCurrentMovePp(moveId, 0);
-            ui.SetCurrentPPText(moveId, infoHolder.GetCurrentMovePp(moveId).ToString());
+            ui
+                .SetCurrentPPText(moveId,
+                infoHolder.GetCurrentMovePp(moveId).ToString());
+
             //infoHolder.SetCurrentMovePp(moveId, 0);
             clickedButton.GetComponent<Button>().interactable = false;
         }
         else
         {
             infoHolder.SetCurrentMovePp(moveId, currentPP);
-            ui.SetCurrentPPText(moveId, infoHolder.GetCurrentMovePp(moveId).ToString());
+            ui
+                .SetCurrentPPText(moveId,
+                infoHolder.GetCurrentMovePp(moveId).ToString());
         }
-
     }
 
     private void SetCurrentPPColor(float currentPP, int moveId)
