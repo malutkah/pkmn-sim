@@ -164,7 +164,7 @@ public class BattleLogic : MonoBehaviour
                 // enemy chooses
                 // attack
                 // switch (comes later, first only attacking)
-                Debug.Log("Enemy is faster.");
+                //Debug.Log("Enemy is faster.");
                 GameManager.instance.EnemyDecides();
             }
         }
@@ -173,19 +173,11 @@ public class BattleLogic : MonoBehaviour
     public void ExecuteMove(string moveName, bool playerAttack = true)
     {
         // get move
-        moves attackerMove =
-            playerAttack
-                ? p_pkmnInBattle
-                    .GetComponent<PokemonMoves>()
-                    .GetMoveByName(moveName)
-                : e_pkmnInBattle
-                    .GetComponent<PokemonMoves>()
-                    .GetMoveByName(moveName);
+        moves attackerMove = playerAttack ? p_pkmnInBattle.GetComponent<PokemonMoves>().GetMoveByName(moveName) :
+                                            e_pkmnInBattle.GetComponent<PokemonMoves>().GetMoveByName(moveName);
 
-        PokemonInfoHolder infoHolderPlayerPkmn =
-            p_pkmnInBattle.GetComponent<PokemonInfoHolder>();
-        PokemonInfoHolder infoHolderEnemyPkmn =
-            e_pkmnInBattle.GetComponent<PokemonInfoHolder>();
+        PokemonInfoHolder infoHolderPlayerPkmn = p_pkmnInBattle.GetComponent<PokemonInfoHolder>();
+        PokemonInfoHolder infoHolderEnemyPkmn = e_pkmnInBattle.GetComponent<PokemonInfoHolder>();
 
         bool hit = UnityEngine.Random.Range(0, 100) <= attackerMove.accuracy;
 

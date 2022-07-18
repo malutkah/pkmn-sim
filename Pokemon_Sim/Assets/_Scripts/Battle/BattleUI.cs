@@ -87,6 +87,20 @@ public class BattleUI : MonoBehaviour
     }
     #endregion
 
+    #region Text
+
+    public void ClearDialogText()
+    {
+        DialogText.text = "";
+    }
+
+    public void WriteDialogText(string text)
+    {
+        DialogText.text = text;
+    }
+
+    #endregion
+
     #region Coroutines
     public IEnumerator TypeSentence(string sentence)
     {

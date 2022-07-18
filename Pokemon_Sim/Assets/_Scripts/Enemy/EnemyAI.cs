@@ -28,7 +28,7 @@ public class EnemyAI : MonoBehaviour
     private PokemonMoves enemyMoves;
 
 
-#region Setup
+    #region Setup
 
     public void Execute()
     {
@@ -55,23 +55,20 @@ public class EnemyAI : MonoBehaviour
     public void SetEnemyInBattle(GameObject pkmn)
     {
         enemyPokemonInBattle = pkmn;
-        enemyInfoHolder =
-            enemyPokemonInBattle.GetComponent<PokemonInfoHolder>();
+        enemyInfoHolder = enemyPokemonInBattle.GetComponent<PokemonInfoHolder>();
         enemyMoves = enemyPokemonInBattle.GetComponent<PokemonMoves>();
     }
 
-#endregion
+    #endregion
 
-
-
-#region TIER: Easy
+    #region TIER: Easy
 
     private void ChooseAttack_Easy()
     {
         var randomMove = UnityEngine.Random.Range(0, 3);
         var moveName = enemyMoves.MoveNames[randomMove];
-        GameManager.instance.ExecuteEnemyAttack (moveName);
+        GameManager.instance.ExecuteEnemyAttack(moveName);
     }
 
-#endregion
+    #endregion
 }

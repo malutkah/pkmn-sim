@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public GameObject PokemonInBattle_Player;
     public EnemyAI ai;
     public BattleLogic logic;
+    public BattleUI ui;
 
     public Phases Phase;
 
@@ -57,11 +58,6 @@ public class GameManager : MonoBehaviour
         enemyInfoHolder = PokemonInBattle_Enemy.GetComponent<PokemonInfoHolder>();
     }
 
-    private void Update()
-    {
-        
-    }
-
     #endregion
 
     #region Battle
@@ -78,6 +74,7 @@ public class GameManager : MonoBehaviour
 
     public void ExecuteEnemyAttack(string moveName)
     {
+        WriteDialogText($"{enemyInfoHolder.poke_name} uses {moveName}");
         logic.EnemyAttack(moveName);
     }
 
@@ -85,6 +82,15 @@ public class GameManager : MonoBehaviour
     {
         ai.Execute();
     }
+
+    #region Text
+
+    public void WriteDialogText(string text)
+    {
+        ui.WriteDialogText(text);
+    }
+
+    #endregion
 
     #endregion
 }
